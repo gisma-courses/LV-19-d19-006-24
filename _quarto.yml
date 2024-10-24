@@ -3,6 +3,8 @@ project:
   output-dir: docs/
   render:
   - "*.qmd"  
+execute:
+  freeze: true    
 website:
   open-graph: true
   page-navigation: true  
