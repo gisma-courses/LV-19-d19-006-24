@@ -1,51 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/index.html</loc>
-    <lastmod>2023-12-12T12:34:39.593Z</lastmod>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/templates/slides-template.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
   <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/worksheets/ws-00.html</loc>
-    <lastmod>2023-12-12T12:30:20.602Z</lastmod>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/modules/de-git-module.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
   <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/worksheets/ws-01.html</loc>
-    <lastmod>2023-12-12T12:30:27.775Z</lastmod>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/base/about.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
   <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/worksheets/ws-02.html</loc>
-    <lastmod>2023-12-12T12:30:34.115Z</lastmod>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/base/faq.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
   <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/worksheets/ws-03.html</loc>
-    <lastmod>2023-12-12T12:30:38.892Z</lastmod>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/assessment/learnr_app-2.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
   <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/worksheets/ws-05.html</loc>
-    <lastmod>2023-12-12T12:30:44.544Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/worksheets/ws-07.html</loc>
-    <lastmod>2023-12-12T12:32:13.997Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/assessment/slidelist.html</loc>
-    <lastmod>2023-12-12T12:35:01.274Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/assessment/learnr_app-2.html</loc>
-    <lastmod>2023-12-12T12:35:10.051Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/assessment/git-more.html</loc>
-    <lastmod>2023-12-12T12:35:16.859Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gisma-courses.github.io/LV-19-d19-006-23/assessment/en-git-more.html</loc>
-    <lastmod>2023-12-12T12:35:41.896Z</lastmod>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/assessment/en-git-more.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
   <url>
     <loc>https://gisma-courses.github.io/LV-19-d19-006-24/index.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/worksheets/ws-07.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/worksheets/ws-02.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/slides/slidelist.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/slides/slide1.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/worksheets/ws-00.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/worksheets/ws-03.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/worksheets/ws-01.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/qgis_session/qgis1.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/assessment/git-more.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/assessment/slidelist.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/base/impressum.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/modules/en-git-module.html</loc>
+    <lastmod>2023-12-12T03:37:04.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gisma-courses.github.io/LV-19-d19-006-24/modules/slidelist.html</loc>
     <lastmod>2023-12-12T03:37:04.000Z</lastmod>
   </url>
 </urlset>
