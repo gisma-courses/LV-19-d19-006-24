@@ -1,0 +1,111 @@
+project: 
+  type: website
+  output-dir: docs
+website:
+  open-graph: true
+  page-navigation: true  
+  title: "Advanced GIS and Remote Sensing"
+  site-url: https://gisma-courses.github.io/LV-19-d19-006-24
+  repo-url: https://github.com/gisma-courses/LV-19-d19-006-24
+  repo-actions: [edit, issue]
+  search: 
+    location: navbar
+    type: textbox
+  page-footer: "LV-19-d19-006-24 (2024)" 
+  twitter-card:
+    creator: "@gisma"
+  comments:
+   utterances:
+     repo: gisma-courses/LV-19-d19-006-24
+  navbar:
+    logo: /images/logooil.jpg
+    left:
+      - icon: question-square-fill
+        text: FAQ
+        href: base/faq.qmd
+      - icon: file-slides-fill
+        text: Slides
+        href: slides/slidelist.qmd
+#      - icon: check2-square
+#        text: TestIt
+#        href: assessment/slidelist.qmd        
+    right:
+      - icon: chat-left-text-fill
+        text: Ilias
+        href: https://ilias3.uni-marburg.de/ilias.php?baseClass=ilrepositorygui&cmdNode=zj:ne&cmdClass=ilObjCourseGUI&cmd=edit&ref_id=4123762
+
+
+
+  sidebar:
+    # logo: /images/logo.jpg
+    pinned: true
+    align: center
+    style: "docked"
+    collapse-level: 1
+    contents:
+      - section: "GIS Basics"
+        contents:
+          - href: https://gisma--courses-github-io.translate.goog/geoinfo-basis-qgis//unit01/unit01-01_reader_geo_raum.html?_x_tr_sl=de&_x_tr_tl=en&_x_tr_hl=de&_x_tr_pto=wapp 
+            text: Space needs a scope
+          - href: https://gisma--courses-github-io.translate.goog/geoinfo-basis-qgis//unit02/unit02-01_reader_gi_raum.html?_x_tr_sl=de&_x_tr_tl=en&_x_tr_hl=de&_x_tr_pto=wapp
+            text: Spatial Representation in GI
+
+      - text: "---"         
+      - section: "R-Spatial Basics"
+        contents:
+          - href: https://gisma-courses.github.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html
+            text: Some Pros & Cons for R-Spatial
+          - href: https://thinking-spatial.org/courses/geoinformationen_kommunizieren/kurs1/
+            text:  First steps in geospatial R (German Ressource)
+          - href: https://r.geocompx.org/intro.html
+            text: Geocomputation with R
+
+
+          
+      - text: "---"
+      - section: "Worksheets"
+#        contents:
+#          - worksheets/ws-00.qmd
+#          - text: "---" 
+#          - text: "QGIS" 
+#          - text: "---" 
+#          - worksheets/ws-01.qmd
+#          - worksheets/ws-02.qmd
+#          - worksheets/ws-03.qmd          
+#          - href: https://gisma-courses.github.io/gi-modules/post/2021-11-13-project-oriented-workflow/
+#            text: "Worksheet 4: Setup your Working Environment"
+#          - href: https://gisma-courses.github.io/gi-modules/post/2021-11-16-getting-startet-with-lidar/
+#            text: "Worksheet 5: Basic Remote Sensing Project"
+#          - href: https://gisma-courses.github.io/gi-modules/post/2021-11-20-forest-information-from-lidar-data/
+#            text: "Worksheet 6: Advanced Remote Sensing Project"
+#          - worksheets/ws-07.qmd
+
+          
+          # - href: https://github.com/gisma-courses/LV-19-050-189-ABM/blob/main/assets/Challenge1Advanced.nlogo
+          #   text: Challenge One Advanced Model
+
+      #- text: "---"
+      #- section: "Machine Learning"
+      #  contents:
+      #    - Machine_Learning_Session/ML_AOA.qmd
+          # - href: https://gisma-courses.github.io/LV-uav-workflow/modules/module-introduction/
+          #   text: Basic Readings        
+          # - href: https://gisma-courses.github.io/LV-uav-workflow/modules/module-fieldwork/
+          #   text: uav/Flight Planning
+      - text: "---"
+##format: dokuwiki
+format:
+  html:
+    theme:
+      light: lumen
+      dark: [lumen, css/theme-dark.scss]
+    code-background: true
+    code-copy: true
+    css: css/styles.css
+    toc: true
+    link-external-icon: true
+    link-external-newwindow: true
+    link-external-filter: '^(?:http:|https:)\/\/www\.quarto\.org\/custom'
+# filters:
+#   - include-files.lua
+#   - quarto

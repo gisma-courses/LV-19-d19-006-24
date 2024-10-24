@@ -1,0 +1,71 @@
+---
+title: "Worksheet 2: Qgis Digital Elevation Models & More"
+
+title-block-banner: ../images/splash_L03.png
+title-block-banner-color: black
+
+---
+
+
+
+Digital terrain models are usually available as raster data and are often used in GIS analyses. They contribute both directly to elevation information and indirectly, e.g. as morphometric or hydrological base data sets, to process-oriented knowledge gain.
+
+
+The subject area of digital terrain models, including their creation based on different remote sensing sensors, is diverse. The materials in this reader outline several commonly used derivations and spatial filters. These concepts can be applied to almost any raster data.
+
+
+## What we will do in this unit
+
+In the exercise, you will derive information from digital terrain models and look at spatial filtering methods. You will also be introduced to more complex tools such as calculating a topographic index or surface runoff.
+
+
+## Learning Objectives 
+
+After this tutorial you will be able to
+
+  * Appreciate the diversity and importance of digital terrain models 
+  * Generate derived raster data using typical tools (algorithms)
+  * Use this derived information in a targeted manner
+  * Extract direct and statistically aggregated information
+
+
+## Materials Required
+
+## Data
+  * [CGIAR-CSI SRTM V4](https://srtm.csi.cgiar.org/srtmdata/){.external target="_blank"} The CGIAR-CSI SRTM V4 is probably the best homogeneously post-processed SRTM dataset in the world. Regarding the new version 4, CGIAR-CSI says: "*envisages that CGIAR-CSI SRTM version 4 is our definitive and final release [...]*", [see CGIAR FAQ](https://srtm.csi.cgiar.org/faq/){.external target="_blank"}.
+  * [SRTM Terrain Model TileDownloader](https://dwtkns.com/srtm30m/){.external target="_blank"}. `ATTENTION:` (Requires registration with [NASA Earthdata](https://urs.earthdata.nasa.gov/users/new){.external target="_blank"}) The Infolink of the surface is corrupted, see the [NASA JPL page](https://www2.jpl.nasa.gov/srtm/){.external target="_blank"} for the necessary metadata. `ATTENTION:` This file must be downloaded as a ZIP file, as it is in [SRTMHGT](https://gdal.org/drivers/raster/srtmhgt.html){.external target="_blank"} format. 
+  * [OpenDEM Germany](https://opendem.info/downloads/srtm_germany_dtm.zip) `ATTENTION:` Please be sure to read the [Info page](https://opendem.info/srtm_processing.html){.external target="_blank"} as extensive re-analysis of the SRTM data has taken place. 
+  * [OpenDEM Europe](https://opendem.info/opendemeu_download_highres.html){.external target="_blank"} `ATTENTION:` Please be sure to read the [Info page](https://opendem.info/opendemeu_background.html){.external target="_blank"} as an extensive re-analysis of the SRTM data has taken place.  .
+  * [Polygon Marburg City Area](../assets/marburg_stadtgebiet.gpkg)
+
+## Tasks Unit 2
+The derivation and analysis of raster data is a very broad field. In addition to image processing and remote sensing, it also includes the direct interpretation and analysis of e.g. terrain model data, which play a particularly prominent role as basic data for spatial analyses of the real world. Due to their long history and importance, there is an almost unmanageable number of different terrain model data. In particular, the well-known SRTM data are available in countless variants. Better quality data is also available. The above selection of data should give you an idea of where to find what you are looking for if you google 'SRTM DEM Germany Europe' for example. Of course, you will find the necessary information for all the data and can then judge whether you think it is suitable. Therefore you should use at least two different data sets in the following tasks ([preferably all](https://raw.githubusercontent.com/gisma-courses/geoinfo-basis-qgis/master/docs/assets/data/le3_dem.zip)).
+
+
+## Task 02
+
+* Download at least two of the above terrain model datasets. You may need to project this data and crop it to the reference size of the Marburg aerial photograph.
+
+* What does the dataset represent? Look at the metadata. Get an overview of the projection, spatial resolution and error values.
+* Project the downloaded terrain model datasets in ETRS89 UTM32 and crop them to the Marburg aerial image section.
+* Calculate slope, aspect (SAGA tool Slope, Aspect, Curvature) and topographic index (GDAL TPI) for the clipped and projected datasets. 
+* Extract the Slope, Aspect and TPI datasets at the location of the fountain on the market square in the upper town of Marburg (using the fountain signature from the Openstreetmap web map).
+* Apply a 5*5 mean filter to the terrain height and re-determine the values of Slope, Aspect and TPI for the location of the market square fountain.
+* Calculate the minimum, maximum and average slope using the data set ([Marburg city area](../assets/marburg_stadtgebiet.gpkg)) and the slope values determined on the unfiltered terrain model. 
+* Calculate the minimum, maximum and mean exposure using the data set ([Marburg city area](../assets/marburg_stadtgebiet.gpkg)) and the filtered 5x5 mean terrain models.
+* visualise the values in a table
+
+* Identify and justify possible reasons for differences between the results of the data sets used. (checklist). 
+
+
+## Assistance
+
+### Task 02
+Important meta information about the SRTM data can be found on the respective pages of the data providers (e.g. [CGIAR FAQ](https://srtm.csi.cgiar.org/faq/){.external target="_blank"} or [EU-DEM Meta](https://land.copernicus.eu/imagery-in-situ/eu-dem/eu-dem-v1.1?tab=metadata){.external target="_blank"}. Please note that in some cases the terrain models are quite different. This is not only true for the Copernicus model compared to the SRTM models, but also for the SRTM models, which differ considerably despite having the same data base. It is particularly important to analyse the metadata in order to successfully complete the last subtask 03-01.
+
+Use one of the Marburg layers from the previous sessions as a template to cut out the grid.
+
+The QGIS help keyword for the mean filter is *"neighbours"* or *"filter"* in the toolbar. For example, `r.neighbours` from the GRASS GIS function collection is displayed as a result, with *"filter"* there are a number of hits. Simple Filter from the SAGA GIS function collection is a good place to start.
+
+With `Zone Statistics` you can display the minimum/maximum/average values of a defined area as a table. For Marburg, you can either digitise the city area as a polygon or search for administrative boundaries. For example, the [Bundesamt für Kartographie und Geodäsie Open Data Server](https://gdz.bkg.bund.de/index.php/default/open-data.html){.external target="_blank"} would be a good place to start.
+ If this is too complicated for you, you can also use the file [Marburg Stadtgebiet]({{ site.baseurl}}}/assets/data/marburg_stadtgebiet.gpkg)) from the download. Note that this will of course give different results if you use different polygons as area references.  
