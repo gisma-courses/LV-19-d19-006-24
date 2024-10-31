@@ -63,6 +63,7 @@ website:
             text:  First steps in geospatial R (German Ressource)
           - href: https://r.geocompx.org/intro.html
             text: Geocomputation with R
+            text: "---"
       - section: "Slides"
         contents:
           - href:  slides/slides_session1.qmd          

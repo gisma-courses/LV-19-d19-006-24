@@ -1,7 +1,7 @@
 ---
 title: "Spatial Patterns"
 comments: false
-title-block-banner: ../images/splash_u9-1.png
+title-block-banner: ../images/climatroof-sp.jpg
 title-block-banner-color: black
 
 ---
