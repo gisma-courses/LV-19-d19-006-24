@@ -84,11 +84,11 @@
     "text": "The Working Sheets will provide weekly assignments related to the general task of reaching out for the course goals.\n\nMandatory assignments (Studienleistung) will be marked as \nGraded examinations (Prüfungsleistung) will be marked as"
   },
   {
-    "objectID": "slides/slides_session1.html#header-12",
-    "href": "slides/slides_session1.html#header-12",
+    "objectID": "slides/slides_session1.html#spatial-patterns",
+    "href": "slides/slides_session1.html#spatial-patterns",
     "title": "Spatial Patterns",
-    "section": "Header (1|2)",
-    "text": "Header (1|2)\n\n\n\n&lt;gisma 2023&gt;",
+    "section": "Spatial Patterns",
+    "text": "Spatial Patterns\nDiscovering and describing spatial patterns is an important part of many geographical studies, and spatial patterns are linked to natural and social processes.\n\n\n\n\n\n\n\n\nCorona Virus Distribution, https://coronavirus.jhu.edu/map.html\n\n\n\n\n\n\n\nIPCC Interactive Atlas, Bias Adjusted TX35\n\n\n\n\n\n\nFigure 1: Examples for spatial patterns",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -96,11 +96,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#header-22",
-    "href": "slides/slides_session1.html#header-22",
+    "objectID": "slides/slides_session1.html#spatial-patterns-of-categorical-raster-data",
+    "href": "slides/slides_session1.html#spatial-patterns-of-categorical-raster-data",
     "title": "Spatial Patterns",
-    "section": "Header (2|2)",
-    "text": "Header (2|2)\nIn this example you will find a basic header and footer text, pagination and a logo in the upper left corner .\n---\ntitle: \"Slides and extensions\"\nsubtitle: \"basically shows the 3 extensions samples\"\ntitle-slide-attributes:\n  data-background-image: slide1/mof.png\n  data-background-size: contain\n  data-background-opacity: \"0.5\"\nformat: \n  revealjs:\n    slide-number: true\n    footer: &lt;gisma 2023&gt;\n    header: This is the header extension\n    header-logo: slide1/logooil.jpg\n[...]\n---",
+    "section": "Spatial patterns of categorical raster data",
+    "text": "Spatial patterns of categorical raster data\nNumerous geographical studies are linked to all kind of classified raster based spatial data\n\n\n\n\n\nhttps://doi.org/10.1016/j.agee.2020.107052\n\n\n\n\n\n\n\n\nhttps://doi.org/10.1016/j.agee.2020.107052",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -108,11 +108,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#spotlight-12",
-    "href": "slides/slides_session1.html#spotlight-12",
+    "objectID": "slides/slides_session1.html#point-patterns-versus-continous-patterns",
+    "href": "slides/slides_session1.html#point-patterns-versus-continous-patterns",
     "title": "Spatial Patterns",
-    "section": "Spotlight (1|2)",
-    "text": "Spotlight (1|2)\nThe support of a pointer or similar pointing features is provided by the plugin spotlight. it is activated by:\nrevealjs-plugins:\n  - spotlight",
+    "section": "Point patterns versus continous patterns",
+    "text": "Point patterns versus continous patterns\n\n\n\n\n\nPoint Distributions, (https://gisgeography.com/spatial-patterns\n\n\n\n\n\n\nRaster based patterns, Source: https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -120,11 +120,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#spotlight-22",
-    "href": "slides/slides_session1.html#spotlight-22",
+    "objectID": "slides/slides_session1.html#dynamics-of-spatial-patterns",
+    "href": "slides/slides_session1.html#dynamics-of-spatial-patterns",
     "title": "Spatial Patterns",
-    "section": "Spotlight (2|2)",
-    "text": "Spotlight (2|2)\nCurrently the spotlight is set to a red dot pointer. Just press the left mouse button and use it. It is defined in the header:\n---\n[...]\nformat: \n  revealjs:\n    slide-number: true\n    footer: &lt;gisma 2023&gt;\n    header: This is the header extension\n    header-logo: slide1/logooil.jpg\n    spotlight:\n      useAsPointer: true\n      size: 5\n\nfilters:\n  - roughnotation\n  - reveal-header\nrevealjs-plugins:\n  - spotlight\n---",
+    "section": "Dynamics of spatial patterns",
+    "text": "Dynamics of spatial patterns\n\n\n\nDynamic evaluation of landscape transformations, https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -132,11 +132,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#highlighting-concept",
-    "href": "slides/slides_session1.html#highlighting-concept",
+    "objectID": "slides/slides_session1.html#quantification-of-categorical-spatial-patterns",
+    "href": "slides/slides_session1.html#quantification-of-categorical-spatial-patterns",
     "title": "Spatial Patterns",
-    "section": "Highlighting concept",
-    "text": "Highlighting concept\nThe support of complex highlighting etc. is provided by the plugin roughnotation. it is activated by:\nfilters:\n  - roughnotation\nTo activate the highlighting interactively press the r key. It will start any notation animations:\nI will be highlighted, and so will these words right here",
+    "section": "Quantification of categorical spatial patterns",
+    "text": "Quantification of categorical spatial patterns\nSpatial patterns can be quantified using landscape metrics (O’Neill et al. 1988; Turner and Gardner 1991; Li and Reynolds 1993; He et al. 2000; Jaeger 2000; Kot i in. 2006; McGarigal 2014).\nSoftware such as FRAGSTATS, GuidosToolbox, or landscapemetrics has proven useful in many scientific studies (&gt; 12,000 citations).\n\nThere is a relationship between an area’s pattern composition and configuration and ecosystem characteristics, such as vegetation diversity, animal distributions, and water quality within this area (Hunsaker i Levine, 1995; Fahrig i Nuttle, 2005; Klingbeil i Willig, 2009; Holzschuh et al., 2010; Fahrig et al., 2011; Carrara et al., 2015; Arroyo-Rodŕıguez et al. 2016; Duflot et al., 2017, many others..)",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -144,11 +144,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#options",
-    "href": "slides/slides_session1.html#options",
+    "objectID": "slides/slides_session1.html#example-data",
+    "href": "slides/slides_session1.html#example-data",
     "title": "Spatial Patterns",
-    "section": "Options",
-    "text": "Options\nThere are many types of options we can use (Press r to show)\n\ntype\nanimate\nanimationDuration\ncolor\nstrokeWidth\nmultiline multiline multiline multiline multiline multiline multiline multiline multiline multiline\niterations\nrtl",
+    "section": "Example data",
+    "text": "Example data\n\nLand cover data for the year 2016 from the CCI-LC project\nSimplified into nine main categories\nPartitioned into 30 x 30 kilometers square blocks\n13,909 categorical rasters (100x100 cells) https://agupubs.onlinelibrary.wiley.com/doi/epdf/10.1029/2020JD033031\n\n  —",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -156,11 +156,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#options-1",
-    "href": "slides/slides_session1.html#options-1",
+    "objectID": "slides/slides_session1.html#example-data-1",
+    "href": "slides/slides_session1.html#example-data-1",
     "title": "Spatial Patterns",
-    "section": "Options",
-    "text": "Options\n(Press r to show)\nThe options are applied by adding arguments like so {.rn rn-color=orange rn-type=circle}\nSo to add a orange circle or turn off animations by adding rn-animate=false\nNote that the arguments are all prefixed with rn-, are not comma-separated, logical values are written as true or false and that strings do not have to be in quotes",
+    "section": "Example Data",
+    "text": "Example Data\nRandomely selected 16 rasters with different proportions of forest (green) areas:",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -168,11 +168,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#options---types",
-    "href": "slides/slides_session1.html#options---types",
+    "objectID": "slides/slides_session1.html#landscape-metrics",
+    "href": "slides/slides_session1.html#landscape-metrics",
     "title": "Spatial Patterns",
-    "section": "Options - types",
-    "text": "Options - types\n(Press r to show)\n\n\nUnderline\nBox\nCircle\nHighlight\nStrike-Through\nCrossed-off\n\nMany types to choose from!\nHyphenated options can be used like so rn-type=strike-through",
+    "section": "Landscape Metrics",
+    "text": "Landscape Metrics\n\nIn the last 40 or so years, several hundred different landscape metrics were developed\nThey quantify the composition and configuration of spatial patterns of categorical rasters\nGeneral assumption is that the spatial pattern of a landscape influences the processes that occur within it\nLandscape metrics can be calculated for three different levels: patch, class, and landscape (here we focus on the landscape level)\nThey can be divided into several groups: (1) area and edge metrics, (2) shape metrics, (3) core metrics, (4) aggregation metrics, (5) diversity metrics, (6) complexity metrics",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -180,11 +180,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#options---multiline",
-    "href": "slides/slides_session1.html#options---multiline",
+    "objectID": "slides/slides_session1.html#landscape-metrics-1",
+    "href": "slides/slides_session1.html#landscape-metrics-1",
     "title": "Spatial Patterns",
-    "section": "Options - Multiline",
-    "text": "Options - Multiline\n(Press r to show)\nThe options rn-multiline=true can be added to make a highligher work across multiple lines.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan nisi hendrerit augue molestie tempus. Phasellus purus quam, aliquet nec commodo quis, pharetra ut orci. Donec laoreet ligula nisl, placerat molestie mauris luctus id. Fusce dapibus non libero nec lobortis.",
+    "section": "Landscape Metrics",
+    "text": "Landscape Metrics\nImportant considerations:\n\nScale: the size of the area over which the metrics are calculated\nExtent: the borders of the study area\nSpatial resolution: the size of the raster cells\nCategorization: the categories used in the analysis\nRedundancy: many metrics are highly correlated",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -192,11 +192,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#all-about-time",
-    "href": "slides/slides_session1.html#all-about-time",
+    "objectID": "slides/slides_session1.html#landscape-metrics-2",
+    "href": "slides/slides_session1.html#landscape-metrics-2",
     "title": "Spatial Patterns",
-    "section": "All about Time",
-    "text": "All about Time\n(Press r to show)\nUnless otherwise specified, all annotations will occur at the same time. Set the rn-index to specify order\nNo rn-index\nrn-index set to 1\nrn-index set to 2\nrn-index set to 3\nrn-index set to 4",
+    "section": "Landscape Metrics",
+    "text": "Landscape Metrics\nSHDI - Shannon’s diversity index - takes both the number of classes and the abundance of each class into account; larger values indicate higher diversity\n\nAI - Aggregation index - from 0 for maximally disaggregated to 100 for maximally aggregated classes",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -204,11 +204,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#fenced-divs",
-    "href": "slides/slides_session1.html#fenced-divs",
+    "objectID": "slides/slides_session1.html#code-examples",
+    "href": "slides/slides_session1.html#code-examples",
     "title": "Spatial Patterns",
-    "section": "Fenced divs",
-    "text": "Fenced divs\nYou can also use fenced divs if you want to apply the changes to larger sections of of the slide\n::: {.rn rn-type=box rn-color=red}\nHere is some text\n\nAnd there is more here\n:::\n\nHere is some text\nAnd there is more here",
+    "section": "Code examples",
+    "text": "Code examples\nTaken from : “The landscapemetrics and motif packages for measuring landscape patterns and processes”\nRead and visualize the data\nlibrary(landscapemetrics)\nlibrary(terra)\nr9 = rast(\"exdata/r9.tif\")\nr1 = rast(\"exdata/r1.tif\")\nplot(r1); plot(r9)",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -216,11 +216,11 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#known-issues",
-    "href": "slides/slides_session1.html#known-issues",
+    "objectID": "slides/slides_session1.html#get-the-indices",
+    "href": "slides/slides_session1.html#get-the-indices",
     "title": "Spatial Patterns",
-    "section": "Known issues",
-    "text": "Known issues\ndoesn’t show correctly in RStudio IDE\nDepending on Browser and setting use the CTRL +/- zoom to place the highlights at the correct places",
+    "section": "Get the indices",
+    "text": "Get the indices\nlsm_l_shdi(r9)\n# A tibble: 1 × 6   layer level     class    id metric value   &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; 1     1 landscape    NA    NA shdi    1.06\nlsm_l_ai(r9)\n# A tibble: 1 × 6   layer level     class    id metric value   &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; 1     1 landscape    NA    NA ai      82.1\ncalculate_lsm(r9, what = c(\"lsm_l_shdi\", \"lsm_l_ai\"))\n# A tibble: 2 × 6   layer level     class    id metric value   &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; 1     1 landscape    NA    NA ai     82.1  2     1 landscape    NA    NA shdi    1.06\ntwo_r = list(r1, r9)\ncalculate_lsm(two_r, what = c(\"lsm_l_shdi\", \"lsm_l_ai\"))\n# A tibble: 4 × 6   layer level     class    id metric   value   &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; 1     1 landscape    NA    NA ai     98.7    2     1 landscape    NA    NA shdi    0.0811 3     2 landscape    NA    NA ai     82.1    4     2 landscape    NA    NA shdi    1.06",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -228,11 +228,35 @@
     ]
   },
   {
-    "objectID": "slides/slides_session1.html#basic-reference",
-    "href": "slides/slides_session1.html#basic-reference",
+    "objectID": "slides/slides_session1.html#code-examples-1",
+    "href": "slides/slides_session1.html#code-examples-1",
     "title": "Spatial Patterns",
-    "section": "Basic Reference",
-    "text": "Basic Reference\nFind more informations at Quarto RevealJS Documentation\n\n\n\n&lt;gisma 2023&gt;",
+    "section": "Code examples",
+    "text": "Code examples\nmat_window = matrix(1, nrow = 11, ncol = 11)\nw_result = window_lsm(r9, window = mat_window, what = \"lsm_l_ai\")\nplot(r9); plot(w_result$layer_1$lsm_l_ai)",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
+  },
+  {
+    "objectID": "slides/slides_session1.html#code-example",
+    "href": "slides/slides_session1.html#code-example",
+    "title": "Spatial Patterns",
+    "section": "Code Example",
+    "text": "Code Example\nhttps://r-spatialecology.github.io/landscapemetrics/\n# A tibble: 133 × 5    metric name                                type           level function_name    &lt;chr&gt;  &lt;chr&gt;                               &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;          1 area   patch area                          area and edge… patch lsm_p_area     2 cai    core area index                     core area met… patch lsm_p_cai      3 circle related circumscribing circle       shape metric   patch lsm_p_circle   4 contig contiguity index                    shape metric   patch lsm_p_contig   5 core   core area                           core area met… patch lsm_p_core    # ℹ 134 more rows\n\nSampling around points of interest\nMoving window calculations\nCalculating landscape metrics for irregular areas\nVisualizations\nMore…",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
+  },
+  {
+    "objectID": "slides/slides_session1.html#exercises",
+    "href": "slides/slides_session1.html#exercises",
+    "title": "Spatial Patterns",
+    "section": "Exercises",
+    "text": "Exercises\n\nRead the data from exdata/lc_small.tif and visualize it. What is the location of the data? What are the extent of the data and its spatial resolution? How many categories it contains?\nCalculate Aggregation Index (AI) for the raster. Interpret the results.\nCalculate Total Edge (TE) for the raster. Interpret the results. Next, read the data from exdata/lc_small2.tif, calculate AI and TE for this raster, and compare the results with the previous raster.\nCalculate Total Edge (TE) for the raster, but this time in a moving window of 9 by 9 cells. Visualize the results.\n(Extra) Using the read_sf() function from the sf package read the exdata/points.gpkg file. Next, calculate SHDI and AI of an area of 3000 meters from each sampling point (see the sample_lsm() function).\n\n\n\n\n&lt;gisma 2023&gt;\n\n\n\nCorona Virus Distribution, https://coronavirus.jhu.edu/map.html\nIPCC Interactive Atlas, Bias Adjusted TX35\nhttps://doi.org/10.1016/j.agee.2020.107052\nhttps://doi.org/10.1016/j.agee.2020.107052\nPoint Distributions, (https://gisgeography.com/spatial-patterns\nRaster based patterns, Source: https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9\nDynamic evaluation of landscape transformations, https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097",
     "crumbs": [
       "FAQ",
       "Slides",
