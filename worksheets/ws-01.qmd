@@ -1,125 +1,28 @@
 ---
-title: "Worksheet 1: Warm up Qgis"
-
+title: "Spatial Patterns"
+comments: false
 title-block-banner: ../images/splash_u9-1.png
 title-block-banner-color: black
 
 ---
 
 
-Getting started with complex software is tedious and requires a certain level of frustration tolerance. Due to the similarity of software tools and concepts, it makes sense to build up *analogue knowledge* and access the workflow in a *logically structured* way, rather than *learning by heart* the individual steps. This is not a matter of course, especially as GIS software packages such as ArcGIS or QGIS are among the most complex software architectures.
 
+## Prerequisites
 
-## What we want to do in this unit
-In addition to the difficulty of learning new conceptual and technical problem areas, there is also the challenge of dealing with a software architecture with an unfamiliar graphical user interface (GUI). To alleviate this initial hurdle, you will take a step-by-step approach, starting in this first unit with some basic and typical tasks that will essentially familiarise you with the new software and data formats.  
+Participants are expected to have a working recent version of R and RStudio installed, along with several R packages listed below.
 
-## Learning Objectives 
+- R: <https://cloud.r-project.org/>
+- RStudio: <https://posit.co/download/rstudio-desktop/#download>
 
-After completing this tutorial you will be able to
-  * Install QGIS
-  * Create a QGIS project file
-  * Distinguish between data formats and data models
-  * Open raster and vector data in QGIS
-  * Check the properties of data layers
-  * Create (digitise) geometries
+```r
+install.packages("remotes")
+pkg_list = c("terra", "sf", "landscapemetrics", "motif", "tidyr", "dplyr")
+remotes::install_cran(pkg_list)
+```
 
+## Exercises
 
-## Materials needed
-
-## Data
-  * [Digital aerial image](https://raw.githubusercontent.com/gisma-courses/geoinfo-basis-qgis/master/docs/assets/data/marburg_RE.tif) of Marburg and surrounding area (example RGB image as raster dataset)
-  * [OSM Forest Objects](https://raw.githubusercontent.com/gisma-courses/geoinfo-basis-qgis/master/docs/assets/data/mr_nat.zip) Extract from the latest (11/2020) Open Streetmap (OSM) dataset.
-  * [OSM Street Objects](https://raw.githubusercontent.com/gisma-courses/geoinfo-basis-qgis/master/docs/assets/data/mr_roads.zip) Extract from the latest Open Streetmap (OSM) dataset.
-  * [OSM POIs] (https://raw.githubusercontent.com/gisma-courses/geoinfo-basis-qgis/master/docs/assets/data/mr_objects.xls) OSM Points of Interest (POI) as Excel spreadsheet.
-
-### Software
-  * [QGIS](https://www.qgis.org/de/site/index.html). The current long term release is version 3.22. It is strongly recommended that the following installation instructions are followed when installing this release:
-  
-* **Windows** [osgeo4W installer](https://download.osgeo.org/osgeo4w/v2/osgeo4w-setup.exe){.external target="_blank"}. 
-**macOS** [Mac installation page](https://www.qgis.org/de/site/forusers/download.html#mac){.external target="_blank"}.
-**Linux** [Linux installation page](https://www.qgis.org/de/site/forusers/download.html#linux){.external target="_blank"}. 
-
-
-### Introductory materials
-
-  * A gentle introduction to GIS](https://docs.qgis.org/3.28/de/docs/gentle_gis_introduction/index.html){.external target="_blank"}: provides a successful QGIS-centred overview of GI concepts. Highly recommended additional learning materials  
-  * QGIS User Manual 3.28 EN](https://docs.qgis.org/3.28/de/docs/user_manual/index.html){.external target="_blank"}: The current English version. It is **the** reference for users. 
-
-## Tasks 1
-
-### Task 01-01
-
-This worksheet serves as an introduction to the different data models in GIS. You will also learn how to import your own spatial data into the GIS or how to create spatial data in the GIS, e.g. by digitising.
-
-::: {.callout-tip appearance="minimal" title="Task 01-01"}
-  * Create a directory that is named **without** special characters and spaces (throughout the path/directory tree).
-  * Create a QGIS project
-  * Download the `marburg_RE.tif` file. 
-  * Find out about the properties of the dataset. (projection, data model, range of values)
-  * Create a subdirectory called `Data` as a subfolder of your project directory. Download the dataset containing Hesse from the [geofabrik](http://download.geofabrik.de/){.external target="_blank"} download page. Unzip this archive into the `Data` subfolder. 
-  * After unzipping the archive, load the file `gis_osm_pois_free_1.shp` into your QGIS project.
-  * Read about the properties of this dataset. (projection, data model, range of values).
-  * Crop the `gis_osm_pois_free_1` dataset to the size of the `marburg_RE.tif` aerial image. 
-  * Export this point data in *geopackage* format under the name `mr_points`.
-  * Import the `mr_objects.xls` table (Spatial Objects dataset (https://raw.githubusercontent.com/gisma-courses/geoinfo-basis-qgis/master/docs/assets/data/mr_objects.xls)) as a spatial layer into your QGIS project.
-  * Create a spatial layer based on the aerial image `marburg_RE.tif` with the coordinate system **EPSG:4326 WGS84**:
-      * any three surfaces (filename `mr_poly`), 
-      * any three polylines (filename `mr_line`) 
-      * Finally, add 3 arbitrary positions (points) of your choice to the `mr_points` layer.
-:::
-
-### Task 01-02 
-
-Unfortunately, we cannot completely bypass the topic of the correct location of geodata sets - i.e. the appropriate projection. In Task 01-01 you imported raster and vector data into QGIS and created your own vector data. The spatial information of the data was available in geographic coordinates. The QGIS software you used always performs a *real-time projection* to project these spherical coordinates onto the *flat* monitor. This has nothing to do with a cartographically correct projection. As a rule of thumb, almost all spatial analysis methods and geometric calculations can only be performed on correctly projected data.
-
-::: {.callout-warning }
-
-To begin with, we can only urge you to keep the CRS (Coordinate Reference System) or KBS (Koordinatenbezugssystem) of your *project* and each data layer identical. For Germany the official system is [ETRS89 UTM 32 ](https://epsg.io/25832){.external target="_blank"}. This helps to avoid wrong positioning, one of the most common mistakes in the GIS world.
-:::
-
-::: {.callout-tip appearance="minimal" title="Task 01-02"}
-* Create a new QGIS project. First load the raster file `marburg_RE.tif` and then the vector datasets `mr_roads` and `mr_nat`.
-   * What are the projections of each dataset?
-   * In which projection are the data displayed? 
-   * Where can you define the projection used to display the data?
-   * What are the possible problems of an *on-the-fly* or *real-time* projection?
-:::
-
-
-
-## Assistance
-
-We would like to offer you some introductory help on QGIS as a concrete introduction to working on Task 1. QGIS is a complex software product that is not only available in different versions for all common operating systems, but is also completely customisable. For this reason, a large number of help files, manuals and tutorials have been circulating on the internet for the past 20 years - by no means will every Google hit be appropriate, nor will every tutorial be suitable for the version you are using.
-
-The first port of call for specific information is the built-in help section of the software package. Extensive documentation is also available. The current [QGIS Landing Page](https://www.qgis.org/de/site/forusers/index.html){.external target="_blank"} is the central access point to all documentation officially provided by the project. 
-
-The following applies to all help pages: be sure to look at the help for your version of QGIS. If it is not (yet) available, try the previous version and preferably the English help, as this is the reference for all translations. 
-
-::: {.callout-warning }
-The transition from QGIS2.x to QGIS3.x has brought fundamental changes. QGIS 2.x tutorials and help are virtually **useless** as a concrete guide for the current version. 
-:::
-
-### Setting up a QGIS project 
-
-For computers with a home directory in the cloud/network (e.g. in university pools) it is strongly recommended to store the data on a **local hard drive**.  To do this, you must first create a folder structure for your project. Help on the project file can be found in [Working with project files](https://docs.qgis.org/3.28/de/docs/user_manual/introduction/project_files.html){.external target="_blank"}. 
-
-::: {.callout-warning }
-Make sure you do not use any special characters, umlauts or spaces. 
-:::
-
-### Digitising Geometry Data
-
-The manual creation of vector data is commonly referred to as *digitising*. You create your own vector-based datasets from raster image files such as satellite imagery, aerial photographs, thematic and topographic maps, simple screenshots or other templates. See the QGIS help for [digitising](https://docs.qgis.org/3.28/de/docs/user_manual/working_with_vector/editing_geometry_attributes.html){.external target="_blank"}. For a detailed application example, see [Digitising forest stands](https://docs.qgis.org/3.28/en/docs/training_manual/forestry/stands_digitazing.html){.external target="_blank"}.
-
-### Cropping vector data 
-This task is a good example of how difficult it can be to find help. Of course, you can always search the web. For example, try "*crop vector data qgis*". You will get a lot of hits, but on closer inspection you will not find anything about cropping vector data using a raster file. What happens when you crop? You obviously need to tell a tool what you want to crop. Start again with this knowledge. Only this time use the toolbar and type "*clip*" or "*clip*". Several hits will be displayed. One of them is *Clip vector to extent*. If you select this, you can choose three options for the *extension*...
-
-
-
-### Importing tables into QGIS
-There are a number of pitfalls when importing tables. In general, table data is only useful in QGIS if it contains either coordinates (i.e. geographic information) or a key such as an ID that can be assigned to existing geometry data. In general, however, they can follow the following scheme
-[Importing spreadsheets or CSV files](http://www.qgistutorials.com/de/docs/3/importing_spreadsheets_csv.html){.external target="_blank"}.
-
-### Working with projections
-The chapter 
-[Working with projections](https://docs.qgis.org/3.28/de/docs/user_manual/working_with_projections/working_with_projections.html){.external target="_blank"} is not easy for beginners. The correct assignment of projections is particularly important. For reprojecting vector data it is worth having a look at [Reprojecting and transforming data](https://docs.qgis.org/3.28/de/docs/training_manual/vector_analysis/reproject_transform.html){.external target="_blank"}.
+The slides are accompanied by practical exercises.
+The best way to get them is to download the exercises repository as a ZIP file from <https://github.com/gisma-courses/LV-19-d19-006-24/archive/session1.zip> and unpack it on your computer.
+Then, you can open the `.Rproj` file and start working on the exercises in RStudio.
