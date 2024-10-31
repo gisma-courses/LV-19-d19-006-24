@@ -88,91 +88,156 @@
     "href": "slides/slides_session1.html#header-12",
     "title": "Spatial Patterns",
     "section": "Header (1|2)",
-    "text": "Header (1|2)\nThe support of header and footer logic is provided by the plugin reveal-header. it is activated by:\nfilters:\n  - reveal-header"
+    "text": "Header (1|2)\n\n\n\n&lt;gisma 2023&gt;",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#header-22",
     "href": "slides/slides_session1.html#header-22",
     "title": "Spatial Patterns",
     "section": "Header (2|2)",
-    "text": "Header (2|2)\nIn this example you will find a basic header and footer text, pagination and a logo in the upper left corner .\n---\ntitle: \"Slides and extensions\"\nsubtitle: \"basically shows the 3 extensions samples\"\ntitle-slide-attributes:\n  data-background-image: slide1/mof.png\n  data-background-size: contain\n  data-background-opacity: \"0.5\"\nformat: \n  revealjs:\n    slide-number: true\n    footer: &lt;gisma 2023&gt;\n    header: This is the header extension\n    header-logo: slide1/logooil.jpg\n[...]\n---"
+    "text": "Header (2|2)\nIn this example you will find a basic header and footer text, pagination and a logo in the upper left corner .\n---\ntitle: \"Slides and extensions\"\nsubtitle: \"basically shows the 3 extensions samples\"\ntitle-slide-attributes:\n  data-background-image: slide1/mof.png\n  data-background-size: contain\n  data-background-opacity: \"0.5\"\nformat: \n  revealjs:\n    slide-number: true\n    footer: &lt;gisma 2023&gt;\n    header: This is the header extension\n    header-logo: slide1/logooil.jpg\n[...]\n---",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#spotlight-12",
     "href": "slides/slides_session1.html#spotlight-12",
     "title": "Spatial Patterns",
     "section": "Spotlight (1|2)",
-    "text": "Spotlight (1|2)\nThe support of a pointer or similar pointing features is provided by the plugin spotlight. it is activated by:\nrevealjs-plugins:\n  - spotlight"
+    "text": "Spotlight (1|2)\nThe support of a pointer or similar pointing features is provided by the plugin spotlight. it is activated by:\nrevealjs-plugins:\n  - spotlight",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#spotlight-22",
     "href": "slides/slides_session1.html#spotlight-22",
     "title": "Spatial Patterns",
     "section": "Spotlight (2|2)",
-    "text": "Spotlight (2|2)\nCurrently the spotlight is set to a red dot pointer. Just press the left mouse button and use it. It is defined in the header:\n---\n[...]\nformat: \n  revealjs:\n    slide-number: true\n    footer: &lt;gisma 2023&gt;\n    header: This is the header extension\n    header-logo: slide1/logooil.jpg\n    spotlight:\n      useAsPointer: true\n      size: 5\n\nfilters:\n  - roughnotation\n  - reveal-header\nrevealjs-plugins:\n  - spotlight\n---"
+    "text": "Spotlight (2|2)\nCurrently the spotlight is set to a red dot pointer. Just press the left mouse button and use it. It is defined in the header:\n---\n[...]\nformat: \n  revealjs:\n    slide-number: true\n    footer: &lt;gisma 2023&gt;\n    header: This is the header extension\n    header-logo: slide1/logooil.jpg\n    spotlight:\n      useAsPointer: true\n      size: 5\n\nfilters:\n  - roughnotation\n  - reveal-header\nrevealjs-plugins:\n  - spotlight\n---",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#highlighting-concept",
     "href": "slides/slides_session1.html#highlighting-concept",
     "title": "Spatial Patterns",
     "section": "Highlighting concept",
-    "text": "Highlighting concept\nThe support of complex highlighting etc. is provided by the plugin roughnotation. it is activated by:\nfilters:\n  - roughnotation\nTo activate the highlighting interactively press the r key. It will start any notation animations:\nI will be highlighted, and so will these words right here"
+    "text": "Highlighting concept\nThe support of complex highlighting etc. is provided by the plugin roughnotation. it is activated by:\nfilters:\n  - roughnotation\nTo activate the highlighting interactively press the r key. It will start any notation animations:\nI will be highlighted, and so will these words right here",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#options",
     "href": "slides/slides_session1.html#options",
     "title": "Spatial Patterns",
     "section": "Options",
-    "text": "Options\nThere are many types of options we can use (Press r to show)\n\ntype\nanimate\nanimationDuration\ncolor\nstrokeWidth\nmultiline multiline multiline multiline multiline multiline multiline multiline multiline multiline\niterations\nrtl"
+    "text": "Options\nThere are many types of options we can use (Press r to show)\n\ntype\nanimate\nanimationDuration\ncolor\nstrokeWidth\nmultiline multiline multiline multiline multiline multiline multiline multiline multiline multiline\niterations\nrtl",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#options-1",
     "href": "slides/slides_session1.html#options-1",
     "title": "Spatial Patterns",
     "section": "Options",
-    "text": "Options\n(Press r to show)\nThe options are applied by adding arguments like so {.rn rn-color=orange rn-type=circle}\nSo to add a orange circle or turn off animations by adding rn-animate=false\nNote that the arguments are all prefixed with rn-, are not comma-separated, logical values are written as true or false and that strings do not have to be in quotes"
+    "text": "Options\n(Press r to show)\nThe options are applied by adding arguments like so {.rn rn-color=orange rn-type=circle}\nSo to add a orange circle or turn off animations by adding rn-animate=false\nNote that the arguments are all prefixed with rn-, are not comma-separated, logical values are written as true or false and that strings do not have to be in quotes",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#options---types",
     "href": "slides/slides_session1.html#options---types",
     "title": "Spatial Patterns",
     "section": "Options - types",
-    "text": "Options - types\n(Press r to show)\n\n\nUnderline\nBox\nCircle\nHighlight\nStrike-Through\nCrossed-off\n\nMany types to choose from!\nHyphenated options can be used like so rn-type=strike-through"
+    "text": "Options - types\n(Press r to show)\n\n\nUnderline\nBox\nCircle\nHighlight\nStrike-Through\nCrossed-off\n\nMany types to choose from!\nHyphenated options can be used like so rn-type=strike-through",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#options---multiline",
     "href": "slides/slides_session1.html#options---multiline",
     "title": "Spatial Patterns",
     "section": "Options - Multiline",
-    "text": "Options - Multiline\n(Press r to show)\nThe options rn-multiline=true can be added to make a highligher work across multiple lines.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan nisi hendrerit augue molestie tempus. Phasellus purus quam, aliquet nec commodo quis, pharetra ut orci. Donec laoreet ligula nisl, placerat molestie mauris luctus id. Fusce dapibus non libero nec lobortis."
+    "text": "Options - Multiline\n(Press r to show)\nThe options rn-multiline=true can be added to make a highligher work across multiple lines.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan nisi hendrerit augue molestie tempus. Phasellus purus quam, aliquet nec commodo quis, pharetra ut orci. Donec laoreet ligula nisl, placerat molestie mauris luctus id. Fusce dapibus non libero nec lobortis.",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#all-about-time",
     "href": "slides/slides_session1.html#all-about-time",
     "title": "Spatial Patterns",
     "section": "All about Time",
-    "text": "All about Time\n(Press r to show)\nUnless otherwise specified, all annotations will occur at the same time. Set the rn-index to specify order\nNo rn-index\nrn-index set to 1\nrn-index set to 2\nrn-index set to 3\nrn-index set to 4"
+    "text": "All about Time\n(Press r to show)\nUnless otherwise specified, all annotations will occur at the same time. Set the rn-index to specify order\nNo rn-index\nrn-index set to 1\nrn-index set to 2\nrn-index set to 3\nrn-index set to 4",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#fenced-divs",
     "href": "slides/slides_session1.html#fenced-divs",
     "title": "Spatial Patterns",
     "section": "Fenced divs",
-    "text": "Fenced divs\nYou can also use fenced divs if you want to apply the changes to larger sections of of the slide\n::: {.rn rn-type=box rn-color=red}\nHere is some text\n\nAnd there is more here\n:::\n\nHere is some text\nAnd there is more here"
+    "text": "Fenced divs\nYou can also use fenced divs if you want to apply the changes to larger sections of of the slide\n::: {.rn rn-type=box rn-color=red}\nHere is some text\n\nAnd there is more here\n:::\n\nHere is some text\nAnd there is more here",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#known-issues",
     "href": "slides/slides_session1.html#known-issues",
     "title": "Spatial Patterns",
     "section": "Known issues",
-    "text": "Known issues\ndoesn’t show correctly in RStudio IDE\nDepending on Browser and setting use the CTRL +/- zoom to place the highlights at the correct places"
+    "text": "Known issues\ndoesn’t show correctly in RStudio IDE\nDepending on Browser and setting use the CTRL +/- zoom to place the highlights at the correct places",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slides_session1.html#basic-reference",
     "href": "slides/slides_session1.html#basic-reference",
     "title": "Spatial Patterns",
     "section": "Basic Reference",
-    "text": "Basic Reference\nFind more informations at Quarto RevealJS Documentation\n\n\n\n&lt;gisma 2023&gt;\n\n\n\n\n\n\n\n \n\n\nThis is the header extension"
+    "text": "Basic Reference\nFind more informations at Quarto RevealJS Documentation\n\n\n\n&lt;gisma 2023&gt;",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Spatial Pattern Description"
+    ]
   },
   {
     "objectID": "slides/slide1.html#header-12",
@@ -452,21 +517,36 @@
     "href": "worksheets/ws-01.html",
     "title": "Spatial Patterns",
     "section": "",
-    "text": "Participants are expected to have a working recent version of R and RStudio installed, along with several R packages listed below.\n\nR: https://cloud.r-project.org/\nRStudio: https://posit.co/download/rstudio-desktop/#download\n\ninstall.packages(\"remotes\")\npkg_list = c(\"terra\", \"sf\", \"landscapemetrics\", \"motif\", \"tidyr\", \"dplyr\")\nremotes::install_cran(pkg_list)"
+    "text": "Participants are expected to have a working recent version of R and RStudio installed, along with several R packages listed below.\n\nR: https://cloud.r-project.org/\nRStudio: https://posit.co/download/rstudio-desktop/#download\n\ninstall.packages(\"remotes\")\npkg_list = c(\"terra\", \"sf\", \"landscapemetrics\", \"motif\", \"tidyr\", \"dplyr\")\nremotes::install_cran(pkg_list)",
+    "crumbs": [
+      "FAQ",
+      "Worksheets",
+      "Spatial Patterns"
+    ]
   },
   {
     "objectID": "worksheets/ws-01.html#prerequisites",
     "href": "worksheets/ws-01.html#prerequisites",
     "title": "Spatial Patterns",
     "section": "",
-    "text": "Participants are expected to have a working recent version of R and RStudio installed, along with several R packages listed below.\n\nR: https://cloud.r-project.org/\nRStudio: https://posit.co/download/rstudio-desktop/#download\n\ninstall.packages(\"remotes\")\npkg_list = c(\"terra\", \"sf\", \"landscapemetrics\", \"motif\", \"tidyr\", \"dplyr\")\nremotes::install_cran(pkg_list)"
+    "text": "Participants are expected to have a working recent version of R and RStudio installed, along with several R packages listed below.\n\nR: https://cloud.r-project.org/\nRStudio: https://posit.co/download/rstudio-desktop/#download\n\ninstall.packages(\"remotes\")\npkg_list = c(\"terra\", \"sf\", \"landscapemetrics\", \"motif\", \"tidyr\", \"dplyr\")\nremotes::install_cran(pkg_list)",
+    "crumbs": [
+      "FAQ",
+      "Worksheets",
+      "Spatial Patterns"
+    ]
   },
   {
     "objectID": "worksheets/ws-01.html#exercises",
     "href": "worksheets/ws-01.html#exercises",
     "title": "Spatial Patterns",
     "section": "Exercises",
-    "text": "Exercises\nThe slides are accompanied by practical exercises. The best way to get them is to download the exercises repository as a ZIP file from https://github.com/gisma-courses/LV-19-d19-006-24/archive/session1.zip and unpack it on your computer. Then, you can open the .Rproj file and start working on the exercises in RStudio."
+    "text": "Exercises\nThe slides are accompanied by practical exercises. The best way to get them is to download the exercises repository as a ZIP file from https://github.com/gisma-courses/LV-19-d19-006-24/blob/main/assets/exercises-session1.zip and unpack it on your computer. Then, you can open the .Rproj file and start working on the exercises in RStudio.",
+    "crumbs": [
+      "FAQ",
+      "Worksheets",
+      "Spatial Patterns"
+    ]
   },
   {
     "objectID": "worksheets/ws-03.html",

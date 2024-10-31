@@ -63,17 +63,23 @@ website:
             text:  First steps in geospatial R (German Ressource)
           - href: https://r.geocompx.org/intro.html
             text: Geocomputation with R
+      - section: "Slides"
+        contents:
+          - href:  slides/slides_session1.qmd          
+            text: Spatial Pattern Description 
 
 
           
       - text: "---"
       - section: "Worksheets"
-#        contents:
-#          - worksheets/ws-00.qmd
-#          - text: "---" 
-#          - text: "QGIS" 
-#          - text: "---" 
-#          - worksheets/ws-01.qmd
+        contents:
+          - worksheets/ws-01.qmd
+          - text: Prerequisites" 
+          - text: "---"           
+
+          - text: "Spatial Patterns" 
+          - text: "---" 
+
 #          - worksheets/ws-02.qmd
 #          - worksheets/ws-03.qmd          
 #          - href: https://gisma-courses.github.io/gi-modules/post/2021-11-13-project-oriented-workflow/
@@ -101,7 +107,7 @@ website:
 format:
   html:
     theme:
-      light: lumen
+      light: minty
       dark: [lumen, css/theme-dark.scss]
     code-background: true
     code-copy: true
