@@ -56,70 +56,120 @@
     "href": "slides/slides_session2.html#landscape-metrics",
     "title": "Landscape Patterns",
     "section": "Landscape Metrics",
-    "text": "Landscape Metrics\n\nProblem no. 1: which of the hundreds of spatial metrics should we choose?\nProblem no. 2: many landscape metrics are highly correlated…"
+    "text": "Landscape Metrics\n\nProblem no. 1: which of the hundreds of spatial metrics should we choose?\nProblem no. 2: many landscape metrics are highly correlated…",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#pca-of-landscape-metrics",
     "href": "slides/slides_session2.html#pca-of-landscape-metrics",
     "title": "Landscape Patterns",
     "section": "PCA of landscape metrics",
-    "text": "PCA of landscape metrics\nWe performed a principal component analysis (PCA) using 17 landscape-level metrics:\n\n:::: columns\n\n\n\n\nPCA 1\n\n\n\n\n\n\n\nPCA 2\n\n\n\n\nFirst two principal components explained ~71% of variability"
+    "text": "PCA of landscape metrics\nWe performed a principal component analysis (PCA) using 17 landscape-level metrics:\n\n:::: columns\n\n\n\n\nPCA 1\n\n\n\n\n\n\n\nPCA 2\n\n\n\n\nFirst two principal components explained ~71% of variability",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#pca-of-landscapes",
     "href": "slides/slides_session2.html#pca-of-landscapes",
     "title": "Landscape Patterns",
     "section": "PCA of landscapes",
-    "text": "PCA of landscapes\nThe result allows to distinguish between:\n\nsimple and complex rasters (left&lt;-&gt;right)\nagmented and consolidated rasters (bottom&lt;-&gt;top)\n\n\n\n\nPCA 2\n\n\nHowever, there are still some problems here…"
+    "text": "PCA of landscapes\nThe result allows to distinguish between:\n\nsimple and complex rasters (left&lt;-&gt;right)\nagmented and consolidated rasters (bottom&lt;-&gt;top)\n\n\n\n\nPCA 2\n\n\nHowever, there are still some problems here…",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#pca-of-landscapes-1",
     "href": "slides/slides_session2.html#pca-of-landscapes-1",
     "title": "Landscape Patterns",
     "section": "PCA of landscapes",
-    "text": "PCA of landscapes\n\nWe performed a second PCA using data from the United Kingdom only\nNext, we predicted the results on the data for the whole Europe\n\n:::: columns\n\n\n\n\nPCA 1\n\n\n\n\n\n\n\nPCA 2"
+    "text": "PCA of landscapes\n\nWe performed a second PCA using data from the United Kingdom only\nNext, we predicted the results on the data for the whole Europe\n\n:::: columns\n\n\n\n\nPCA 1\n\n\n\n\n\n\n\nPCA 2",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#pca-of-landscapes-2",
     "href": "slides/slides_session2.html#pca-of-landscapes-2",
     "title": "Landscape Patterns",
     "section": "PCA of landscapes",
-    "text": "PCA of landscapes\n\n\n\nPCA 1 PCA 2 UK EU\n\n\nIssues with the PCA approach:\n\nEach new dataset requires recalculation of both, landscape metrics and principal components analysis (PCA)\nHighly correlated landscape metrics are used\nPCA results interpretation is not straightforward"
+    "text": "PCA of landscapes\n\n\n\nPCA 1 PCA 2 UK EU\n\n\nIssues with the PCA approach:\n\nEach new dataset requires recalculation of both, landscape metrics and principal components analysis (PCA)\nHighly correlated landscape metrics are used\nPCA results interpretation is not straightforward",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#it-metrics",
     "href": "slides/slides_session2.html#it-metrics",
     "title": "Landscape Patterns",
     "section": "IT metrics",
-    "text": "IT metrics\n\nFive information theory metrics based on a co-occurrence matrix exist (Nowosad and Stepinski, 2019, https://doi.org/10.1007/s10980-019-00830-x)\nMarginal entropy [H(x)] - diversity (composition) of spatial categories - from monothematic patterns to multithematic patterns\nRelative mutual information [U] - clumpiness (configuration) of spatial categories from fragmented patterns to consolidated patterns)\nH(x) and U are uncorrelated\n\n\n\n\n\nEntropy\n\n\n\n\n\n\n\nRelative mutual information"
+    "text": "IT metrics\n\nFive information theory metrics based on a co-occurrence matrix exist (Nowosad and Stepinski, 2019, https://doi.org/10.1007/s10980-019-00830-x)\nMarginal entropy [H(x)] - diversity (composition) of spatial categories - from monothematic patterns to multithematic patterns\nRelative mutual information [U] - clumpiness (configuration) of spatial categories from fragmented patterns to consolidated patterns)\nH(x) and U are uncorrelated\n\n\n\n\n\nEntropy\n\n\n\n\n\n\n\nRelative mutual information",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#it-metrics-1",
     "href": "slides/slides_session2.html#it-metrics-1",
     "title": "Landscape Patterns",
     "section": "IT metrics",
-    "text": "IT metrics\n2D parametrization of categorical rasters’ configurations based on two weakly correlated IT metrics groups similar patterns into distinct regions of the parameters space"
+    "text": "IT metrics\n2D parametrization of categorical rasters’ configurations based on two weakly correlated IT metrics groups similar patterns into distinct regions of the parameters space",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#it-metrics-final-results",
     "href": "slides/slides_session2.html#it-metrics-final-results",
     "title": "Landscape Patterns",
     "section": "IT metrics final results",
-    "text": "IT metrics final results\n:::: columns\n\n\n\n\nLand cover data\n\n\n\n\n\n\n\nParametrization of two IT metrics"
+    "text": "IT metrics final results\n:::: columns\n\n\n\n\nLand cover data\n\n\n\n\n\n\n\nParametrization of two IT metrics",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#exercises",
     "href": "slides/slides_session2.html#exercises",
     "title": "Landscape Patterns",
     "section": "Exercises",
-    "text": "Exercises\n\nThe marginal entropy and relative mutual information can be calculated using the landscapemetrics package’s functions: lsm_l_ent() and lsm_l_relmutinf(). Calculate both of these metrics for the exdata/lc_small.tif raster.\nRead the exdata/lc_europe.tif raster using rast() from the **terra** package and theexdata/polygons.gpkgvector data using theread_sf()function from the **sf** package. Calculate the marginal entropy and relative mutual information for each polygon using thesample_lsm()``` function.\nJoin the calculated values with the polygons (see https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html for more details).\nCalculate SHDI and AI for the polygons. Compare the values of SHDI and AI with the marginal entropy and relative mutual information (e.g., using a scatterplot or by calculating the correlation coefficient). Are the results similar?\n(Extra) Create your own polygonal grid using st_make_grid() function from the sf package for the area from the exdata/polygons.gpkg file. Calculate the marginal entropy and relative mutual information for each square using the sample_lsm() function. Visualize the results."
+    "text": "Exercises\n\nThe marginal entropy and relative mutual information can be calculated using the landscapemetrics package’s functions: lsm_l_ent() and lsm_l_relmutinf(). Calculate both of these metrics for the exdata/lc_small.tif raster.\nRead the exdata/lc_europe.tif raster using rast() from the **terra** package and theexdata/polygons.gpkgvector data using theread_sf()function from the **sf** package. Calculate the marginal entropy and relative mutual information for each polygon using thesample_lsm()``` function.\nJoin the calculated values with the polygons (see https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html for more details).\nCalculate SHDI and AI for the polygons. Compare the values of SHDI and AI with the marginal entropy and relative mutual information (e.g., using a scatterplot or by calculating the correlation coefficient). Are the results similar?\n(Extra) Create your own polygonal grid using st_make_grid() function from the sf package for the area from the exdata/polygons.gpkg file. Calculate the marginal entropy and relative mutual information for each square using the sample_lsm() function. Visualize the results.",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slides_session2.html#it-metrics-2",
     "href": "slides/slides_session2.html#it-metrics-2",
     "title": "Landscape Patterns",
     "section": "IT metrics",
-    "text": "IT metrics\nThese metrics still leave some questions open…\n\nRelative mutual information is a result of dividing mutual information by entropy. What to do when the entropy is zero?\nHow to incorporate the meaning of categories into the analysis?\n\n\n\n\nParametrization of two IT metrics\n\n\n\n\n\n&lt;gisma 2023&gt;\n\n\n\nPCA 1\nPCA 2\nPCA 2\nPCA 1\nPCA 2\nPCA 1 PCA 2 UK EU\nEntropy\nRelative mutual information\nLand cover data\nParametrization of two IT metrics\nParametrization of two IT metrics"
+    "text": "IT metrics\nThese metrics still leave some questions open…\n\nRelative mutual information is a result of dividing mutual information by entropy. What to do when the entropy is zero?\nHow to incorporate the meaning of categories into the analysis?\n\n\n\n\nParametrization of two IT metrics\n\n\n\n\n\n&lt;gisma 2023&gt;\n\n\n\nPCA 1\nPCA 2\nPCA 2\nPCA 1\nPCA 2\nPCA 1 PCA 2 UK EU\nEntropy\nRelative mutual information\nLand cover data\nParametrization of two IT metrics\nParametrization of two IT metrics",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Landscape Patterns"
+    ]
   },
   {
     "objectID": "slides/slidelist.html",
