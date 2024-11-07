@@ -1,5 +1,5 @@
 ---
-title: "Spatial Patterns"
+title: "Prerequisies"
 comments: false
 title-block-banner: ../images/climatroof-sp.jpg
 title-block-banner-color: black

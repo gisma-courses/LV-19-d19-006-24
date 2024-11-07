@@ -57,13 +57,12 @@ website:
       - text: "---"         
       - section: "R-Spatial Basics"
         contents:
-          - href: https://gisma-courses.github.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html
-            text: Some Pros & Cons for R-Spatial
+          - href: https://gisma-courses.githu**************************************b.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html
+            text: Some Pros & Cons for R-Spatial************************************************************************************************
           - href: https://thinking-spatial.org/courses/geoinformationen_kommunizieren/kurs1/
             text:  First steps in geospatial R (German Ressource)
           - href: https://r.geocompx.org/intro.html
             text: Geocomputation with R
-            text: "---"
       - section: "Slides"
         contents:
           - href:  slides/slides_session1.qmd          
@@ -75,13 +74,14 @@ website:
       - section: "Worksheets"
         contents:
           - worksheets/ws-01.qmd
-          - text: Prerequisites" 
+          - text: Prerequisies
+          - worksheets/ws-02.qmd
           - text: "---"           
 
           - text: "Spatial Patterns" 
           - text: "---" 
 
-#          - worksheets/ws-02.qmd
+
 #          - worksheets/ws-03.qmd          
 #          - href: https://gisma-courses.github.io/gi-modules/post/2021-11-13-project-oriented-workflow/
 #            text: "Worksheet 4: Setup your Working Environment"
