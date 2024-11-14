@@ -1,0 +1,68 @@
+---
+title: "Pattern-based spatial analysis"
+subtitle: "How to discover and to describe"
+author: "Chris Reudenbach"
+title-slide-attributes:
+  data-background-image: slide1/preview-image-mof.png
+  #data-background-size: contain
+  data-background-opacity: "0.5"
+format:
+  revealjs:
+    theme: [../_extensions/metropolis-theme/metropolis.scss]
+    toc: false
+    toc-depth: 2
+    chalkboard: true
+    slide-number: true
+    footer: <gisma 2024>
+    menu: true
+lightbox: true
+spotlight:
+      useAsPointer: true
+      size: 5
+---
+
+## Spatial Patterns
+
+In recent years, the ideas of analyzing spatial patterns have been extended through an approach called **pattern-based spatial analysis** [(Long in in. 2010; Cardille in in. 2010; Cardille in in. 2012; Jasiewicz i in. 2013; Jasiewicz i in. 2015)]{.smallcaps}.
+
+The fundamental idea is to divide a big area into a large number of smaller areas which we may call local landscapes patches.
+
+::: {.callout-important appearance="minimal"}
+Note: The patch size is depending on spatial data resolution and scale of the landscape
+:::
+
+::::: columns
+::: {.column width="25%"}
+![](/assets/ng_grid.png)
+:::
+
+::: {.column width="45%"}
+The idea is to represent each of this arbitrary areas using a statistical description of the spatial pattern - a **spatial signature**.
+:::
+:::::
+
+This spatial signatures can be **compared** using a large number of existing **distance or dissimilarity measures** [(Lin 1991; Cha 2007)]{.smallcaps}, which enables spatial analyses such as searching, change detection, clustering, or segmentation.
+
+------------------------------------------------------------------------
+
+
+## Spatial Signatures
+
+
+Most landscape metrics are single numbers representing specific features of a local landscape.
+
+Spatial signatures, on the other hand, are multi-element representations of landscape composition and configuration.
+
+:::: [.columns]
+
+::: {.column width="45%"}
+![](/assets/index-29-bis-1.png)
+:::
+
+::: {.column width="45%"}
+The basic signature is the co-occurrence matrix:
+![](/assets/cooc.png)
+:::
+::::
+
+

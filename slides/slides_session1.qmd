@@ -78,13 +78,13 @@ Numerous geographical studies are linked to all kind of classified raster based 
 
 ## Quantification of categorical spatial patterns
 
-Spatial patterns can be quantified using landscape metrics (~O’Neill et al. 1988; Turner and Gardner 1991; Li and Reynolds 1993; He et al. 2000; Jaeger 2000; Kot i in. 2006; McGarigal 2014~).
+Spatial patterns can be quantified using landscape metrics [(O’Neill et al. 1988; Turner and Gardner 1991; Li and Reynolds 1993; He et al. 2000; Jaeger 2000; Kot i in. 2006; McGarigal 2014)]{.smallcaps}.
 
 Software such as FRAGSTATS, [GuidosToolbox](https://forest.jrc.ec.europa.eu/en/activities/lpa/gtb/), or [landscapemetrics](https://r-spatialecology.github.io/landscapemetrics/) has proven useful in many scientific studies (\> 12,000 citations).
 
 ![](/assets/rid_map.png)
 
-There is a relationship between an area’s pattern composition and configuration and ecosystem characteristics, such as vegetation diversity, animal distributions, and water quality within this area (~Hunsaker i Levine, 1995; Fahrig i Nuttle, 2005; Klingbeil i Willig, 2009; Holzschuh et al., 2010; Fahrig et al., 2011; Carrara et al., 2015; Arroyo-Rodŕıguez et al. 2016; Duflot et al., 2017, many others..~)
+There is a relationship between an area’s pattern composition and configuration and ecosystem characteristics, such as vegetation diversity, animal distributions, and water quality within this area [(Hunsaker i Levine, 1995; Fahrig i Nuttle, 2005; Klingbeil i Willig, 2009; Holzschuh et al., 2010; Fahrig et al., 2011; Carrara et al., 2015; Arroyo-Rodŕıguez et al. 2016; Duflot et al., 2017, many others..)]{.smallcaps}
 
 ------------------------------------------------------------------------
 

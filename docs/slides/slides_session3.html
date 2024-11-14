@@ -14,7 +14,7 @@
   <meta name="generator" content="quarto-1.4.553">
 
   <meta name="author" content="Chris Reudenbach">
-  <title>Advanced GIS and Remote Sensing - Pattern-based spatial analysis</title>
+  <title>Advanced GIS and Remote Sensing - Landscape Metrics Reloaded</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -32,71 +32,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -390,11 +325,11 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="Advanced GIS and Remote Sensing - Pattern-based spatial analysis">
-<meta property="og:description" content="How to discover and to describe">
+<meta property="og:title" content="Advanced GIS and Remote Sensing - Landscape Metrics Reloaded">
+<meta property="og:description" content="Why and what to discover and to describe">
 <meta property="og:site_name" content="Advanced GIS and Remote Sensing">
-<meta name="twitter:title" content="Advanced GIS and Remote Sensing - Pattern-based spatial analysis">
-<meta name="twitter:description" content="How to discover and to describe">
+<meta name="twitter:title" content="Advanced GIS and Remote Sensing - Landscape Metrics Reloaded">
+<meta name="twitter:description" content="Why and what to discover and to describe">
 <meta name="twitter:creator" content="@gisma">
 <meta name="twitter:card" content="summary">
 </head>
@@ -403,8 +338,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="slide1/preview-image-mof.png" data-background-opacity="0.5" class="quarto-title-block center">
-  <h1 class="title">Pattern-based spatial analysis</h1>
-  <p class="subtitle">How to discover and to describe</p>
+  <h1 class="title">Landscape Metrics Reloaded</h1>
+  <p class="subtitle">Why and what to discover and to describe</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -415,242 +350,140 @@ Chris Reudenbach
 </div>
 
 </section>
-<section id="spatial-patterns" class="slide level2">
-<h2>Spatial Patterns</h2>
-<p>Discovering and describing spatial patterns is an important part of many geographical studies, and spatial patterns are linked to natural and social processes.</p>
-<div id="fig-patterns" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig">
-<div aria-describedby="fig-patterns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<section id="what-is-the-meaning" class="slide level2">
+<h2>What is the meaning?</h2>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Spatial patterns can be quantified using landscape metrics <span class="smallcaps">(O’Neill&nbsp;et&nbsp;al.&nbsp;1988;&nbsp;Turner&nbsp;and&nbsp;Gardner&nbsp;1991;&nbsp;Li&nbsp;and&nbsp;Reynolds&nbsp;1993;&nbsp;He&nbsp;et&nbsp;al.&nbsp;2000;&nbsp;Jaeger&nbsp;2000;&nbsp;Kot&nbsp;i&nbsp;in.&nbsp;2006;&nbsp;McGarigal&nbsp;2014)</span>.</p>
+</div>
+</div>
+</div>
+<p>And well, we can calculate technically very complex metrics and indices, but what is the meaning?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="../assets/corona_hopkins.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Corona Virus Distribution, https://coronavirus.jhu.edu/map.html"><img data-src="../assets/corona_hopkins.png" style="width:850.0%"></a></p>
-<figcaption><a href="https://coronavirus.jhu.edu/map.html">Corona Virus Distribution, https://coronavirus.jhu.edu/map.html</a></figcaption>
+<p><a href="../assets/2dmap_ent_relmutinf.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Parametrization of two IT metrics"><img data-src="../assets/2dmap_ent_relmutinf.png" style="width:35.0%" alt="Parametrization of two IT metrics"></a></p>
+<figcaption>Parametrization of two IT metrics</figcaption>
 </figure>
 </div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../assets/ipcc.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="IPCC Interactive Atlas, Bias Adjusted TX35"><img data-src="../assets/ipcc.png"></a></p>
-<figcaption><a href="eyJ0eXBlIjoiQVRMQVMiLCJjb21tb25zIjp7ImxhdCI6MjUwNTIzMiwibG5nIjo3MjgxMzEsInpvb20iOjMsInByb2oiOiJFUFNHOjU0MDMwIiwibW9kZSI6ImNvbXBsZXRlX2F0bGFzIn0sInByaW1hcnkiOnsic2NlbmFyaW8iOiJzc3AxMjYiLCJwZXJpb2QiOiJuZWFyIiwic2Vhc29uIjoieWVhciIsImRhdGFzZXQiOiJDTUlQNiIsInZhcmlhYmxlIjoiVFgzNWJjIiwidmFsdWVUeXBlIjoiQU5PTUFMWSIsImhhdGNoaW5nIjoiU0lNUExFIiwicmVnaW9uU2V0IjoiYXI2IiwiYmFzZWxpbmUiOiJBUjUiLCJyZWdpb25zU2VsZWN0ZWQiOltdfSwicGxvdCI6eyJhY3RpdmVUYWIiOiJwbHVtZSIsIm1hc2siOiJub25lIiwic2NhdHRlcllNYWciOm51bGwsInNjYXR0ZXJZVmFyIjpudWxsLCJzaG93aW5nIjpmYWxzZX19">IPCC Interactive Atlas, Bias Adjusted TX35</a></figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-patterns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Examples for spatial patterns
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="spatial-patterns-of-categorical-raster-data" class="slide level2">
-<h2>Spatial patterns of categorical raster data</h2>
-<p>Numerous geographical studies are linked to all kind of classified raster based spatial data</p>
-<div class="columns">
-<div class="column" style="width:35%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../assets/caspian.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3" title="https://doi.org/10.1016/j.agee.2020.107052"><img data-src="../assets/caspian.png" alt="https://doi.org/10.1016/j.agee.2020.107052"></a></p>
-<figcaption><a href="https://doi.org/10.1016/j.agee.2020.107052" class="uri">https://doi.org/10.1016/j.agee.2020.107052</a></figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:10%;">
-
-</div><div class="column" style="width:35%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../assets/canada.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4" title="https://doi.org/10.1016/j.agee.2020.107052"><img data-src="../assets/canada.jpg" alt="https://doi.org/10.1016/j.agee.2020.107052"></a></p>
-<figcaption><a href="https://doi.org/10.1016/j.agee.2020.107052" class="uri">https://doi.org/10.1016/j.agee.2020.107052</a></figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section>
-<section id="types-of-spatial-patterns" class="title-slide slide level1 center">
-<h1>Types of spatial patterns</h1>
-
-</section>
-<section id="point-patterns-versus-continous-patterns" class="slide level2">
-<h2>Point patterns versus continous patterns</h2>
-<div class="columns">
-<div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../*assets/pointdistributions.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5" title="Point Distributions, (https://gisgeography.com/spatial-patterns"><img data-src="../*assets/pointdistributions.jpg" alt="Point Distributions, (https://gisgeography.com/spatial-patterns"></a></p>
-<figcaption>Point Distributions, (https://gisgeography.com/spatial-patterns</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../assets/gr1.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6" title="Raster based patterns, Source: https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9"><img data-src="../assets/gr1.jpg" alt="Raster based patterns, Source: https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9"></a></p>
-<figcaption><a href="https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9">Raster based patterns, Source: https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9</a></figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="dynamics-of-spatial-patterns" class="slide level2">
-<h2>Dynamics of spatial patterns</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../assets/landscapechange.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7" title="Dynamic evaluation of landscape transformations, https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097"><img data-src="../assets/landscapechange.png" style="width:35.0%" alt="Dynamic evaluation of landscape transformations, https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097"></a></p>
-<figcaption><a href="https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097">Dynamic evaluation of landscape transformations, https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097</a></figcaption>
-</figure>
-</div>
-</section>
-<section id="quantification-of-categorical-spatial-patterns" class="slide level2">
-<h2>Quantification of categorical spatial patterns</h2>
-<p>Spatial patterns can be quantified using landscape metrics (<sub>O’Neill&nbsp;et&nbsp;al.&nbsp;1988;&nbsp;Turner&nbsp;and&nbsp;Gardner&nbsp;1991;&nbsp;Li&nbsp;and&nbsp;Reynolds&nbsp;1993;&nbsp;He&nbsp;et&nbsp;al.&nbsp;2000;&nbsp;Jaeger&nbsp;2000;&nbsp;Kot&nbsp;i&nbsp;in.&nbsp;2006;&nbsp;McGarigal&nbsp;2014</sub>).</p>
-<p>Software such as FRAGSTATS, <a href="https://forest.jrc.ec.europa.eu/en/activities/lpa/gtb/">GuidosToolbox</a>, or <a href="https://r-spatialecology.github.io/landscapemetrics/">landscapemetrics</a> has proven useful in many scientific studies (&gt; 12,000 citations).</p>
-<p><a href="../assets/rid_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img data-src="../assets/rid_map.png"></a></p>
-<p>There is a relationship between an area’s pattern composition and configuration and ecosystem characteristics, such as vegetation diversity, animal distributions, and water quality within this area (<sub>Hunsaker&nbsp;i&nbsp;Levine,&nbsp;1995;&nbsp;Fahrig&nbsp;i&nbsp;Nuttle,&nbsp;2005;&nbsp;Klingbeil&nbsp;i&nbsp;Willig,&nbsp;2009;&nbsp;Holzschuh&nbsp;et&nbsp;al.,&nbsp;2010;&nbsp;Fahrig&nbsp;et&nbsp;al.,&nbsp;2011;&nbsp;Carrara&nbsp;et&nbsp;al.,&nbsp;2015;&nbsp;Arroyo-Rodŕıguez&nbsp;et&nbsp;al.&nbsp;2016;&nbsp;Duflot&nbsp;et&nbsp;al.,&nbsp;2017,&nbsp;many&nbsp;others..</sub>)</p>
-</section>
-<section id="example-data" class="slide level2">
-<h2>Example data</h2>
 <ul>
-<li>Land cover data for the year 2016 from the <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-land-cover?tab=overview">CCI-LC project</a></li>
-<li>Simplified into nine main categories</li>
-<li>Partitioned into 30 x 30 kilometers square blocks</li>
-<li>13,909 categorical rasters (100x100 cells) https://agupubs.onlinelibrary.wiley.com/doi/epdf/10.1029/2020JD033031</li>
-</ul>
-<p><img data-src="../assets/lc_map1.png" style="width:30.0%"> <img data-src="../assets/lc_map2.png" style="width:30.0%"> —</p>
-</section>
-<section id="example-data-1" class="slide level2">
-<h2>Example Data</h2>
-<p>Randomely selected 16 rasters with different proportions of forest (green) areas:</p>
-<p><a href="../assets/rid_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img data-src="../assets/rid_map.png"></a></p>
-</section>
-<section id="landscape-metrics" class="slide level2">
-<h2>Landscape Metrics</h2>
-<ul>
-<li>In the last 40 or so years, several hundred different landscape metrics were developed</li>
-<li>They quantify the composition and configuration of spatial patterns of categorical rasters</li>
-<li>General assumption is that the spatial pattern of a landscape influences the processes that occur within it</li>
-<li>Landscape metrics can be calculated for three different levels: patch, class, and landscape (here we focus on the landscape level)</li>
-<li>They can be divided into several groups: (1) area and edge metrics, (2) shape metrics, (3) core metrics, (4) aggregation metrics, (5) diversity metrics, (6) complexity metrics</li>
+<li><strong>Marginal entropy</strong> [H(x)] - diversity (composition) of spatial categories - from <strong>monothematic patterns to multithematic patterns</strong></li>
+<li><strong>Relative mutual information</strong> [U] - clumpiness (configuration) of spatial categories from <strong>fragmented patterns to consolidated patterns</strong></li>
 </ul>
 </section>
-<section id="landscape-metrics-1" class="slide level2">
-<h2>Landscape Metrics</h2>
-<p>Important considerations:</p>
+<section id="back-to-theory" class="slide level2">
+<h2>Back to theory</h2>
+<p>So let’s go one step back:</p>
+<div class="fragment">
+<p>Read the following section of <a href="https://fragstats.org/index.php/background/landscape-metrics">Fragstats Manual</a> and answer the following question:</p>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>What are the basic concept an meaning meaning of landscape metrics?</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Form teams of two and please try to answer the following questions:</p>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
 <ul>
-<li><strong>Scale</strong>: the size of the area over which the metrics are calculated</li>
-<li><strong>Extent</strong>: the borders of the study area</li>
-<li><strong>Spatial resolution</strong>: the size of the raster cells</li>
-<li><strong>Categorization</strong>: the categories used in the analysis</li>
-<li><strong>Redundancy</strong>: many metrics are highly correlated</li>
+<li>What is now the specific purpose in scientific application?</li>
+<li>What can be expressed with them at all?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="now-try-to-find-an-interpretation" class="slide level2">
+<h2>Now try to find an interpretation</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/2dmap_ent_relmutinf.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Parametrization of two IT metrics"><img data-src="../assets/2dmap_ent_relmutinf.png" style="width:45.0%" alt="Parametrization of two IT metrics"></a></p>
+<figcaption>Parametrization of two IT metrics</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Marginal entropy</strong> [H(x)] - diversity (composition) of spatial categories - from <strong>monothematic patterns to multithematic patterns</strong></li>
+<li><strong>Relative mutual information</strong> [U] - clumpiness (configuration) of spatial categories from <strong>fragmented patterns to consolidated patterns</strong></li>
 </ul>
 </section>
-<section id="landscape-metrics-2" class="slide level2">
-<h2>Landscape Metrics</h2>
-<p><strong>SHDI</strong> - <a href="https://r-spatialecology.github.io/landscapemetrics/reference/lsm_l_shdi.html">Shannon’s diversity index</a> - takes both the number of classes and the abundance of each class into account; larger values indicate higher diversity</p>
-<p><a href="../assets/shdi_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img data-src="../assets/shdi_map.png" style="width:60.0%"></a></p>
-<p><strong>AI</strong> - <a href="https://r-spatialecology.github.io/landscapemetrics/reference/lsm_l_ai.html">Aggregation index</a> - from 0 for maximally disaggregated to 100 for maximally aggregated classes</p>
-<p><a href="../assets/ai_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img data-src="../assets/ai_map.png" style="width:60.0%"></a></p>
-</section>
-<section id="code-examples" class="slide level2">
-<h2>Code examples</h2>
-<p>Taken from : <a href="https://arxiv.org/pdf/2405.06559">“The landscapemetrics and motif packages for measuring landscape patterns and processes”</a></p>
-<h4 id="read-and-visualize-the-data">Read and visualize the data</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(landscapemetrics)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(terra)</span>
-<span id="cb1-3"><a></a>r9 <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"exdata/r9.tif"</span>)</span>
-<span id="cb1-4"><a></a>r1 <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"exdata/r1.tif"</span>)</span>
-<span id="cb1-5"><a></a><span class="fu">plot</span>(r1); <span class="fu">plot</span>(r9)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img data-src="../assets/unnamed-chunk-4-1.png" style="width:30.0%"><img data-src="../assets/unnamed-chunk-4-2.png" style="width:30.0%"></p>
-</section>
-<section id="get-the-indices" class="slide level2">
-<h2>Get the indices</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">lsm_l_shdi</span>(r9)</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a><span class="co"># A tibble: 1 × 6</span></span>
-<span id="cb2-4"><a></a>  layer level     class    id metric value</span>
-<span id="cb2-5"><a></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb2-6"><a></a><span class="dv">1</span>     <span class="dv">1</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> shdi    <span class="fl">1.06</span></span>
-<span id="cb2-7"><a></a></span>
-<span id="cb2-8"><a></a><span class="fu">lsm_l_ai</span>(r9)</span>
-<span id="cb2-9"><a></a></span>
-<span id="cb2-10"><a></a><span class="co"># A tibble: 1 × 6</span></span>
-<span id="cb2-11"><a></a>  layer level     class    id metric value</span>
-<span id="cb2-12"><a></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb2-13"><a></a><span class="dv">1</span>     <span class="dv">1</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> ai      <span class="fl">82.1</span></span>
-<span id="cb2-14"><a></a></span>
-<span id="cb2-15"><a></a><span class="fu">calculate_lsm</span>(r9, <span class="at">what =</span> <span class="fu">c</span>(<span class="st">"lsm_l_shdi"</span>, <span class="st">"lsm_l_ai"</span>))</span>
-<span id="cb2-16"><a></a></span>
-<span id="cb2-17"><a></a><span class="co"># A tibble: 2 × 6</span></span>
-<span id="cb2-18"><a></a>  layer level     class    id metric value</span>
-<span id="cb2-19"><a></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb2-20"><a></a><span class="dv">1</span>     <span class="dv">1</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> ai     <span class="fl">82.1</span> </span>
-<span id="cb2-21"><a></a><span class="dv">2</span>     <span class="dv">1</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> shdi    <span class="fl">1.06</span></span>
-<span id="cb2-22"><a></a></span>
-<span id="cb2-23"><a></a>two_r <span class="ot">=</span> <span class="fu">list</span>(r1, r9)</span>
-<span id="cb2-24"><a></a><span class="fu">calculate_lsm</span>(two_r, <span class="at">what =</span> <span class="fu">c</span>(<span class="st">"lsm_l_shdi"</span>, <span class="st">"lsm_l_ai"</span>))</span>
-<span id="cb2-25"><a></a></span>
-<span id="cb2-26"><a></a><span class="co"># A tibble: 4 × 6</span></span>
-<span id="cb2-27"><a></a>  layer level     class    id metric   value</span>
-<span id="cb2-28"><a></a>  <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb2-29"><a></a><span class="dv">1</span>     <span class="dv">1</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> ai     <span class="fl">98.7</span>   </span>
-<span id="cb2-30"><a></a><span class="dv">2</span>     <span class="dv">1</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> shdi    <span class="fl">0.0811</span></span>
-<span id="cb2-31"><a></a><span class="dv">3</span>     <span class="dv">2</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> ai     <span class="fl">82.1</span>   </span>
-<span id="cb2-32"><a></a><span class="dv">4</span>     <span class="dv">2</span> landscape    <span class="cn">NA</span>    <span class="cn">NA</span> shdi    <span class="fl">1.06</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="code-examples-1" class="slide level2">
-<h2>Code examples</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>mat_window <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">11</span>, <span class="at">ncol =</span> <span class="dv">11</span>)</span>
-<span id="cb3-2"><a></a>w_result <span class="ot">=</span> <span class="fu">window_lsm</span>(r9, <span class="at">window =</span> mat_window, <span class="at">what =</span> <span class="st">"lsm_l_ai"</span>)</span>
-<span id="cb3-3"><a></a><span class="fu">plot</span>(r9); <span class="fu">plot</span>(w_result<span class="sc">$</span>layer_1<span class="sc">$</span>lsm_l_ai)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img data-src="../assets/unnamed-chunk-6-1.png" style="width:30.0%"><img data-src="../assets/unnamed-chunk-6-2.png" style="width:30.0%"></p>
-</section>
-<section id="package-landscapemetrics" class="slide level2">
-<h2>Package landscapemetrics</h2>
-<p><a href="https://r-spatialecology.github.io/landscapemetrics/">https://r-spatialecology.github.io/landscapemetrics/</a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># A tibble: 133 × 5</span></span>
-<span id="cb4-2"><a></a>   metric name                                type           level function_name</span>
-<span id="cb4-3"><a></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>          <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        </span>
-<span id="cb4-4"><a></a> <span class="dv">1</span> area   patch area                          area and edge… patch lsm_p_area   </span>
-<span id="cb4-5"><a></a> <span class="dv">2</span> cai    core area index                     core area met… patch lsm_p_cai    </span>
-<span id="cb4-6"><a></a> <span class="dv">3</span> circle related circumscribing circle       shape metric   patch lsm_p_circle </span>
-<span id="cb4-7"><a></a> <span class="dv">4</span> contig contiguity index                    shape metric   patch lsm_p_contig </span>
-<span id="cb4-8"><a></a> <span class="dv">5</span> core   core area                           core area met… patch lsm_p_core   </span>
-<span id="cb4-9"><a></a><span class="co"># ℹ 134 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="what-are-the-fields-of-application" class="slide level2">
+<h2>What are the fields of application?</h2>
+<div class="fragment">
+<p>What are applications and what do they say?</p>
+<p>Look at the first 30-50 hits on Google Scholar: <a href="https://scholar.google.de/scholar?as_ylo=2020&amp;q=landscape+metrics&amp;hl=de&amp;as_sdt=0,5">Google Scholar Landscape Metrics</a></p>
+<p>Work through the following questions:</p>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
 <ul>
-<li>Sampling around points of interest</li>
-<li>Moving window calculations</li>
-<li>Calculating landscape metrics for irregular areas</li>
-<li>Visualizations</li>
-<li>More…</li>
+<li>Try to sort the articles into meaningful groups.</li>
+<li>What are the most important questions and applications?</li>
+<li>Choose an article that interests you and summarize it in a 3-minute presentation, focusing on the significance of the metrics.</li>
 </ul>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="exercises" class="slide level2">
-<h2>Exercises</h2>
-<ol type="1">
-<li>Read the data from <code>exdata/lc_small.tif</code> and visualize it. What is the location of the data? What are the extent of the data and its spatial resolution? How many categories it contains?</li>
-<li>Calculate <strong>Aggregation Index</strong> (AI) for the raster. Interpret the results.</li>
-<li>Calculate <strong>Total Edge</strong> (TE) for the raster. Interpret the results. Next, read the data from `exdata/lc_small2.tif, calculate AI and TE for this raster, and compare the results with the previous raster.</li>
-<li><strong>Calculate Total Edge</strong> (TE) for the raster, but this time in a <em>moving window</em> of 9 by 9 cells. Visualize the results.</li>
-<li>(Extra) Using the <code>read_sf()</code> function from the <strong>sf</strong> package, read the <code>exdata/points.gpkg</code> file. Next, calculate SHDI and AI of an area of 3000 meters from each sampling point (see the <code>sample_lsm()</code> function).</li>
-</ol>
+<section id="getting-the-idea" class="slide level2">
+<h2>Getting the idea</h2>
+<p>With this knowledge check <a href="https://link.springer.com/article/10.1007/s10980-021-01392-7">Present and historical landscape structure shapes current species richness in Central European grasslands</a>.</p>
+<p>Try to find an answer:</p>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<ul>
+<li>Why did they choose this specific indices?</li>
+<li>Can you identify the impact of specific metrics with respect to grassland?</li>
+<li>Discuss their Conlcusion with respect to landscape metrics</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="ercercise" class="slide level2">
+<h2>Ercercise</h2>
+<p>Please navigate to the <a href="https://r-spatialecology.github.io/landscapemetrics/index.html">landscapemetrics</a> package.</p>
+<p>Run the following tutorials with the example data of this course:</p>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<ul>
+<li><a href="https://r-spatialecology.github.io/landscapemetrics/articles/guide_sample_lsm.html">Sample lsm</a></li>
+<li><a href="https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html">Irregular Areas</a></li>
+<li><a href="https://r-spatialecology.github.io/landscapemetrics/articles/utility.html">Utilities</a></li>
+</ul>
+</div>
+</div>
+</div>
+<p>For the irregular vector data download the OSM data <a href="https://download.geofabrik.de/">e.g.&nbsp;from Geofabrik</a> and use the category landuse. Note you need to merge <a href="https://download.geofabrik.de/europe/germany/niedersachsen.html">Niedersachsen</a> and <a href="https://download.geofabrik.de/europe/germany/sachsen-anhalt.html">Sachsen-Anhalt</a></p>
+<h3 id="addon">Addon</h3>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<ul>
+<li>Download the fragstats tutorial <a href="https://www.fragstats.org/download/Tutorial_2.zip">Analyzing a single grid</a>.</li>
+<li>Run the tutorial but use landscapemetrics instead</li>
+</ul>
+</div>
+</div>
+</div>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
-<p>&lt;gisma 2023&gt;</p>
+<p>&lt;gisma 2024&gt;</p>
 </div>
 </div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1"><a href="https://coronavirus.jhu.edu/map.html">Corona Virus Distribution, https://coronavirus.jhu.edu/map.html</a></span>
-<span class="glightbox-desc lightbox-desc-2"><a href="eyJ0eXBlIjoiQVRMQVMiLCJjb21tb25zIjp7ImxhdCI6MjUwNTIzMiwibG5nIjo3MjgxMzEsInpvb20iOjMsInByb2oiOiJFUFNHOjU0MDMwIiwibW9kZSI6ImNvbXBsZXRlX2F0bGFzIn0sInByaW1hcnkiOnsic2NlbmFyaW8iOiJzc3AxMjYiLCJwZXJpb2QiOiJuZWFyIiwic2Vhc29uIjoieWVhciIsImRhdGFzZXQiOiJDTUlQNiIsInZhcmlhYmxlIjoiVFgzNWJjIiwidmFsdWVUeXBlIjoiQU5PTUFMWSIsImhhdGNoaW5nIjoiU0lNUExFIiwicmVnaW9uU2V0IjoiYXI2IiwiYmFzZWxpbmUiOiJBUjUiLCJyZWdpb25zU2VsZWN0ZWQiOltdfSwicGxvdCI6eyJhY3RpdmVUYWIiOiJwbHVtZSIsIm1hc2siOiJub25lIiwic2NhdHRlcllNYWciOm51bGwsInNjYXR0ZXJZVmFyIjpudWxsLCJzaG93aW5nIjpmYWxzZX19">IPCC Interactive Atlas, Bias Adjusted TX35</a></span>
-<span class="glightbox-desc lightbox-desc-3"><a href="https://doi.org/10.1016/j.agee.2020.107052" class="uri">https://doi.org/10.1016/j.agee.2020.107052</a></span>
-<span class="glightbox-desc lightbox-desc-4"><a href="https://doi.org/10.1016/j.agee.2020.107052" class="uri">https://doi.org/10.1016/j.agee.2020.107052</a></span>
-<span class="glightbox-desc lightbox-desc-5">Point Distributions, (https://gisgeography.com/spatial-patterns</span>
-<span class="glightbox-desc lightbox-desc-6"><a href="https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9">Raster based patterns, Source: https://www.cell.com/cell/fulltext/S0092-8674%2823%2901219-9</a></span>
-<span class="glightbox-desc lightbox-desc-7"><a href="https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097">Dynamic evaluation of landscape transformations, https://www.landscape-online.org/index.php/lo/article/view/LO.2022.1097/LO.2022.1097</a></span>
+<span class="glightbox-desc lightbox-desc-1">Parametrization of two IT metrics</span>
+<span class="glightbox-desc lightbox-desc-2">Parametrization of two IT metrics</span>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
@@ -1041,7 +874,7 @@ Figure&nbsp;1: Examples for spatial patterns
     </script>
     <script src="https://utteranc.es/client.js" repo="gisma-courses/LV-19-d19-006-24" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
     </script>
-    <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","loop":false,"selector":".lightbox","openEffect":"zoom"});
+    <script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom","loop":false});
     window.onload = () => {
       lightboxQuarto.on('slide_before_load', (data) => {
         const { slideIndex, slideNode, slideConfig, player, trigger } = data;
