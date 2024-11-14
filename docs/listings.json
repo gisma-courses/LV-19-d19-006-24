@@ -1,12 +1,9 @@
 [
   {
-    "listing": "/slides/slidelist.html",
+    "listing": "/modules/slidelist.html",
     "items": [
-      "/slides/slides_session3.html",
-      "/slides/slides_session2.html",
-      "/slides/slides_session4.html",
-      "/slides/slide1.html",
-      "/slides/slides_session1.html"
+      "/modules/de-git-module.html",
+      "/modules/en-git-module.html"
     ]
   },
   {
@@ -18,10 +15,13 @@
     ]
   },
   {
-    "listing": "/modules/slidelist.html",
+    "listing": "/slides/slidelist.html",
     "items": [
-      "/modules/de-git-module.html",
-      "/modules/en-git-module.html"
+      "/slides/slides_session3.html",
+      "/slides/slides_session2.html",
+      "/slides/slides_session4.html",
+      "/slides/slide1.html",
+      "/slides/slides_session1.html"
     ]
   }
 ]
