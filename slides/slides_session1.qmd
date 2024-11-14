@@ -159,41 +159,40 @@ plot(r1); plot(r9)
 
 ## Get the indices
 
-``` r
+``` R
 lsm_l_shdi(r9)
-```
 
-`# A tibble: 1 × 6
+# A tibble: 1 × 6
   layer level     class    id metric value
   <int> <chr>     <int> <int> <chr>  <dbl>
-1     1 landscape    NA    NA shdi    1.06`
+1     1 landscape    NA    NA shdi    1.06
 
-``` r
 lsm_l_ai(r9)
-```
-`# A tibble: 1 × 6
+
+# A tibble: 1 × 6
   layer level     class    id metric value
   <int> <chr>     <int> <int> <chr>  <dbl>
-1     1 landscape    NA    NA ai      82.1`
-``` r
+1     1 landscape    NA    NA ai      82.1
+
 calculate_lsm(r9, what = c("lsm_l_shdi", "lsm_l_ai"))
-```
-`# A tibble: 2 × 6
+
+# A tibble: 2 × 6
   layer level     class    id metric value
   <int> <chr>     <int> <int> <chr>  <dbl>
 1     1 landscape    NA    NA ai     82.1 
-2     1 landscape    NA    NA shdi    1.06`
-``` r
+2     1 landscape    NA    NA shdi    1.06
+
 two_r = list(r1, r9)
 calculate_lsm(two_r, what = c("lsm_l_shdi", "lsm_l_ai"))
-```
-`# A tibble: 4 × 6
+
+# A tibble: 4 × 6
   layer level     class    id metric   value
   <int> <chr>     <int> <int> <chr>    <dbl>
 1     1 landscape    NA    NA ai     98.7   
 2     1 landscape    NA    NA shdi    0.0811
 3     2 landscape    NA    NA ai     82.1   
-4     2 landscape    NA    NA shdi    1.06`
+4     2 landscape    NA    NA shdi    1.06
+```
 
 --- 
 
@@ -207,11 +206,13 @@ plot(r9); plot(w_result$layer_1$lsm_l_ai)
 
 ---
 
-## Code Example 
+## Package  landscapemetrics
+
 [https://r-spatialecology.github.io/landscapemetrics/](https://r-spatialecology.github.io/landscapemetrics/)
 
 
-`# A tibble: 133 × 5
+```R
+# A tibble: 133 × 5
    metric name                                type           level function_name
    <chr>  <chr>                               <chr>          <chr> <chr>        
  1 area   patch area                          area and edge… patch lsm_p_area   
@@ -219,7 +220,8 @@ plot(r9); plot(w_result$layer_1$lsm_l_ai)
  3 circle related circumscribing circle       shape metric   patch lsm_p_circle 
  4 contig contiguity index                    shape metric   patch lsm_p_contig 
  5 core   core area                           core area met… patch lsm_p_core   
-# ℹ 134 more rows`
+# ℹ 134 more rows
+```
 
 * Sampling around points of interest
 * Moving window calculations
@@ -231,7 +233,7 @@ plot(r9); plot(w_result$layer_1$lsm_l_ai)
 ## Exercises
 
 1. Read the data from `exdata/lc_small.tif` and visualize it. What is the location of the data? What are the extent of the data and its spatial resolution? How many categories it contains?
-2. Calculate Aggregation Index (AI) for the raster. Interpret the results.
-3. Calculate Total Edge (TE) for the raster. Interpret the results. Next, read the data from `exdata/lc_small2.tif`, calculate AI and TE for this raster, and compare the results with the previous raster.
-4. Calculate Total Edge (TE) for the raster, but this time in a moving window of 9 by 9 cells. Visualize the results.
-5. (Extra) Using the read_sf() function from the sf package read the `exdata/points.gpkg` file. Next, calculate SHDI and AI of an area of 3000 meters from each sampling point (see the `sample_lsm()` function).
+1. Calculate **Aggregation Index** (AI) for the raster. Interpret the results.
+1. Calculate **Total Edge** (TE) for the raster. Interpret the results. Next, read the data from `exdata/lc_small2.tif, calculate AI and TE for this raster, and compare the results with the previous raster.
+1. **Calculate Total Edge** (TE) for the raster, but this time in a *moving window* of 9 by 9 cells. Visualize the results.
+1. (Extra) Using the `read_sf()` function from the **sf** package, read the `exdata/points.gpkg` file. Next, calculate SHDI and AI of an area of 3000 meters from each sampling point (see the `sample_lsm()` function).
