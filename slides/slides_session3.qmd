@@ -68,11 +68,10 @@ Form teams of two and please try to answer the following questions:
 
 ------------------------------------------------------------------------
 
-## What are the fields of application?
+### What are the fields of application?
 
-:::: fragment
-What are applications and what do they say?
 
+::: fragment
 Look at the first 30-50 hits on Google Scholar: [Google Scholar Landscape Metrics](https://scholar.google.de/scholar?as_ylo=2020&q=landscape+metrics&hl=de&as_sdt=0,5)
 
 Work through the following questions:
@@ -81,13 +80,12 @@ Work through the following questions:
 -   Try to sort the articles into meaningful groups.
 -   What are the most important questions and applications?
 -   Choose an article that interests you and summarize it in a 3-minute presentation, focusing on the significance of the metrics.
+
 :::
-::::
 
----
+:::
 
-## Getting the idea
-
+::: fragment
 With this knowledge check [Present and historical landscape structure shapes current species richness in Central European grasslands](https://link.springer.com/article/10.1007/s10980-021-01392-7).
 
 Try to find an answer:
@@ -97,7 +95,7 @@ Try to find an answer:
 -   Can you identify the impact of specific metrics with respect to grassland?
 -   Discuss their Conlcusion with respect to landscape metrics
 :::
-
+:::
 
 ## Ercercise
 
