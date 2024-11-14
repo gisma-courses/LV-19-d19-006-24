@@ -29,6 +29,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../worksheets/ws-03.html" rel="next">
 <link href="../worksheets/ws-01.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -120,11 +121,6 @@ background-size: cover;
 </i> 
 <span class="menu-text">FAQ</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../slides/slidelist.html"> <i class="bi bi-file-slides-fill" role="img">
-</i> 
-<span class="menu-text">Slides</span></a>
-  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -207,8 +203,8 @@ background-size: cover;
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="https://gisma-courses.githu**************************************b.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Some Pros &amp; Cons for R-Spatial************************************************************************************************</span></a>
+  <a href="https://gisma-courses.github.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Some Pros &amp; Cons for R-Spatial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -225,6 +221,7 @@ background-size: cover;
 </li>
       </ul>
   </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
@@ -270,11 +267,12 @@ background-size: cover;
  <span class="menu-text">Worksheet 1: Warm Up Exercises</span></a>
   </div>
 </li>
-          <li class="px-0"><hr class="sidebar-divider hi "></li>
           <li class="sidebar-item">
- <span class="menu-text">Spatial Patterns</span>
-  </li>
-          <li class="px-0"><hr class="sidebar-divider hi "></li>
+  <div class="sidebar-item-container"> 
+  <a href="../worksheets/ws-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Worksheet 2: Landscape metrics part 1</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -288,7 +286,7 @@ background-size: cover;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#exercises-ws-1" id="toc-exercises-ws-1" class="nav-link active" data-scroll-target="#exercises-ws-1">Exercises WS 1</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/gisma-courses/LV-19-d19-006-24/edit/main/worksheets/ws-02.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gisma-courses/LV-19-d19-006-24/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -299,14 +297,14 @@ background-size: cover;
 
 
 
-<section id="exercises" class="level2">
-<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercises-ws-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-ws-1">Exercises WS 1</h2>
 <ol type="1">
-<li>Read the data from exdata/lc_small.tif and visualize it. What is the location of the data? What are the extent of the data and its spatial resolution? How many categories it contains?</li>
-<li>Calculate Aggregation Index (AI) for the raster. Interpret the results.</li>
-<li>Calculate Total Edge (TE) for the raster. Interpret the results. Next, read the data from exdata/lc_small2.tif, calculate AI and TE for this raster, and compare the results with the previous raster.</li>
-<li>Calculate Total Edge (TE) for the raster, but this time in a moving window of 9 by 9 cells. Visualize the results.</li>
-<li>(Extra) Using the read_sf() function from the sf package read the exdata/points.gpkg file. Next, calculate SHDI and AI of an area of 3000 meters from each sampling point (see the sample_lsm() function).</li>
+<li>Read the data from <code>exdata/lc_small.tif</code> and visualize it. What is the location of the data? What are the extent of the data and its spatial resolution? How many categories it contains?</li>
+<li>Calculate <strong>Aggregation Index</strong> (AI) for the raster. Interpret the results.</li>
+<li>Calculate <strong>Total Edge</strong> (TE) for the raster. Interpret the results. Next, read the data from `exdata/lc_small2.tif, calculate AI and TE for this raster, and compare the results with the previous raster.</li>
+<li><strong>Calculate Total Edge</strong> (TE) for the raster, but this time in a <em>moving window</em> of 9 by 9 cells. Visualize the results.</li>
+<li>(Extra) Using the <code>read_sf()</code> function from the <strong>sf</strong> package, read the <code>exdata/points.gpkg</code> file. Next, calculate SHDI and AI of an area of 3000 meters from each sampling point (see the <code>sample_lsm()</code> function).</li>
 </ol>
 
 
@@ -882,6 +880,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../worksheets/ws-03.html" class="pagination-link" aria-label="Worksheet 2: Landscape metrics part 1">
+        <span class="nav-page-text">Worksheet 2: Landscape metrics part 1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

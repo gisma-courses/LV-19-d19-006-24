@@ -1,47 +1,15 @@
 ---
-title: "Worksheet 3: Watersheds Concept and Workflows"
+title: "Worksheet 2: Landscape metrics part 1"
 
 title-block-banner: ../images/splash_L03.png
 title-block-banner-color: black
 
 ---
 
-A watershed, also known as a catchment area or river basin, is the area from which precipitation flows into a particular river or watercourse and into which the river or watercourse drains. It is a natural hydrological unit defined by topographical features. Catchment modelling is an important aspect of water resources and environmental science for understanding the behaviour of the hydrological cycle and developing sustainable water management strategies.
+## Exercises WS 2
 
-Catchment modelling allows the simulation of water flow, precipitation, runoff patterns and the transport of sediment and pollutants within the catchment. This is often done using hydrological models based on computer simulations. These models help to analyse different scenarios and environmental impacts, such as those associated with land use change, climate change or human activities.
-
-The benefits of catchment modelling are many. They include predicting floods, assessing water quality, planning water management measures, identifying potential environmental impacts and developing strategies for sustainable water use. Understanding the dynamics of catchments is crucial to preventing water scarcity, protecting ecosystems and reconciling human activities with the environment.
-
-## What we will do in this unit
-
-We will investigate to what extent the terrain model and the chosen algorithm influence the accuracy and relevance of hydrological forecasts when modelling the Lahn catchment area.
-
-## Learning Objectives 
-
-After this tutorial you will be able to
-
- 
-* Identify and evaluate appropriate tools and workflows
-* Identify basic technical concepts
-* Evaluate different technical workflows in relation to a problem
-* critically reflect on and document which decisions led to which process
-
-
-## Materials Required
-
-## Data
-  * [CGIAR-CSI SRTM V4](https://srtm.csi.cgiar.org/srtmdata/){.external target="_blank"} The CGIAR-CSI SRTM V4 is probably the best homogeneously post-processed SRTM dataset in the world. Regarding the new version 4, CGIAR-CSI says: "*envisages that CGIAR-CSI SRTM version 4 is our definitive and final release [...]*", [see CGIAR FAQ](https://srtm.csi.cgiar.org/faq/){.external target="_blank"}.
-  * [SRTM Terrain Model TileDownloader](https://dwtkns.com/srtm30m/){.external target="_blank"}. `ATTENTION:` (Requires registration with [NASA Earthdata](https://urs.earthdata.nasa.gov/users/new){.external target="_blank"}) The Infolink of the surface is corrupted, see the [NASA JPL page](https://www2.jpl.nasa.gov/srtm/){.external target="_blank"} for the necessary metadata. `ATTENTION:` This file must be downloaded as a ZIP file, as it is in [SRTMHGT](https://gdal.org/drivers/raster/srtmhgt.html){.external target="_blank"} format. 
-  * [OpenDEM Germany](https://opendem.info/downloads/srtm_germany_dtm.zip) `ATTENTION:` Please be sure to read the [Info page](https://opendem.info/srtm_processing.html){.external target="_blank"} as extensive re-analysis of the SRTM data has taken place. 
-  * [OpenDEM Europe](https://opendem.info/opendemeu_download_highres.html){.external target="_blank"} `ATTENTION:` Please be sure to read the [Info page](https://opendem.info/opendemeu_background.html){.external target="_blank"} as an extensive re-analysis of the SRTM data has taken place.
-  * [GIS&T Body of Knowledge Watershed Concept](https://gistbok.ucgis.org/bok-topics/watersheds-and-drainage-networks)
- * [Watershed ArcGIS Story](https://storymaps.arcgis.com/stories/ccb399d1eae64ed49e4c4c2c2f697e6b)
- * [White-box QGIS Tuitorial](https://rashms.com/gis/watershed-delineation-using-whitebox-tools-wbt-plugin-in-qgis/)
-  * [Saga/QGIS Tutorial](https://rashms.com/gis/watershed-delineation-using-saga-tools-plugin-in-qgis/)
- *  [Saga Tutorial](https://sagatutorials.wordpress.com/preprocessing-and-catchment-deliniation/)
- *  [QGIS Tutorial Hydrolocical Analysis](https://docs.qgis.org/3.28/en/docs/training_manual/processing/hydro.html)
- 
- ## Tasks 3
-Please choose one or more approaches to model the catchment of the river Lahn with the outflow point Lahnstein. Compare with the linked online version of mghydro.com
- 
-<iframe width="600" height="500" src="https://mghydro.com/watersheds/shared/2829FB.html"></iframe>  
+1. The marginal entropy and relative mutual information can be calculated using the **landscapemetrics** package’s functions: `lsm_l_ent()` and `lsm_l_relmutinf()`. Calculate both of these metrics for the `exdata/lc_small.tif` raster.
+1. Read the `exdata/lc_europe.tif` raster using `rast() from the **terra** package and the `exdata/polygons.gpkg` vector data using the `read_sf()` function from the **sf** package. Calculate the marginal entropy and relative mutual information for each polygon using the `sample_lsm()``` function.
+1. Join the calculated values with the polygons (see https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html for more details).
+1. Calculate SHDI and AI for the polygons. Compare the values of SHDI and AI with the marginal entropy and relative mutual information (e.g., using a scatterplot or by calculating the correlation coefficient). Are the results similar?
+1. (Extra) Create your own polygonal grid using `st_make_grid()` function from the **sf** package for the area from the `exdata/polygons.gpkg` file. Calculate the marginal entropy and relative mutual information for each square using the sample_lsm() function. Visualize the results.

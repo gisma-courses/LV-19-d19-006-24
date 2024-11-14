@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Advanced GIS and Remote Sensing - Worksheet 3: Watersheds Concept and Workflows</title>
+<title>Advanced GIS and Remote Sensing - Worksheet 2: Landscape metrics part 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,6 +29,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../worksheets/ws-02.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -87,11 +88,9 @@ background-size: cover;
 
 
 <link rel="stylesheet" href="../css/styles.css">
-<meta property="og:title" content="Advanced GIS and Remote Sensing - Worksheet 3: Watersheds Concept and Workflows">
-<meta property="og:description" content="">
+<meta property="og:title" content="Advanced GIS and Remote Sensing - Worksheet 2: Landscape metrics part 1">
 <meta property="og:site_name" content="Advanced GIS and Remote Sensing">
-<meta name="twitter:title" content="Advanced GIS and Remote Sensing - Worksheet 3: Watersheds Concept and Workflows">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Advanced GIS and Remote Sensing - Worksheet 2: Landscape metrics part 1">
 <meta name="twitter:creator" content="@gisma">
 <meta name="twitter:card" content="summary">
 </head>
@@ -121,11 +120,6 @@ background-size: cover;
 </i> 
 <span class="menu-text">FAQ</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../slides/slidelist.html"> <i class="bi bi-file-slides-fill" role="img">
-</i> 
-<span class="menu-text">Slides</span></a>
-  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -145,17 +139,17 @@ background-size: cover;
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Worksheet 3: Watersheds Concept and Workflows</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../worksheets/ws-01.html">Worksheets</a></li><li class="breadcrumb-item"><a href="../worksheets/ws-03.html">Worksheet 2: Landscape metrics part 1</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../worksheets/ws-01.html">Worksheets</a></li><li class="breadcrumb-item"><a href="../worksheets/ws-03.html">Worksheet 2: Landscape metrics part 1</a></li></ol></nav>
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Worksheet 3: Watersheds Concept and Workflows</h1>
+      <h1 class="title">Worksheet 2: Landscape metrics part 1</h1>
                       </div>
   </div>
     
@@ -208,8 +202,8 @@ background-size: cover;
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="https://gisma-courses.githu**************************************b.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Some Pros &amp; Cons for R-Spatial************************************************************************************************</span></a>
+  <a href="https://gisma-courses.github.io/LV-19-d19-006/morea/geocomputation-with-r/reading-screencast-spatial-r-gis-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Some Pros &amp; Cons for R-Spatial</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -226,6 +220,7 @@ background-size: cover;
 </li>
       </ul>
   </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
@@ -252,13 +247,13 @@ background-size: cover;
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Worksheets</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../worksheets/ws-01.html" class="sidebar-item-text sidebar-link">
@@ -271,11 +266,12 @@ background-size: cover;
  <span class="menu-text">Worksheet 1: Warm Up Exercises</span></a>
   </div>
 </li>
-          <li class="px-0"><hr class="sidebar-divider hi "></li>
           <li class="sidebar-item">
- <span class="menu-text">Spatial Patterns</span>
-  </li>
-          <li class="px-0"><hr class="sidebar-divider hi "></li>
+  <div class="sidebar-item-container"> 
+  <a href="../worksheets/ws-03.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Worksheet 2: Landscape metrics part 1</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
@@ -289,10 +285,7 @@ background-size: cover;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-we-will-do-in-this-unit" id="toc-what-we-will-do-in-this-unit" class="nav-link active" data-scroll-target="#what-we-will-do-in-this-unit">What we will do in this unit</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#materials-required" id="toc-materials-required" class="nav-link" data-scroll-target="#materials-required">Materials Required</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#exercises-ws-2" id="toc-exercises-ws-2" class="nav-link active" data-scroll-target="#exercises-ws-2">Exercises WS 2</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/gisma-courses/LV-19-d19-006-24/edit/main/worksheets/ws-03.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gisma-courses/LV-19-d19-006-24/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -303,43 +296,15 @@ background-size: cover;
 
 
 
-<p>A watershed, also known as a catchment area or river basin, is the area from which precipitation flows into a particular river or watercourse and into which the river or watercourse drains. It is a natural hydrological unit defined by topographical features. Catchment modelling is an important aspect of water resources and environmental science for understanding the behaviour of the hydrological cycle and developing sustainable water management strategies.</p>
-<p>Catchment modelling allows the simulation of water flow, precipitation, runoff patterns and the transport of sediment and pollutants within the catchment. This is often done using hydrological models based on computer simulations. These models help to analyse different scenarios and environmental impacts, such as those associated with land use change, climate change or human activities.</p>
-<p>The benefits of catchment modelling are many. They include predicting floods, assessing water quality, planning water management measures, identifying potential environmental impacts and developing strategies for sustainable water use. Understanding the dynamics of catchments is crucial to preventing water scarcity, protecting ecosystems and reconciling human activities with the environment.</p>
-<section id="what-we-will-do-in-this-unit" class="level2">
-<h2 class="anchored" data-anchor-id="what-we-will-do-in-this-unit">What we will do in this unit</h2>
-<p>We will investigate to what extent the terrain model and the chosen algorithm influence the accuracy and relevance of hydrological forecasts when modelling the Lahn catchment area.</p>
-</section>
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p>After this tutorial you will be able to</p>
-<ul>
-<li>Identify and evaluate appropriate tools and workflows</li>
-<li>Identify basic technical concepts</li>
-<li>Evaluate different technical workflows in relation to a problem</li>
-<li>critically reflect on and document which decisions led to which process</li>
-</ul>
-</section>
-<section id="materials-required" class="level2">
-<h2 class="anchored" data-anchor-id="materials-required">Materials Required</h2>
-</section>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<ul>
-<li><a href="https://srtm.csi.cgiar.org/srtmdata/" class="external" target="_blank">CGIAR-CSI SRTM V4</a> The CGIAR-CSI SRTM V4 is probably the best homogeneously post-processed SRTM dataset in the world. Regarding the new version 4, CGIAR-CSI says: “<em>envisages that CGIAR-CSI SRTM version 4 is our definitive and final release […]</em>”, <a href="https://srtm.csi.cgiar.org/faq/" class="external" target="_blank">see CGIAR FAQ</a>.</li>
-<li><a href="https://dwtkns.com/srtm30m/" class="external" target="_blank">SRTM Terrain Model TileDownloader</a>. <code>ATTENTION:</code> (Requires registration with <a href="https://urs.earthdata.nasa.gov/users/new" class="external" target="_blank">NASA Earthdata</a>) The Infolink of the surface is corrupted, see the <a href="https://www2.jpl.nasa.gov/srtm/" class="external" target="_blank">NASA JPL page</a> for the necessary metadata. <code>ATTENTION:</code> This file must be downloaded as a ZIP file, as it is in <a href="https://gdal.org/drivers/raster/srtmhgt.html" class="external" target="_blank">SRTMHGT</a> format.</li>
-<li><a href="https://opendem.info/downloads/srtm_germany_dtm.zip">OpenDEM Germany</a> <code>ATTENTION:</code> Please be sure to read the <a href="https://opendem.info/srtm_processing.html" class="external" target="_blank">Info page</a> as extensive re-analysis of the SRTM data has taken place.</li>
-<li><a href="https://opendem.info/opendemeu_download_highres.html" class="external" target="_blank">OpenDEM Europe</a> <code>ATTENTION:</code> Please be sure to read the <a href="https://opendem.info/opendemeu_background.html" class="external" target="_blank">Info page</a> as an extensive re-analysis of the SRTM data has taken place.</li>
-<li><a href="https://gistbok.ucgis.org/bok-topics/watersheds-and-drainage-networks">GIS&amp;T Body of Knowledge Watershed Concept</a></li>
-<li><a href="https://storymaps.arcgis.com/stories/ccb399d1eae64ed49e4c4c2c2f697e6b">Watershed ArcGIS Story</a></li>
-<li><a href="https://rashms.com/gis/watershed-delineation-using-whitebox-tools-wbt-plugin-in-qgis/">White-box QGIS Tuitorial</a></li>
-<li><a href="https://rashms.com/gis/watershed-delineation-using-saga-tools-plugin-in-qgis/">Saga/QGIS Tutorial</a></li>
-<li><a href="https://sagatutorials.wordpress.com/preprocessing-and-catchment-deliniation/">Saga Tutorial</a></li>
-<li><a href="https://docs.qgis.org/3.28/en/docs/training_manual/processing/hydro.html">QGIS Tutorial Hydrolocical Analysis</a></li>
-</ul>
-<p>## Tasks 3 Please choose one or more approaches to model the catchment of the river Lahn with the outflow point Lahnstein. Compare with the linked online version of mghydro.com</p>
-<iframe width="600" height="500" src="https://mghydro.com/watersheds/shared/2829FB.html">
-</iframe>
+<section id="exercises-ws-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-ws-2">Exercises WS 2</h2>
+<ol type="1">
+<li>The marginal entropy and relative mutual information can be calculated using the <strong>landscapemetrics</strong> package’s functions: <code>lsm_l_ent()</code> and <code>lsm_l_relmutinf()</code>. Calculate both of these metrics for the <code>exdata/lc_small.tif</code> raster.</li>
+<li>Read the <code>exdata/lc_europe.tif</code> raster using <code>rast() from the **terra** package and the</code>exdata/polygons.gpkg<code>vector data using the</code>read_sf()<code>function from the **sf** package. Calculate the marginal entropy and relative mutual information for each polygon using the</code>sample_lsm()``` function.</li>
+<li>Join the calculated values with the polygons (see https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html for more details).</li>
+<li>Calculate SHDI and AI for the polygons. Compare the values of SHDI and AI with the marginal entropy and relative mutual information (e.g., using a scatterplot or by calculating the correlation coefficient). Are the results similar?</li>
+<li>(Extra) Create your own polygonal grid using <code>st_make_grid()</code> function from the <strong>sf</strong> package for the area from the <code>exdata/polygons.gpkg</code> file. Calculate the marginal entropy and relative mutual information for each square using the sample_lsm() function. Visualize the results.</li>
+</ol>
 
 
 </section>
@@ -907,6 +872,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://utteranc.es/client.js" repo="gisma-courses/LV-19-d19-006-24" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../worksheets/ws-02.html" class="pagination-link" aria-label="Worksheet 1: Warm Up Exercises">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Worksheet 1: Warm Up Exercises</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
