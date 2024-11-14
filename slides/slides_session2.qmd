@@ -27,29 +27,29 @@ spotlight:
 - **Problem no. 2**: many landscape metrics are highly correlated…
 
 ![](/assets/shdi_ai_map.png){width="40%"}
+---
 
+
+## Possible Approach - PCA of type samples of landscape metrics
+
+We performed a principal component analysis (PCA) using 17 landscape-level metrics:
+
+
+![](/assets/pca.png){width="80%"}
 
 ---
 
 ## PCA of landscape metrics
 
-We performed a principal component analysis (PCA) using 17 landscape-level metrics:
-
-
-![](/assets/pca.png){width="40%"}
-
-
-:::: columns
+:::: {.columns}
 
 ::: {.column width="45%"}
-
 ![PCA 1](/assets/PC1.png)
 :::
 
 ::: {.column width="45%"}
-
 ![PCA 2](/assets/PC2.png)
-
+:::
 
 ::::
 
@@ -77,7 +77,7 @@ However, there are still some problems here…
 * Next, we predicted the results on the data for the whole Europe
 
 
-:::: columns
+:::: {.columns}
 
 ::: {.column width="45%"}
 
@@ -85,8 +85,8 @@ However, there are still some problems here…
 :::
 
 ::: {.column width="45%"}
-
 ![PCA 2](/assets/PC2UK_map.png)
+:::
 
 
 ::::
@@ -112,17 +112,18 @@ Issues with the PCA approach:
 * **Relative mutual information [U]** - clumpiness (configuration) of spatial categories from fragmented patterns to consolidated patterns)
 * **H(x) **and **U** are uncorrelated
 
-::: {.column width="45%"}
+:::: {.columns}
 
+::: {.column width="45%"}
 ![Entropy](/assets/ent_map.png)
 :::
 
 ::: {.column width="45%"}
-
 ![Relative mutual information](/assets/relmutinf_map.png)
-
+:::
 
 ::::
+
 
 --- 
 
@@ -135,21 +136,19 @@ Issues with the PCA approach:
 ---
 
 ## IT metrics final results
-
-
-:::: columns
+:::: {.columns}
 
 ::: {.column width="45%"}
-
 ![Land cover data](/assets/lc_map1.png)
 :::
 
 ::: {.column width="45%"}
-
 ![Parametrization of two IT metrics](/assets/2dmap_ent_relmutinf.png)
-
+:::
 
 ::::
+
+
 
 --- 
 
