@@ -201,7 +201,7 @@
     "href": "slides/slides_session3.html#ercercise",
     "title": "Landscape Metrics Reloaded",
     "section": "Ercercise",
-    "text": "Ercercise\nPlease navigate to the landscapemetrics package.\nRun the following tutorials with the example data of this course:\n\n\n\n\nSample lsm\nIrregular Areas\nUtilities\n\n\n\n\nFor the irregular vector data download the OSM data e.g. from Geofabrik and use the category landuse. Note you need to merge Niedersachsen and Sachsen-Anhalt\nAddon\n\n\n\n\nDownload the fragstats tutorial Analyzing a single grid.\nRun the tutorial once with fragstats and then use the data and indices for the same analysis with landscapemetrics instead.\n\n\n\n\n\n\n\n&lt;gisma 2024&gt;\n\n\n\nParametrization of two IT metrics\nParametrization of two IT metrics",
+    "text": "Ercercise\nPlease navigate to the landscapemetrics package.\nRun the following tutorials with the example data of this course:\n\n\n\n\nSample lsm\nIrregular Areas\nUtilities\n\n\n\n\nFor the irregular vector data download the OSM data e.g. from Geofabrik and use the category landuse. Note you need to merge Niedersachsen and Sachsen-Anhalt\nAddon\n\n\n\n\nDownload the FragStats tutorial Analyzing a single grid.\nRun the tutorial once with FragStats and then use the data and indices for the same analysis with landscapemetrics instead.\n\n\n\n\n\n\n\n&lt;gisma 2024&gt;\n\n\n\nParametrization of two IT metrics\nParametrization of two IT metrics",
     "crumbs": [
       "FAQ",
       "Slides",

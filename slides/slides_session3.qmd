@@ -117,7 +117,7 @@ For the irregular vector data download the OSM data [e.g. from Geofabrik](https:
 ::: {.callout-tip appearance="minimal"}
 
 
-- Download the fragstats tutorial [Analyzing a single grid](https://www.fragstats.org/download/Tutorial_2.zip).
-- Run the tutorial once with `fragstats` and then use the data and indices for the same analysis with landscapemetrics instead.
+- Download the `FragStats` tutorial [Analyzing a single grid](https://www.fragstats.org/download/Tutorial_2.zip).
+- Run the tutorial once with `FragStats` and then use the data and indices for the same analysis with landscapemetrics instead.
 
 :::
