@@ -313,10 +313,10 @@ background-size: cover;
 <h2 class="anchored" data-anchor-id="exercises-ws-2">Exercises WS 2</h2>
 <ol type="1">
 <li>The marginal entropy and relative mutual information can be calculated using the <strong>landscapemetrics</strong> package’s functions: <code>lsm_l_ent()</code> and <code>lsm_l_relmutinf()</code>. Calculate both of these metrics for the <code>exdata/lc_small.tif</code> raster.</li>
-<li>Read the <code>exdata/lc_europe.tif</code> raster using <code>rast() from the **terra** package and the</code>exdata/polygons.gpkg<code>vector data using the</code>read_sf()<code>function from the **sf** package. Calculate the marginal entropy and relative mutual information for each polygon using the</code>sample_lsm()``` function.</li>
-<li>Join the calculated values with the polygons (see https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html for more details).</li>
+<li>Read the <code>exdata/lc_europe.tif</code> raster using <code>rast()</code> from the <strong>terra</strong> package and the <code>exdata/polygons.gpkg</code> vector data using the <code>read_sf()</code> function from the <strong>sf</strong> package. Calculate the marginal entropy and relative mutual information for each polygon using the <code>sample_lsm()</code> function.</li>
+<li>Join the calculated values with the polygons (see <a href="https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html">https://r-spatialecology.github.io/landscapemetrics/articles/irregular_areas.html</a> for more details).</li>
 <li>Calculate SHDI and AI for the polygons. Compare the values of SHDI and AI with the marginal entropy and relative mutual information (e.g., using a scatterplot or by calculating the correlation coefficient). Are the results similar?</li>
-<li>(Extra) Create your own polygonal grid using <code>st_make_grid()</code> function from the <strong>sf</strong> package for the area from the <code>exdata/polygons.gpkg</code> file. Calculate the marginal entropy and relative mutual information for each square using the sample_lsm() function. Visualize the results.</li>
+<li>(Extra) Create your own polygonal grid using <code>st_make_grid()</code> function from the <strong>sf</strong> package for the area from the <code>exdata/polygons.gpkg</code> file. Calculate the marginal entropy and relative mutual information for each square using the <code>sample_lsm()</code> function. Visualize the results.</li>
 </ol>
 
 

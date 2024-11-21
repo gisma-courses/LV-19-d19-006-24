@@ -32,6 +32,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -382,11 +447,267 @@ Chris Reudenbach
 <p>The basic signature is the co-occurrence matrix: <img data-src="../assets/cooc.png"></p>
 </div>
 </div>
+</section>
+<section id="spatial-signatures-dimension-reduction-normailsation" class="slide level2">
+<h2>Spatial signatures dimension reduction &amp; normailsation</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><a href="../assets/index-31-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="../assets/index-31-1.png"></a></p>
+</div><div class="column" style="width:45%;">
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/cove1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="Reduced co-occurrence vector (cove)"><img data-src="../assets/cove1.png" alt="Reduced co-occurrence vector (cove)"></a></p>
+<figcaption><strong>Reduced co-occurrence vector (cove)</strong></figcaption>
+</figure>
+</div>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/cove3.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5" title="Normalized co-occurrence vector(cove)"><img data-src="../assets/cove3.png" alt="Normalized co-occurrence vector(cove)"></a></p>
+<figcaption><strong>Normalized co-occurrence vector(cove)</strong></figcaption>
+</figure>
+</div>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/cove3.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6" title="Co-occurrence vector (cove)"><img data-src="../assets/cove3.png" alt="Co-occurrence vector (cove)"></a></p>
+<figcaption><strong>Co-occurrence vector (cove)</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dissimilarity-measures-example-1" class="slide level2">
+<h2>Dissimilarity measures Example 1</h2>
+<p>Measuring the distance between two signatures in the form of normalized vectors allows determining dissimilarity between spatial structures.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="../assets/index-35-1.png"> <img data-src="../assets/di1.png"></p>
+</div><div class="column" style="width:25%;">
+
+</div><div class="column" style="width:30%;">
+<p><img data-src="../assets/index-37-1.png"> <img data-src="../assets/di2.png"></p>
+</div>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/jsd1.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7" title="Jensen-Shannon distance between the above rasters: 0.0684"><img data-src="../assets/jsd1.png" class="quarto-figure quarto-figure-center" style="width:35.0%" alt="Jensen-Shannon distance between the above rasters: 0.0684"></a></p>
+</figure>
+</div>
+<figcaption>Jensen-Shannon distance between the above rasters: <strong>0.0684</strong></figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="dissimilarity-measures-example-2" class="slide level2">
+<h2>Dissimilarity measures Example 2</h2>
+<p>Measuring the distance between two signatures in the form of normalized vectors allows determining dissimilarity between spatial structures.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="../assets/index-40-1.png"> <img data-src="../assets/di3.png"></p>
+</div><div class="column" style="width:25%;">
+
+</div><div class="column" style="width:30%;">
+<p><img data-src="../assets/index-41-1.png"> <img data-src="../assets/di4.png"></p>
+</div>
+</div>
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/jsd2.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8" title="Jensen-Shannon distance between the above rasters: 0.444"><img data-src="../assets/jsd2.png" class="quarto-figure quarto-figure-center" style="width:35.0%" alt="Jensen-Shannon distance between the above rasters: 0.444"></a></p>
+</figure>
+</div>
+<figcaption>Jensen-Shannon distance between the above rasters: <strong>0.444</strong></figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="pattern-based-spatial-analysis" class="slide level2">
+<h2>Pattern-based spatial analysis</h2>
+<p>The distance between spatial signatures provides a powerful possibility to identify (dis)similarities in several contexts.</p>
+<div class="quarto-layout-panel" data-layout="[30,30,30]">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_search4.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9" title="finding similar spatial structures - one to many comparison"><img data-src="../assets/lsp_search4.png" alt="finding similar spatial structures - one to many comparison"></a></p>
+<figcaption>finding similar spatial structures - <strong>one to many</strong> comparison</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_compare2.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10" title="quantitative assessment of changes in spatial structures - one to one comparison"><img data-src="../assets/lsp_compare2.png" alt="quantitative assessment of changes in spatial structures - one to one comparison"></a></p>
+<figcaption>quantitative assessment of changes in spatial structures - <strong>one to one</strong> comparison</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_cluster4.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11" title="clustering similar spatial structures - many to many comparison"><img data-src="../assets/lsp_cluster4.png" alt="clustering similar spatial structures - many to many comparison"></a></p>
+<figcaption>clustering similar spatial structures - <strong>many to many</strong> comparison</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>::::::</p>
+</section>
+<section id="one-to-many" class="slide level2">
+<h2>One to many</h2>
+<p>Finding areas with similar topography to the Suwalski Landscape Park</p>
+<div class="quarto-layout-panel" data-layout="[1,1]">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_search2.png" class="lightbox" data-glightbox="description: .lightbox-desc-12" data-gallery="quarto-lightbox-gallery-12" title="Topography Indices"><img data-src="../assets/lsp_search2.png" style="width:85.0%" alt="Topography Indices"></a></p>
+<figcaption>Topography Indices</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_search4.png" class="lightbox" data-glightbox="description: .lightbox-desc-13" data-gallery="quarto-lightbox-gallery-13" title="JSD Index"><img data-src="../assets/lsp_search4.png" style="width:85.0%" alt="JSD Index"></a></p>
+<figcaption>JSD Index</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="one-to-one" class="slide level2">
+<h2>One to one</h2>
+<p>The left maps are showing that many areas in the Amazon have undergone significant land cover changes between 1992 and 2018. The challenge now is to determine which areas have changed the most. The right map shows these areas identified by high JSD values.</p>
+<div class="callout callout-important no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Note that changes in both <strong>category and spatial configuration</strong> are measured.</p>
+</div>
+</div>
+</div>
+<div class="quarto-layout-panel" data-layout="[0.75,0.35]">
+<div class="quarto-layout-row quarto-layout-valign-bottom">
+<div class="quarto-layout-cell" style="flex-basis: 68.2%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_compare1.png" class="lightbox" data-glightbox="description: .lightbox-desc-14" data-gallery="quarto-lightbox-gallery-14" title="Landuse Types"><img data-src="../assets/lsp_compare1.png" style="width:85.0%" alt="Landuse Types"></a></p>
+<figcaption>Landuse Types</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 31.8%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_compare2.png" class="lightbox" data-glightbox="description: .lightbox-desc-15" data-gallery="quarto-lightbox-gallery-15" title="JSD Index"><img data-src="../assets/lsp_compare2.png" style="width:85.0%" alt="JSD Index"></a></p>
+<figcaption>JSD Index</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="many-to-many" class="slide level2">
+<h2>Many to many</h2>
+<p>Areas in Africa with similar spatial structures for two themes have been identified - land cover and landforms.</p>
+<p><a href="../assets/lsp_cluster_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img data-src="../assets/lsp_cluster_map.png"></a></p>
+</section>
+<section id="many-to-many-1" class="slide level2">
+<h2>Many to many</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../assets/lsp_cluster6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img data-src="../assets/lsp_cluster6.png" class="quarto-figure quarto-figure-center" style="width:75.0%"></a></p>
+</figure>
+</div>
+<p>The quality of each cluster can be assessed using metrics:</p>
+<ul>
+<li><strong>Intra-cluster heterogeneity</strong>: determines distances between all landscapes within a group</li>
+<li><strong>Inter-cluster isolation</strong>: determines distances between a given group and all others</li>
+</ul>
+</section>
+<section id="examples" class="slide level2">
+<h2>Examples</h2>
+<h3 id="coma">coma</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(motif)</span>
+<span id="cb1-3"><a></a>r9 <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"../exdata/r9.tif"</span>)</span>
+<span id="cb1-4"><a></a>r9_sign_coma <span class="ot">=</span> <span class="fu">lsp_signature</span>(r9, <span class="at">type =</span> <span class="st">"coma"</span>)</span>
+<span id="cb1-5"><a></a>r9_sign_coma</span>
+<span id="cb1-6"><a></a>r9_sign_coma<span class="sc">$</span>signature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h3 id="cove">cove</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>r9_sign <span class="ot">=</span> <span class="fu">lsp_signature</span>(r9, <span class="at">type =</span> <span class="st">"cove"</span>)</span>
+<span id="cb2-2"><a></a>r9_sign</span>
+<span id="cb2-3"><a></a>r9_sign<span class="sc">$</span>signature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h3 id="search">search</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(sf)</span>
+<span id="cb3-2"><a></a>landcover <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/landcover2015s.tif"</span>, <span class="at">package =</span> <span class="st">"motif"</span>))</span>
+<span id="cb3-3"><a></a>ecoregions <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="fu">system.file</span>(<span class="st">"vector/ecoregionss.gpkg"</span>, <span class="at">package =</span> <span class="st">"motif"</span>))</span>
+<span id="cb3-4"><a></a>ecoregion1 <span class="ot">=</span> ecoregions[<span class="dv">1</span>, ]</span>
+<span id="cb3-5"><a></a>landcover1 <span class="ot">=</span> <span class="fu">crop</span>(landcover, ecoregion1, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-6"><a></a><span class="fu">plot</span>(landcover)</span>
+<span id="cb3-7"><a></a><span class="fu">plot</span>(landcover1)</span>
+<span id="cb3-8"><a></a></span>
+<span id="cb3-9"><a></a>search_result <span class="ot">=</span> <span class="fu">lsp_search</span>(landcover1, landcover, </span>
+<span id="cb3-10"><a></a>                           <span class="at">type =</span> <span class="st">"cove"</span>, <span class="at">dist_fun =</span> <span class="st">"jensen-shannon"</span>, <span class="at">window =</span> <span class="dv">25</span>,</span>
+<span id="cb3-11"><a></a>                           <span class="at">output =</span> <span class="st">"sf"</span>)</span>
+<span id="cb3-12"><a></a><span class="fu">plot</span>(search_result[<span class="st">"dist"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h3 id="minmax">min/max</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>search_result<span class="sc">$</span>id[<span class="fu">which.min</span>(search_result<span class="sc">$</span>dist)]</span>
+<span id="cb4-2"><a></a>search_results_75 <span class="ot">=</span> <span class="fu">lsp_extract</span>(landcover, <span class="at">window =</span> <span class="dv">25</span>, <span class="at">id =</span> <span class="dv">75</span>)</span>
+<span id="cb4-3"><a></a><span class="fu">plot</span>(search_results_75)</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a>search_result<span class="sc">$</span>id[<span class="fu">which.max</span>(search_result<span class="sc">$</span>dist)]</span>
+<span id="cb4-6"><a></a>search_results_215 <span class="ot">=</span> <span class="fu">lsp_extract</span>(landcover, <span class="at">window =</span> <span class="dv">25</span>, <span class="at">id =</span> <span class="dv">215</span>)</span>
+<span id="cb4-7"><a></a><span class="fu">plot</span>(search_results_215)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercises" class="slide level2">
+<h2>Exercises</h2>
+<ol type="1">
+<li>Read the study area polygon from the <code>exdata/harz_borders.gpkg</code> file using the <code>read_sf()</code> function from the <strong>sf</strong> package.</li>
+<li>Read the land cover raster data for Europe from the file <code>exdata/lc_europe.tif</code> using the function <code>rast()</code> from the package <strong>terra</strong>. Visualise both datasets.</li>
+<li>Crop and mask the raster to the polygon boundaries. Visualise the results.</li>
+<li>Compute a spatial signature for the study area. Can you understand its meaning?</li>
+<li>Find out which areas of the Europe raster are most similar to the study area (this may take a minute or so). Try different window sizes (e.g.&nbsp;200 or 500).</li>
+</ol>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 <p>&lt;gisma 2024&gt;</p>
 </div>
+</div>
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-4"><strong>Reduced co-occurrence vector (cove)</strong></span>
+<span class="glightbox-desc lightbox-desc-5"><strong>Normalized co-occurrence vector(cove)</strong></span>
+<span class="glightbox-desc lightbox-desc-6"><strong>Co-occurrence vector (cove)</strong></span>
+<span class="glightbox-desc lightbox-desc-7">Jensen-Shannon distance between the above rasters: <strong>0.0684</strong></span>
+<span class="glightbox-desc lightbox-desc-8">Jensen-Shannon distance between the above rasters: <strong>0.444</strong></span>
+<span class="glightbox-desc lightbox-desc-9">finding similar spatial structures - <strong>one to many</strong> comparison</span>
+<span class="glightbox-desc lightbox-desc-10">quantitative assessment of changes in spatial structures - <strong>one to one</strong> comparison</span>
+<span class="glightbox-desc lightbox-desc-11">clustering similar spatial structures - <strong>many to many</strong> comparison</span>
+<span class="glightbox-desc lightbox-desc-12">Topography Indices</span>
+<span class="glightbox-desc lightbox-desc-13">JSD Index</span>
+<span class="glightbox-desc lightbox-desc-14">Landuse Types</span>
+<span class="glightbox-desc lightbox-desc-15">JSD Index</span>
 </div>
 </section>
     </div>
@@ -601,6 +922,44 @@ Chris Reudenbach
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
@@ -779,7 +1138,7 @@ Chris Reudenbach
     </script>
     <script src="https://utteranc.es/client.js" repo="gisma-courses/LV-19-d19-006-24" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
     </script>
-    <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
+    <script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom"});
     window.onload = () => {
       lightboxQuarto.on('slide_before_load', (data) => {
         const { slideIndex, slideNode, slideConfig, player, trigger } = data;
