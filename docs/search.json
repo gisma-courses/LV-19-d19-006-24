@@ -116,7 +116,7 @@
     "href": "slides/slides_session4.html#dissimilarity-measures-example-1",
     "title": "Pattern-based spatial analysis",
     "section": "Dissimilarity measures Example 1",
-    "text": "Dissimilarity measures Example 1\nMeasuring the distance between two signatures in the form of normalized vectors allows determining dissimilarity between spatial structures.\n\n\n \n\n\n\n \n\n\n\n\n\n\n\n\n\n\nJensen-Shannon distance between the above rasters: 0.0684",
+    "text": "Dissimilarity measures Example 1\nMeasuring the distance between two signatures in the form of normalised vectors allows the dissimilarity between spatial structures to be determined. The package [motif] (https://jakubnowosad.com/motif/) is designed to do this work.\n\n\n \n\n\n\n \n\n\n\n\n\n\n\n\n\n\nJensen-Shannon distance between the above rasters: 0.0684",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -140,7 +140,7 @@
     "href": "slides/slides_session4.html#pattern-based-spatial-analysis",
     "title": "Pattern-based spatial analysis",
     "section": "Pattern-based spatial analysis",
-    "text": "Pattern-based spatial analysis\nThe distance between spatial signatures provides a powerful possibility to identify (dis)similarities in several contexts.\n\n\n\n\n\n\nfinding similar spatial structures - one to many comparison\n\n\n\n\n\n\n\nquantitative assessment of changes in spatial structures - one to one comparison\n\n\n\n\n\n\n\nclustering similar spatial structures - many to many comparison\n\n\n\n\n\n::::::",
+    "text": "Pattern-based spatial analysis\nThe distance between spatial signatures provides a powerful possibility to identify (dis)similarities in several contexts.\n\n\n\n\n\n\nfinding similar spatial structures - one to many comparison\n\n\n\n\n\n\n\nquantitative assessment of changes in spatial structures - one to one comparison\n\n\n\n\n\n\n\nclustering similar spatial structures - many to many comparison",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -934,6 +934,18 @@
       "FAQ",
       "Worksheets",
       "Worksheet 3: Pattern-based spatial analysis"
+    ]
+  },
+  {
+    "objectID": "slides/slides_session4.html#spatial-signatures-dimension-reduction-normalisation",
+    "href": "slides/slides_session4.html#spatial-signatures-dimension-reduction-normalisation",
+    "title": "Pattern-based spatial analysis",
+    "section": "Spatial signatures dimension reduction & normalisation",
+    "text": "Spatial signatures dimension reduction & normalisation\n\n\n\n\n\n\n\n\nReduced co-occurrence vector (cove)\n\n\n\n\n\n\n\nNormalized co-occurrence vector(cove)\n\n\n\n\n\n\n\nCo-occurrence vector (cove)",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Pattern-based spatial analysis"
     ]
   }
 ]
