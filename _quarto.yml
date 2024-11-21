@@ -72,6 +72,8 @@ website:
             text: Landscape Patterns
           - href:  slides/slides_session3.qmd          
             text: Landscape Patterns Reloaded
+          - href:  slides/slides_session4.qmd          
+            text: Pattern-based spatial analysis            
           
       - text: "---"
       - section: "Worksheets"
@@ -79,6 +81,7 @@ website:
           - worksheets/ws-01.qmd
           - worksheets/ws-02.qmd
           - worksheets/ws-03.qmd
+          - worksheets/ws-04.qmd
           - worksheets/ws-04.qmd
        
 
