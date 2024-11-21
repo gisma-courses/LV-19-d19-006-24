@@ -1,0 +1,27 @@
+[
+  {
+    "listing": "/slides/slidelist.html",
+    "items": [
+      "/slides/slides_session3.html",
+      "/slides/slides_session2.html",
+      "/slides/slides_session4.html",
+      "/slides/slide1.html",
+      "/slides/slides_session1.html"
+    ]
+  },
+  {
+    "listing": "/assessment/slidelist.html",
+    "items": [
+      "/assessment/learnr_app-2.html",
+      "/assessment/git-more.html",
+      "/assessment/en-git-more.html"
+    ]
+  },
+  {
+    "listing": "/modules/slidelist.html",
+    "items": [
+      "/modules/de-git-module.html",
+      "/modules/en-git-module.html"
+    ]
+  }
+]
