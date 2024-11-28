@@ -74,6 +74,8 @@ website:
             text: Landscape Patterns Reloaded
           - href:  slides/slides_session4.qmd          
             text: Pattern-based spatial analysis            
+          - href:  slides/slides_session5.qmd          
+            text: Continous data spatial analysis                        
           
       - text: "---"
       - section: "Worksheets"
