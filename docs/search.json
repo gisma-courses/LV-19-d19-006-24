@@ -953,7 +953,12 @@
     "href": "slides/slides_session5.html#climate-data---best-practicse",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Climate data - best practicse",
-    "text": "Climate data - best practicse\nFirst we need to setup our environment.\n\ninstall.packages(\"geodata\")\ndevtools::install_github(\"Nowosad/spquery\")\ndevtools::install_github(\"Nowosad/patternogram\")\ndevtools::install_github(\"Nowosad/supercells\")\nlibrary(terra); library(sf);library(geodata);library(mapview);library(spquery);library(patternogram)\n\nUsing the geodata package (helper package for terra) we can download in a very comfortable often used core data sets. In this case Worldclim and\n\n# German border on top level (nation)\nde = geodata::gadm(country = \"DEU\",level = 0,path = tempdir())\n# Worldclim historical climate data for Germany https://www.worldclim.org/data/index.html\nwc_tmin_de = worldclim_country(\"Germany\", var=\"tmin\", path=tempdir())\n# WCRP Coupled Model Intercomparison Project data https://www.wcrp-climate.org/wgcm-cmip\ncmip_tmin_2_5  = geodata::cmip6_world(\"CNRM-CM6-1\", \"585\", \"2061-2080\", var=\"tmin\", res=10, path=tempdir())\n# cropping and masking\nwc_tmin_de = crop(wc_tmin_de,de,mask=T)\ncmip_tmin_2_5_de = crop(cmip_tmin_2_5 , de,mask=T)\n# set plotting layout\nnf &lt;- layout( matrix(c(1,2), ncol=2) )\n\nplot(cmip_tmin_2_5_de)\nplot(wc_tmin_de)\n\n\n\n\nNote: Please check the websites for the meaning of the data"
+    "text": "Climate data - best practicse\nFirst we need to setup our environment.\n\ninstall.packages(\"geodata\")\ndevtools::install_github(\"Nowosad/spquery\")\ndevtools::install_github(\"Nowosad/patternogram\")\ndevtools::install_github(\"Nowosad/supercells\")\nlibrary(terra); library(sf);library(geodata);library(mapview);library(spquery);library(patternogram)\n\nUsing the geodata package (helper package for terra) we can download in a very comfortable often used core data sets. In this case Worldclim and\n\n# German border on top level (nation)\nde = geodata::gadm(country = \"DEU\",level = 0,path = tempdir())\n# Worldclim historical climate data for Germany https://www.worldclim.org/data/index.html\nwc_tmin_de = worldclim_country(\"Germany\", var=\"tmin\", path=tempdir())\n# WCRP Coupled Model Intercomparison Project data https://www.wcrp-climate.org/wgcm-cmip\ncmip_tmin_2_5  = geodata::cmip6_world(\"CNRM-CM6-1\", \"585\", \"2061-2080\", var=\"tmin\", res=10, path=tempdir())\n# cropping and masking\nwc_tmin_de = crop(wc_tmin_de,de,mask=T)\ncmip_tmin_2_5_de = crop(cmip_tmin_2_5 , de,mask=T)\n# set plotting layout\nnf &lt;- layout( matrix(c(1,2), ncol=2) )\n\nplot(cmip_tmin_2_5_de)\nplot(wc_tmin_de)\n\n\n\n\nNote: Please check the websites for the meaning of the data",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#spatial-signatures",
@@ -1030,48 +1035,83 @@
     "href": "slides/slides_session5.html#exercises",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Exercises",
-    "text": "Exercises\nThe goal: to regionalize Germany’s climates - Use Worldclim versus CMIP data - Use the uper helper functions and code for Great Britain\nExtended SLIC workflow uses the dynamic time warping (DTW) distance function rather than the Euclidean distance.\n\n\n\n&lt;gisma 2024&gt;\n\n\n\nCMIP6 downscaled future climate projection for 2061-2080 [model: CNRM-ESM2-1; ssp: “585”]\nWorldClim version 2.1 climate data for 1970-2000\nComparison historical Marburg vs CMIP\nComparison Worldclim vs CMIP\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 1"
+    "text": "Exercises\nThe goal: to regionalize Germany’s climates - Use Worldclim versus CMIP data - Use the uper helper functions and code for Great Britain\nExtended SLIC workflow uses the dynamic time warping (DTW) distance function rather than the Euclidean distance.\n\n\n\n&lt;gisma 2024&gt;\n\n\n\nCMIP6 downscaled future climate projection for 2061-2080 [model: CNRM-ESM2-1; ssp: “585”]\nWorldClim version 2.1 climate data for 1970-2000\nComparison historical Marburg vs CMIP\nComparison Worldclim vs CMIP\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 1",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#minimum-temperature-c",
     "href": "slides/slides_session5.html#minimum-temperature-c",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Minimum temperature (°C)",
-    "text": "Minimum temperature (°C)\n\n\n\n\n\nCMIP6 downscaled future climate projection for 2061-2080 [model: CNRM-ESM2-1; ssp: “585”]\n\n\n\n\n\n\nWorldClim version 2.1 climate data for 1970-2000"
+    "text": "Minimum temperature (°C)\n\n\n\n\n\nCMIP6 downscaled future climate projection for 2061-2080 [model: CNRM-ESM2-1; ssp: “585”]\n\n\n\n\n\n\nWorldClim version 2.1 climate data for 1970-2000",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#identifying-and-comparing-similar-spatial-patterns",
     "href": "slides/slides_session5.html#identifying-and-comparing-similar-spatial-patterns",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Identifying and comparing similar spatial patterns",
-    "text": "Identifying and comparing similar spatial patterns\nUsing the package spquery for finding similarities in continous raster data (e.g., raster time-series)\n\n\n\n# get Marburg and make it a spatial point\nmr = st_sf(st_sfc(st_point(c( 8.770833, 50.810001)),\n                  crs = \"EPSG:4326\"))\nvec = as.numeric(extract(wc_tmin_de, mr, ID = FALSE))\nvec\n# search for similarity in the data set\nsearch_tmin = spq_search(vec, cmip_tmin_2_5_de,\n                         dist_fun = \"euclidean\")\n\n# visualize\nplot(search_tmin,\n     plg = list( loc = \"topright\",title = \"Dissimilarity\"))\nplot(mr, add=TRUE, col='red', lwd=4)\n\n\n\n\nComparison historical Marburg vs CMIP\n\n\n\n\n\n# some cleaning\ncrop= crop( wc_tmin_de,cmip_tmin_2_5_de)\nres = resample(crop,cmip_tmin_2_5_de)\n\n# call comparison\ncompare_tmin = spq_compare(cmip_tmin_2_5_de, res,\n                           dist_fun = \"euclidean\")\n\n# visualize\nplot(compare_tmin,\n     plg = list( loc = \"topright\",title = \"Dissimilarity\"), \n     col =viridis(256))\nplot(mr, add=TRUE, col='red', lwd=4)\n\n\n\n\nComparison Worldclim vs CMIP"
+    "text": "Identifying and comparing similar spatial patterns\nUsing the package spquery for finding similarities in continous raster data (e.g., raster time-series)\n\n\n\n# get Marburg and make it a spatial point\nmr = st_sf(st_sfc(st_point(c( 8.770833, 50.810001)),\n                  crs = \"EPSG:4326\"))\nvec = as.numeric(extract(wc_tmin_de, mr, ID = FALSE))\nvec\n# search for similarity in the data set\nsearch_tmin = spq_search(vec, cmip_tmin_2_5_de,\n                         dist_fun = \"euclidean\")\n\n# visualize\nplot(search_tmin,\n     plg = list( loc = \"topright\",title = \"Dissimilarity\"))\nplot(mr, add=TRUE, col='red', lwd=4)\n\n\n\n\nComparison historical Marburg vs CMIP\n\n\n\n\n\n# some cleaning\ncrop= crop( wc_tmin_de,cmip_tmin_2_5_de)\nres = resample(crop,cmip_tmin_2_5_de)\n\n# call comparison\ncompare_tmin = spq_compare(cmip_tmin_2_5_de, res,\n                           dist_fun = \"euclidean\")\n\n# visualize\nplot(compare_tmin,\n     plg = list( loc = \"topright\",title = \"Dissimilarity\"), \n     col =viridis(256))\nplot(mr, add=TRUE, col='red', lwd=4)\n\n\n\n\nComparison Worldclim vs CMIP",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#patternogram",
     "href": "slides/slides_session5.html#patternogram",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "patternogram",
-    "text": "patternogram\nDescribing the range of spatial autocorrelation\n\nexplore spatial autocorrelations of predictors in machine learning models\ndetect spatial autocorrelation in various data structures\ncompare the spatial autocorrelation of variables over time\ninvestigate spatial autocorrelation of categorical spatial patterns\n\n\nlibrary(patternogram)\nlibrary(ggplot2)\npg1_100 = patternogram(wc_tmin_de, sample_size = 10)\npg2_100 = patternogram(cmip_tmin_2_5_de, sample_size = 10)\npg1_500 = patternogram(wc_tmin_de, sample_size = 100)\npg2_500 = patternogram(cmip_tmin_2_5_de, sample_size = 100)\npg1_1000 = patternogram(wc_tmin_de, sample_size = 1000)\npg2_1000 = patternogram(cmip_tmin_2_5_de, sample_size = 1000)\nggplot() + geom_point(data=pg1_100, aes(x=dist, y=dissimilarity), color='red4') +\n           geom_point(data=pg2_100, aes(x=dist, y=dissimilarity), color='red') +\n           geom_point(data=pg1_500, aes(x=dist, y=dissimilarity), color='blue') +\n           geom_point(data=pg2_500, aes(x=dist, y=dissimilarity), color='lightblue') +\n           geom_point(data=pg1_1000, aes(x=dist, y=dissimilarity), color='green') +\n           geom_point(data=pg2_1000, aes(x=dist, y=dissimilarity), color='darkgreen')            \n\n\nlibrary(patternogram)\nlibrary(ggplot2)\npg1_100 = patternogram(wc_tmin_de, width = 100, sample_size = 10)\npg2_100 = patternogram(cmip_tmin_2_5_de, width = 100 ,sample_size = 10)\npg1_500 = patternogram(wc_tmin_de,  width = 100,sample_size = 10)\npg2_500 = patternogram(cmip_tmin_2_5_de,  width = 100,sample_size = 10)\npg1_1000 = patternogram(wc_tmin_de,  width = 100,sample_size = 10)\npg2_1000 = patternogram(cmip_tmin_2_5_de, width = 100,sample_size = 10)\nggplot() + geom_point(data=pg1_100, aes(x=dist, y=dissimilarity), color='red4') +\n           geom_point(data=pg2_100, aes(x=dist, y=dissimilarity), color='red') +\n           geom_point(data=pg1_500, aes(x=dist, y=dissimilarity), color='blue') +\n           geom_point(data=pg2_500, aes(x=dist, y=dissimilarity), color='lightblue') +\n           geom_point(data=pg1_1000, aes(x=dist, y=dissimilarity), color='green') +\n           geom_point(data=pg2_1000, aes(x=dist, y=dissimilarity), color='darkgreen')"
+    "text": "patternogram\nDescribing the range of spatial autocorrelation\n\nexplore spatial autocorrelations of predictors in machine learning models\ndetect spatial autocorrelation in various data structures\ncompare the spatial autocorrelation of variables over time\ninvestigate spatial autocorrelation of categorical spatial patterns\n\n\nlibrary(patternogram)\nlibrary(ggplot2)\npg1_100 = patternogram(wc_tmin_de, sample_size = 10)\npg2_100 = patternogram(cmip_tmin_2_5_de, sample_size = 10)\npg1_500 = patternogram(wc_tmin_de, sample_size = 100)\npg2_500 = patternogram(cmip_tmin_2_5_de, sample_size = 100)\npg1_1000 = patternogram(wc_tmin_de, sample_size = 1000)\npg2_1000 = patternogram(cmip_tmin_2_5_de, sample_size = 1000)\nggplot() + geom_point(data=pg1_100, aes(x=dist, y=dissimilarity), color='red4') +\n           geom_point(data=pg2_100, aes(x=dist, y=dissimilarity), color='red') +\n           geom_point(data=pg1_500, aes(x=dist, y=dissimilarity), color='blue') +\n           geom_point(data=pg2_500, aes(x=dist, y=dissimilarity), color='lightblue') +\n           geom_point(data=pg1_1000, aes(x=dist, y=dissimilarity), color='green') +\n           geom_point(data=pg2_1000, aes(x=dist, y=dissimilarity), color='darkgreen')            \n\n\nlibrary(patternogram)\nlibrary(ggplot2)\npg1_100 = patternogram(wc_tmin_de, width = 100, sample_size = 10)\npg2_100 = patternogram(cmip_tmin_2_5_de, width = 100 ,sample_size = 10)\npg1_500 = patternogram(wc_tmin_de,  width = 100,sample_size = 10)\npg2_500 = patternogram(cmip_tmin_2_5_de,  width = 100,sample_size = 10)\npg1_1000 = patternogram(wc_tmin_de,  width = 100,sample_size = 10)\npg2_1000 = patternogram(cmip_tmin_2_5_de, width = 100,sample_size = 10)\nggplot() + geom_point(data=pg1_100, aes(x=dist, y=dissimilarity), color='red4') +\n           geom_point(data=pg2_100, aes(x=dist, y=dissimilarity), color='red') +\n           geom_point(data=pg1_500, aes(x=dist, y=dissimilarity), color='blue') +\n           geom_point(data=pg2_500, aes(x=dist, y=dissimilarity), color='lightblue') +\n           geom_point(data=pg1_1000, aes(x=dist, y=dissimilarity), color='green') +\n           geom_point(data=pg2_1000, aes(x=dist, y=dissimilarity), color='darkgreen')",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#slic-supercells",
     "href": "slides/slides_session5.html#slic-supercells",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Slic /supercells",
-    "text": "Slic /supercells\nsupercells: an extension of SLIC (Simple Linear Iterative Clustering; Achanta et al. (2012), doi:10.1109/TPAMI.2012.120) that can be applied to non-imagery geospatial rasters that carry:\n\npattern information (co-occurrence matrices)\ncompositional information (histograms)\ntime-series information (ordered sequences)\nother forms of information for which the use of Euclidean distance may not be justified\nSegmentation/regionalization: partitioning space into smaller segments while minimizing internal inhomogeneity and maximizing external isolation\n\n\n\n\nSLIC/supercells are a way to improve the output and reduce the cost of segmentation"
+    "text": "Slic /supercells\nsupercells: an extension of SLIC (Simple Linear Iterative Clustering; Achanta et al. (2012), doi:10.1109/TPAMI.2012.120) that can be applied to non-imagery geospatial rasters that carry:\n\npattern information (co-occurrence matrices)\ncompositional information (histograms)\ntime-series information (ordered sequences)\nother forms of information for which the use of Euclidean distance may not be justified\nSegmentation/regionalization: partitioning space into smaller segments while minimizing internal inhomogeneity and maximizing external isolation\n\n\n\n\nSLIC/supercells are a way to improve the output and reduce the cost of segmentation",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#code-examples",
     "href": "slides/slides_session5.html#code-examples",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Code examples",
-    "text": "Code examples\n\nlibrary(terra)\nlibrary(supercells)\n# Version 1\nmintemp_zones = supercells(cmip_tmin_2_5_de, k = 250, compactness = 4)\nplot(cmip_tmin_2_5_de[[1]]); plot(mintemp_zones, add = TRUE, col = NA)\n# Version 2\nmintemp_zones = supercells(cmip_tmin_2_5_de, k = 50, compactness = 4)\nplot(cmip_tmin_2_5_de[[1]]); plot(mintemp_zones, add = TRUE, col = NA)\n# Version 3\nmintemp_zones = supercells(cmip_tmin_2_5_de, k = 250, compactness = 1)\nplot(cmip_tmin_2_5_de[[1]]); plot(mintemp_zones, add = TRUE, col = NA)\n\n\n\n\n\n\n\n\n\nk = 250, compactness = 4\n\n\n\n\n\n\n\nk = 50, compactness = 4\n\n\n\n\n\n\n\nk = 250, compactness = 1\n\n\n\n\n\n\nFigure 2"
+    "text": "Code examples\n\nlibrary(terra)\nlibrary(supercells)\n# Version 1\nmintemp_zones = supercells(cmip_tmin_2_5_de, k = 250, compactness = 4)\nplot(cmip_tmin_2_5_de[[1]]); plot(mintemp_zones, add = TRUE, col = NA)\n# Version 2\nmintemp_zones = supercells(cmip_tmin_2_5_de, k = 50, compactness = 4)\nplot(cmip_tmin_2_5_de[[1]]); plot(mintemp_zones, add = TRUE, col = NA)\n# Version 3\nmintemp_zones = supercells(cmip_tmin_2_5_de, k = 250, compactness = 1)\nplot(cmip_tmin_2_5_de[[1]]); plot(mintemp_zones, add = TRUE, col = NA)\n\n\n\n\n\n\n\n\n\nk = 250, compactness = 4\n\n\n\n\n\n\n\nk = 50, compactness = 4\n\n\n\n\n\n\n\nk = 250, compactness = 1\n\n\n\n\n\n\nFigure 2",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   },
   {
     "objectID": "slides/slides_session5.html#code-examples---regionalisation-based-on-supercells",
     "href": "slides/slides_session5.html#code-examples---regionalisation-based-on-supercells",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Code Examples - Regionalisation based on supercells",
-    "text": "Code Examples - Regionalisation based on supercells\n\n# create supercells based on the 2D time-series ---------------------------\nsp = supercells(c(ta, pr), step = 15, compactness = 0.01, dist_fun = dtw_2d)\nplot(sp)\n\n# create 3, 7, 11, and 15 regions based on the 2D time-series -------------\nsp_regions = ?map_dfr(c(3, 7, 11, 15), regionalize_dtw_2d, sp)\n\ntm_shape(sp_regions) +\n  tm_polygons() +\n  tm_facets(\"k\")"
+    "text": "Code Examples - Regionalisation based on supercells\n\n# create supercells based on the 2D time-series ---------------------------\nsp = supercells(c(ta, pr), step = 15, compactness = 0.01, dist_fun = dtw_2d)\nplot(sp)\n\n# create 3, 7, 11, and 15 regions based on the 2D time-series -------------\nsp_regions = ?map_dfr(c(3, 7, 11, 15), regionalize_dtw_2d, sp)\n\ntm_shape(sp_regions) +\n  tm_polygons() +\n  tm_facets(\"k\")",
+    "crumbs": [
+      "FAQ",
+      "Slides",
+      "Continous data spatial analysis"
+    ]
   }
 ]
