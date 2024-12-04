@@ -324,10 +324,9 @@ tm_shape(sp_regions) +
 ## Exercises
 
 The goal: to regionalize Germany's climates
+
 - Use Worldclim versus CMIP data
-- Use the uper helper functions and code for Great Britain
-
-
+- Use the upper helper functions and code for Great Britain
 
 
 Extended SLIC workflow uses the dynamic time warping (DTW) distance function rather than the Euclidean distance.

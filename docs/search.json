@@ -1035,7 +1035,7 @@
     "href": "slides/slides_session5.html#exercises",
     "title": "Spatial patterns of non-categorical rasters",
     "section": "Exercises",
-    "text": "Exercises\nThe goal: to regionalize Germany’s climates - Use Worldclim versus CMIP data - Use the uper helper functions and code for Great Britain\nExtended SLIC workflow uses the dynamic time warping (DTW) distance function rather than the Euclidean distance.\n\n\n\n&lt;gisma 2024&gt;\n\n\n\nCMIP6 downscaled future climate projection for 2061-2080 [model: CNRM-ESM2-1; ssp: “585”]\nWorldClim version 2.1 climate data for 1970-2000\nComparison historical Marburg vs CMIP\nComparison Worldclim vs CMIP\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 1",
+    "text": "Exercises\nThe goal: to regionalize Germany’s climates\n\nUse Worldclim versus CMIP data\nUse the upper helper functions and code for Great Britain\n\nExtended SLIC workflow uses the dynamic time warping (DTW) distance function rather than the Euclidean distance.\n\n\n\n&lt;gisma 2024&gt;\n\n\n\nCMIP6 downscaled future climate projection for 2061-2080 [model: CNRM-ESM2-1; ssp: “585”]\nWorldClim version 2.1 climate data for 1970-2000\nComparison historical Marburg vs CMIP\nComparison Worldclim vs CMIP\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 4\nk = 50, compactness = 4\nk = 250, compactness = 1",
     "crumbs": [
       "FAQ",
       "Slides",
@@ -1113,5 +1113,19 @@
       "Slides",
       "Continous data spatial analysis"
     ]
+  },
+  {
+    "objectID": "worksheets/ws-06.html",
+    "href": "worksheets/ws-06.html",
+    "title": "Worksheet 5: Regionalisation",
+    "section": "",
+    "text": "Regionalize Germany’s climates.\n\nUse Worldclim versus CMIP data\nUse the upper helper functions and code for Great Britain\n\n\n\n\n\n\n\n\n\n\nMake sure you get an idea of a “scientific” climate zoning concept.\nThe following links provide an initial random selection of some thoughts on this concept.\n\nClimate Extremes are Becoming More Frequent, Co-occurring, and Persistent in Europe\nA systematic review of GIS-based local climate zone mapping studies\nEuropean summer weather regimes 1990-2019: Automatic classification and representation in a small - global climate model ensemble\n\nWhat are the main aims of the following articles in relation to climate zones?\nHow do you assess the proposed solution using supercells etc. in comparison?\nUse the LCZ-generator and compare it to your results."
+  },
+  {
+    "objectID": "worksheets/ws-06.html#exercises-ws-5",
+    "href": "worksheets/ws-06.html#exercises-ws-5",
+    "title": "Worksheet 5: Regionalisation",
+    "section": "",
+    "text": "Regionalize Germany’s climates.\n\nUse Worldclim versus CMIP data\nUse the upper helper functions and code for Great Britain\n\n\n\n\n\n\n\n\n\n\nMake sure you get an idea of a “scientific” climate zoning concept.\nThe following links provide an initial random selection of some thoughts on this concept.\n\nClimate Extremes are Becoming More Frequent, Co-occurring, and Persistent in Europe\nA systematic review of GIS-based local climate zone mapping studies\nEuropean summer weather regimes 1990-2019: Automatic classification and representation in a small - global climate model ensemble\n\nWhat are the main aims of the following articles in relation to climate zones?\nHow do you assess the proposed solution using supercells etc. in comparison?\nUse the LCZ-generator and compare it to your results."
   }
 ]
