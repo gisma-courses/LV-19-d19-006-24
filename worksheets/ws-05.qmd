@@ -1,5 +1,5 @@
 ---
-title: "Worksheet 3: Pattern-based spatial analysis"
+title: "Worksheet 4: Pattern-based spatial analysis"
 
 title-block-banner: ../images/splash_L03.png
 title-block-banner-color: black

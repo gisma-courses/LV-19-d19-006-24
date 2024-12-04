@@ -23,25 +23,25 @@
   {
     "objectID": "worksheets/ws-05.html",
     "href": "worksheets/ws-05.html",
-    "title": "Worksheet 3: Pattern-based spatial analysis",
+    "title": "Worksheet 4: Pattern-based spatial analysis",
     "section": "",
     "text": "Read the study area polygon from the exdata/harz_borders.gpkg file using the read_sf() function from the sf package.\nRead the land cover raster data for Europe from the file exdata/lc_europe.tif using the function rast() from the package terra. Visualise both datasets.\nCrop and mask the raster to the polygon boundaries. Visualise the results.\nCompute a spatial signature for the study area. Can you understand its meaning?\nFind out which areas of the Europe raster are most similar to the study area (this may take a minute or so). Try different window sizes (e.g. 200 or 500).\n\n\n\n\n\n\n\n\n\n\nDownload Corine data from 2012 and 2018.\nDefine an appropriate scale for the assessment of forest structure changes at European level\nIdentify the areas with the smallest and largest changes\nProvide a short interpretation\nHow’s the Harz ranked?",
     "crumbs": [
       "FAQ",
       "Worksheets",
-      "Worksheet 3: Pattern-based spatial analysis"
+      "Worksheet 4: Pattern-based spatial analysis"
     ]
   },
   {
     "objectID": "worksheets/ws-05.html#exercises-ws-4",
     "href": "worksheets/ws-05.html#exercises-ws-4",
-    "title": "Worksheet 3: Pattern-based spatial analysis",
+    "title": "Worksheet 4: Pattern-based spatial analysis",
     "section": "",
     "text": "Read the study area polygon from the exdata/harz_borders.gpkg file using the read_sf() function from the sf package.\nRead the land cover raster data for Europe from the file exdata/lc_europe.tif using the function rast() from the package terra. Visualise both datasets.\nCrop and mask the raster to the polygon boundaries. Visualise the results.\nCompute a spatial signature for the study area. Can you understand its meaning?\nFind out which areas of the Europe raster are most similar to the study area (this may take a minute or so). Try different window sizes (e.g. 200 or 500).\n\n\n\n\n\n\n\n\n\n\nDownload Corine data from 2012 and 2018.\nDefine an appropriate scale for the assessment of forest structure changes at European level\nIdentify the areas with the smallest and largest changes\nProvide a short interpretation\nHow’s the Harz ranked?",
     "crumbs": [
       "FAQ",
       "Worksheets",
-      "Worksheet 3: Pattern-based spatial analysis"
+      "Worksheet 4: Pattern-based spatial analysis"
     ]
   },
   {
@@ -941,25 +941,25 @@
   {
     "objectID": "worksheets/ws-04.html",
     "href": "worksheets/ws-04.html",
-    "title": "Worksheet 2: Landscape metrics part 2",
+    "title": "Worksheet 3: Landscape metrics part 2",
     "section": "",
     "text": "Please navigate to the landscapemetrics package.\nRun the following tutorials with the example data of this course:\n\n\n\n\n\n\n\nSample lsm\nIrregular Areas\nUtilities\n\n\n\n\nFor the irregular vector data download the OSM data e.g. from Geofabrik and use the category landuse. Note you need to merge Niedersachsen and Sachsen-Anhalt\n\n\n\n\n\n\n\n\n\nDownload the fragstats tutorial Analyzing a single grid.\nRun the tutorial but use landscapemetrics instead",
     "crumbs": [
       "FAQ",
       "Worksheets",
-      "Worksheet 2: Landscape metrics part 2"
+      "Worksheet 3: Landscape metrics part 2"
     ]
   },
   {
     "objectID": "worksheets/ws-04.html#exercises-ws-3",
     "href": "worksheets/ws-04.html#exercises-ws-3",
-    "title": "Worksheet 2: Landscape metrics part 2",
+    "title": "Worksheet 3: Landscape metrics part 2",
     "section": "",
     "text": "Please navigate to the landscapemetrics package.\nRun the following tutorials with the example data of this course:\n\n\n\n\n\n\n\nSample lsm\nIrregular Areas\nUtilities\n\n\n\n\nFor the irregular vector data download the OSM data e.g. from Geofabrik and use the category landuse. Note you need to merge Niedersachsen and Sachsen-Anhalt\n\n\n\n\n\n\n\n\n\nDownload the fragstats tutorial Analyzing a single grid.\nRun the tutorial but use landscapemetrics instead",
     "crumbs": [
       "FAQ",
       "Worksheets",
-      "Worksheet 2: Landscape metrics part 2"
+      "Worksheet 3: Landscape metrics part 2"
     ]
   },
   {
