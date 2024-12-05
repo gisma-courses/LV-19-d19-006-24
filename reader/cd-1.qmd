@@ -71,7 +71,7 @@ You can either use the data saved from the previous exercise or define, download
 However, the work environment is usually loaded first.
 
 ```{R setup , message = FALSE, warnings = FALSE}
-#| eval: false
+#| echo: true
 # ---- 0 Projekt Setup ----
 require("pacman")
 #remotes::install_github("zivankaraman/CDSE")
@@ -176,6 +176,8 @@ This gives us 315 matching images recorded between Januar 2019 and December 2023
 To obtain a Sentinel data cube, a gdalcube image collection must be created from the STAC query result. To do this, the asset names must be explicitly named in order to apply the SCL channel with the quality characteristics per pixel (classification as clouds, cloud shadows, etc.). In this query, a filter is set to cloud cover <= 50%.
 
 ```{r add_cube_assets}
+#| echo: true
+
 library(gdalcubes)
 assets = c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL")
 s2_collection = stac_image_collection(items$features, asset_names = assets, property_filter = function(x) {x[["eo:cloud_cover"]] < 50}) 
@@ -192,6 +194,8 @@ The *gdalcube image collection* can be considered as a proxy structure object wh
 
 
 ```{r create_cubeview, messages=FALSE, warnings=FALSE}
+#| echo: true
+
 b = 100
 v = cube_view(srs = "EPSG:32632", 
               dx = 10, 
@@ -215,11 +219,14 @@ Only calling a final *action* will start the processing on the COG-Server. In th
 
 
 ```{r get_data_write_ncdf}
+#| echo: true
+#| eval: false
+#| 
 # we "download" the data and write it t a netcdf file
-  s2.mask = image_mask("SCL", values = c(3,8,9))
-  gdalcubes_options(parallel = 16, ncdf_compression_level = 5)
-  raster_cube(s2_collection, v, mask = s2.mask) |>
-    write_ncdf("../data/MOF_10_2.nc",overwrite=TRUE)
+#  s2.mask = image_mask("SCL", values = c(3,8,9))
+#  gdalcubes_options(parallel = 16, ncdf_compression_level = 5)
+#  raster_cube(s2_collection, v, mask = s2.mask) |>
+#    write_ncdf("../data/MOF_10_2.nc",overwrite=TRUE)
 ```
 
 In the following examples we will show a simple plot in a generic pipe. However, a more common visualisation is quite simple. A typical pipe might be Save a resulting netCDF file `->` Convert it to a `stars` object `->` Visualise the results with `tmap`, `mapview`, `ggplot2` or whatever package you prefer to produce (interactive) map(s).
@@ -233,7 +240,8 @@ Possible *reducers* include `min"`, `mean"`, `median"`, `max"`, `count"` (count 
 To get an idea of the data, we can compute simple summary statistics using a 'reducer' function over dimensions. For example, using the `count` reducer, we can learn about the temporal coverage for each aggregated pixel, giving us an initial understanding of the temporal quality of the dataset.
 
 ```{r count, messages=FALSE, warnings=FALSE}
-
+#| echo: true
+#| eval: false
 ncdf_cube("../data/MOF_10_2.nc") |>
   reduce_time("count(B04)") |> 
   plot(key.pos = 1,  col = viridis::viridis, nbreaks = 10)
@@ -248,7 +256,8 @@ Below you will find various examples dealing with the common NDVI and the [kNDVI
 Below, we derive mean monthly kNdvi values over all pixel time series.
 
 ```{r forest_kndvi, messages=FALSE, warnings=FALSE}
-
+#| echo: true
+#| eval: false
 ncdf_cube("../data/MOF_10_2.nc") |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
@@ -260,6 +269,9 @@ ncdf_cube("../data/MOF_10_2.nc") |>
 Below, we derive mean monthly Ndvi values over all pixel time series.
 
 ```{r forest_ndvi, messages=FALSE, warnings=FALSE}
+#| echo: true
+#| eval: false
+#|  
 ncdf_cube("../data/MOF_10_2.nc") |>
   apply_pixel("(B08-B04)/(B08+B04)", "NDVI") |>
   reduce_time("mean(NsDVI)") |>
@@ -271,6 +283,7 @@ ncdf_cube("../data/MOF_10_2.nc") |>
 The [CDSE package](https://zivankaraman.github.io/CDSE/articles/CDSE.html) provides another simple way to get Sentinel/Copernicus data sets.
 
 ```{R}
+#| echo: true
 #| eval: false
 ####
 
@@ -385,6 +398,7 @@ We need the file `U2018_CLC2018_V2020_20u1.tif`.
 Alternatively, the already correctly processed and projected \*data set from the github repository (see script) can be used.
 
 ```{R stack, message=FALSE, warnings=FALSE}
+#| echo: true
 #| eval: false
 #--- Reading the data from the directories
 
@@ -453,6 +467,7 @@ The cluster algorithm can achieve a fairly acceptable separation of the clearing
 Also experiment with other cluster settings and discuss the results.
 
 ```{R}
+#| echo: true
 #| eval: false
 ## k-means über RStoolbox
 # Modell
@@ -493,6 +508,7 @@ For this exercise, we use `mapedit`, a small but powerful package that allows yo
 In combination with `mapview`, any \[color composite\] (https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/composites/) can also be used as a basis for digitization.
 
 ```{R}
+#| echo: true
 #| eval: false
 
 m1 = tm_shape(pred_stack_2019) + tm_rgb(r=4, g=3, b=2) +
@@ -524,6 +540,7 @@ Dense vegetation appears a darker red.
 Cities and open ground appear gray or light brown, water appears blue or black.
 
 ```{R digitize, echo=TRUE}
+#| echo: true
 #| eval: false
 
 #---- Digitization of training data ----
@@ -589,6 +606,7 @@ The result is a table with training data for 2019 and 2020.
 The data set contains all raster information for all bands covered by the polygons for the classes "clearcut" and "other".
 
 ```{R raw_train, echo=TRUE}
+#| echo: true
 #| eval: false
 head(tDF)
 ```
@@ -617,6 +635,7 @@ This means that we, as users, have to provide the algorithm with data that conve
 This data is then divided into training and test data.
 
 ```{R maxlike , message = FALSE, warnings = FALSE}
+#| echo: true
 #| eval: false
 # ---- Maximum Likelihood Classification ----
 
@@ -672,6 +691,7 @@ This is repeated with all available decision trees.
 Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.
 
 ```{R random_forest, eval=FALSE, message=FALSE, include=FALSE, warnings=FALSE}
+#| echo: true
 #| eval: false
 
 # Settings for model training: cross-validation, 10 repetitions
@@ -712,6 +732,7 @@ This can certainly be taken as an indication of the need to improve the classifi
 Overall, however, the model can be considered good.
 
 ```{R konfusiomatrix2019, echo=FALSE, message=FALSE, warnings=FALSE}
+#| echo: true
 #| eval: false
 # ----Calculation of the confusion matrix  ----
 cm_rf <- confusionMatrix(data = predict(rf_model, newdata = testDat), testDat$class)
@@ -724,6 +745,7 @@ Now we are ready to apply the verified model to our data set.
 In remote sensing, this is usually called classification.
 
 ```{R klassifikation2019, message = FALSE, warnings = FALSE}
+#| echo: true
 #| eval: false
 # Klassifikation (auch Vorhersage genannt)
 prediction_rf_2019  = raster::predict(pred_stack_2019 ,rf_model)
@@ -734,6 +756,7 @@ saveRDS(prediction_rf_2020, paste0(envrmt$path_data,"prediction_rf_2020.rds"))
 ```
 
 ```{R vergleichklassifikationen}
+#| echo: true
 #| eval: false
 prediction_rf_2019 = readRDS(paste0(envrmt$path_data,"prediction_rf_2019.rds"))
 prediction_rf_2020 = readRDS(paste0(envrmt$path_data,"prediction_rf_2020.rds"))
