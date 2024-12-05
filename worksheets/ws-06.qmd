@@ -26,10 +26,6 @@ Regionalize Germany's climates.
 - What are the main aims of the following articles in relation to climate zones?
 - How do you assess the proposed solution using supercells etc. in comparison? 
 
-  
-
-
-
 - Use the [LCZ-generator](https://lcz-generator.rub.de/) and compare it to your results. 
 
 :::

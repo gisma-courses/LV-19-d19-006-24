@@ -76,6 +76,11 @@ website:
             text: Pattern-based spatial analysis            
           - href:  slides/slides_session5.qmd          
             text: Continous data spatial analysis                        
+      - text: "---"  
+      - section: "Reader"
+        contents:
+          - href:  reader/cd-1.qmd          
+            text: Classification Workflow 
           
       - text: "---"
       - section: "Worksheets"
