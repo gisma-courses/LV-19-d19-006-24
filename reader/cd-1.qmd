@@ -1,5 +1,5 @@
 ---
-title: Change Detection - Klassifikationsverfahren 
+title: Change Detection - Sentinel  
 author: Chris Reudenbach
 date: '2021-12-16'
 bibliography: references.bib
@@ -27,32 +27,41 @@ As already explained in the introduction, we start with a scalable change detect
 Scalable means that we limit the analysis to a manageable area, the Nordwestharz, and to two time slices.
 However, the resulting algorithm can be applied to different or larger areas and to more time slices.
 
-## Information from image data
+## Information from satellite imagery
 
 Unprocessed satellite images are not necessarily informative.
 While our eyes can interpret a true-color image relatively conclusively and intuitively, a reliable and reproducible, i.e. scientifically sound, interpretation requires other approaches.
 A major advantage of typical image analysis methods over visual interpretation is the derivation of additional, so-called *invisible* information.
-We have already calculated simple indices such as NDVI or surface albedo as a physically based conversion of image signals into a measured variable.
 
-To obtain useful or meaningful information, e.g. about the land cover in an area, we have to analyze the data according to the question at hand.
-Probably the best known and most widely used approach is the supervised classification of image data into categories of interest.
+To obtain useful or meaningful information, e.g. about the land cover in an area, we have to analyze the data according to the question at hand. Probably the best known and most widely used approach is the supervised classification of image data into categories of interest.
 
-This tutorial introduces you to the classification of satellite and aerial image data.
+In this unit, you will learn about the classification of satellite image data. This includes both data acquisition on the Copernicus portal and the various steps from digitising the training data to evaluating the quality of the classifications. 
 
 We will cover the following topics:
 
-1.  preparation of the working environment and loading of data
-2.  digitization of the training areas
-3.  unsupervised classification (kmeans clustering)
-4.  model training
-5.  supervised classification (Random Forest, Maximum Likelihood)
-6.  estimation of model quality
+0. Theoretical principles 
+1. Preparing the work environment and automated data collection
+2. Overview – Unsupervised classification (k-means clustering)
+3. Recording training areas.
+4. Supervised classification (Random Forest, Maximum Likelihood)
+5. Estimating model quality
 
-# Classification of remote sensing data
+## Theoretical principles
 
 Please note that all types of classification usually require extensive data pre-processing.
 The focus is then on model building and quality assessment, which can be seen as the technical basis for classification, in order to finally derive the interpretation of the results in terms of content in the data post-processing.
+
 We will go through this process step by step.
+
+## Unsupervised Classification - k-means clustering
+
+Probably the best-known unsupervised classification technique is K-means clustering, which is also referred to as the *"simplest machine learning algorithm"*.
+
+K-means clustering is a technique commonly used in satellite image classification to group pixels with similar spectral characteristics. Treating each pixel as an observation, the algorithm assigns pixels to clusters based on their spectral values, with each cluster having a mean (or centroid) that represents its central spectral signature. This results in the segmentation of the image into distinct regions (similar to Voronoi cells) corresponding to land cover types, such as water, vegetation or urban areas, facilitating further analysis. It is often used to obtain an initial overview of whether the raster data can be sufficiently separated in feature space.
+
+![](https://en.wikipedia.org/wiki/K-means_clustering#/media/File:K-means_convergence.gif)
+
+Figure: Convergence of k-means clustering from an unfavorable starting position (two initial cluster centers are fairly close). [Chire](https://commons.wikimedia.org/wiki/User:Chire) \[CC BY-SA 4.0\] via wikipedia.org
 
 ## Supervised classification
 
@@ -60,12 +69,52 @@ In supervised land cover classification, a model is derived from a limited amoun
 The land cover types are defined *a priori*, and the model attempts to predict these types based on the similarity between the characteristics of the training data and the rest of the data set.
 
 ![](images/supervised_classification.jpg)
+Classifiers (e.g. the maximum likelihood classifier) or machine learning algorithms (such as Random Forest) use the training data to determine descriptive models that represent statistical signatures, classification trees or other functions.
+Within the limits of the quality of the training data, such models are suitable and representative for making predictions for areas if the predictors from the model are available for the entire area.
+
+We now want to predict the spatial characteristics of clear-felling/no forest using a maximum likelihood classification and random forest, and apply standard methods of random validation and model quality assessment.
+
+The goal is to separate clearcuts from all other pixels and to quantify the differences between 2019 and 2020.
+
+### Maximum Likelihood Classification
+
+Maximum likelihood classification assumes that the distribution of data for each class and in each channel is normally distributed.
+Under this assumption, the probability that a particular pixel belongs to a particular class is calculated.
+Since the probabilities can also be specified as a threshold, without this restriction, *all* pixels are assigned regardless of how unlikely they are.
+Each pixel is assigned to the class that has the highest probability (i.e., the maximum probability).
+
+![](images/max.png)
+
+### Random forest
+
+Random forests can be used for both regression and classification tasks, with the latter being particularly relevant in environmental remote sensing.
+Like any machine learning method, the random forest model learns to recognize patterns and structures in the data itself.
+Since the random forest algorithm also requires training data, it is also a supervised learning method.
+![](images/Random_forest_diagram_complete.png)!
+
+Figure: Simplified illustration of data classification by random forest during training.
+Venkata Jagannath \[CC BY-SA 4.0\] via wikipedia.org
+
+A random forest algorithm learns from the data by creating random decision trees – hence the name.
+For classification tasks, the algorithm takes a suitable instance of a decision tree from the training data set and assigns the corresponding class to the pixel.
+This is repeated with all available decision trees.
+Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.
 
 From a pragmatic point of view, classification tasks generally require the following steps:
 
 -   Creation of a comprehensive input data set that contains one or more raster layers. Selection of training areas, i.e. subsets of the input data set for which the land cover type is known to the remote sensing expert. Knowledge of the land cover can be obtained, for example, from one's own or third-party in situ observations, management information or other remote sensing products (e.g. high-resolution aerial photographs). Training a model using the training sites. For validation purposes, the training sites are often subdivided into one or more test and training sites to evaluate the performance of the model algorithm. Applying the trained model to the entire data set, i.e. predicting the land cover type based on the similarity of the data at each site to the class characteristics of the training data set.
 
-## Start - Setting up the work environment
+## Change detection case study: Harz Mountains
+
+# Goals
+
+This example shows how complex times series methods from external R packages can be applied in cloud computing environments using [`[rstac`](https://cran.r-project.org/package=rstac) [@rstac] and [`gdalcubes`](https://cran.r-project.org/package=gdalcubes) [@gdalcubes]. We will use the [`bfast` R package](https://cran.r-project.org/package=bfast) containing unsupervised change detection methods identifying structural breakpoints in vegetation index time series. Specifically, we will use the `bfastmonitor()` function to monitor changes on a dedicated timeperiod of a time series of Sentinel-2 imagery.
+
+Other packages used in this tutorial include [`stars`](https://cran.r-project.org/package=stars) [@stars], [`tmap`](https://cran.r-project.org/package=tmap) [@tmap] and [mapview](https://cran.r-project.org/package=tmap) [@mapview] for creating interactive maps, [`sf`](https://cran.r-project.org/package=sf) [@sf] for processing vector data, and [`colorspace`](https://cran.r-project.org/package=colorspace) [@colorspace] for visualizations with accessible colors.
+
+This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.
+
+### Setting up the work environment
 
 You can either use the data saved from the previous exercise or define, download and edit a new area.
 However, the work environment is usually loaded first.
@@ -76,16 +125,98 @@ However, the work environment is usually loaded first.
 require("pacman")
 #remotes::install_github("zivankaraman/CDSE")
 # packages installing if necessary and loading
-pacman::p_load(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes, sf, dplyr,CDSE, downloader, tidyverse,RStoolbox,rprojroot, exactextractr, randomForest, ranger, e1071, caret, link2GI, rstac, OpenStreetMap,colorspace)
+pacman::p_load(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes, sf, dplyr,CDSE, downloader, tidyverse,RStoolbox,rprojroot, exactextractr, randomForest, ranger, e1071, caret, link2GI, rstac, OpenStreetMap,colorspace,ows4R,httr)
 #--- Switch to determine whether digitization is required. If set to FALSE, the
 root_folder = find_rstudio_root_file()
+
+ndvi.col = function(n) {
+  rev(sequential_hcl(n, "Green-Yellow"))
+}
+
+ano.col = diverging_hcl(7, palette = "Red-Green",  register = "rg")
 
 ```
 
 Please add any missing or defective packages in the above setup script (if error messages occur).
 On the basis of the available Sentinel data, the first step should be to identify suitable data sets for a surface classification.
 
-## Retrieving Sentinel data part 1 gdalcubes
+### Defining the Area of Interest
+
+Please note to project to three different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.\
+
+
+```{r geometries}
+
+library(tmap)
+library(tmaptools)
+library(sf)
+library(httr)
+library(ows4R)
+
+
+nre_regions <- "https://geodienste.bfn.de/ogc/wfs/gliederungen?"
+regions_client <- WFSClient$new(nre_regions, 
+                            serviceVersion = "2.0.0",)
+regions_client$getFeatureTypes(pretty = TRUE)
+
+url <- parse_url(nre_regions)
+url$query <- list(service = "wfs",
+                  #version = "2.0.0", # optional
+                  request = "GetFeature",
+                  typename = "Haupteinheiten",
+                  srsName = "EPSG:4326"
+                  )
+request <- build_url(url)
+
+nre_regions_sf <- read_sf(request)
+harz = nre_regions_sf |> 
+  filter(NAME_ORD3 %in% c( "Oberharz")) 
+plot(harz)
+harz_bbox = bb(harz,projection=4326)
+harz_32632 =sf::st_transform(harz,crs = 32632)
+harz_bbox_32632 = bb(harz_32632,projection=32632)
+
+utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/train_areas_2019_2020.gpkg",destfile=file.path("../data/train_areas_2019_2020.gpkg"))
+train_areas_2019_2020 = st_read(file.path("../data/train_areas_2019_2020.gpkg"))
+
+# mapping the extents and boundaries of the choosen geometries
+tmap_mode("view")
+tmap_options(check.and.fix = TRUE) + 
+  tm_basemap(server = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldTopoMap","Esri.WorldImagery")) +
+  tm_shape(harz) +   
+  tm_polygons(alpha = 0.4)
+
+#--- Reading the data from the directories
+
+##--- This describes how to process the Corine land use and land cover dataset
+## The necessary file can also be downloaded from the repository
+## An account is required for the download https://land.copernicus.eu/pan-european/corine-land-cover
+## Therefore, download the data manually and copy it into the directory and unzip it
+## Then execute the commented snippet below
+
+corine_raw = rast(file.path("../data/U2018_CLC2018_V2020_20u1.tif"))
+corine_harz = terra::crop(corine_raw,vect(harz))
+plot(corine_harz)
+terra::writeRaster(corine_harz,file.path("../data/corine_harz.tif"),overwrite=TRUE)
+
+# Alternatively, download the example data set
+# utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine_harz.tif",destfile=file.path(root_folder,"../data/corine_harz.tif"))
+# corine_harz = rast(file.path(root_folder,"../data/corine_harz.tif"))
+
+mapview(corine_harz)+harz
+
+# Create a forest mask from corine
+# Agro-forestry areas code=22, Broad-leaved forest code=23,
+# Coniferous forest code=24, Mixed forest code=25
+harz_forest_mask = classify(corine_harz,c(-100,22,0,22,26,1,26,500,0))
+plot(harz_forest_mask)
+e <- ext(harz_forest_mask)
+p <- as.polygons(e, crs="EPSG:4326")
+cm=sf::st_as_sf(p)
+
+```
+
+### Aternative 1: Retrieving Sentinel using `gdalcubes`
 
 Sentinel-2 is currently the most important platform for Earth observation in all areas, but especially for climate change, land use and ecological issues at all levels, from the upper micro to the global scale.
 
@@ -105,71 +236,29 @@ This approach allows any provider of spatio-temporal data (imagery, SAR, point c
 
 [Element84](https://www.element84.com/) has provided a public API called Earth-search, a central search catalogue for all public AWS datasets using STAC (including the new Sentinel-2 COGs), which contains more than 11.4 million Sentinel-2 scenes worldwide as of 1 November 2017.
 
-# Goals
-
-This example shows how complex times series methods from external R packages can be applied in cloud computing environments using [`[rstac`](https://cran.r-project.org/package=rstac) [@rstac] and [`gdalcubes`](https://cran.r-project.org/package=gdalcubes) [@gdalcubes]. We will use the [`bfast` R package](https://cran.r-project.org/package=bfast) containing unsupervised change detection methods identifying structural breakpoints in vegetation index time series. Specifically, we will use the `bfastmonitor()` function to monitor changes on a dedicated timeperiod of a time series of Sentinel-2 imagery.
-
-Other packages used in this tutorial include [`stars`](https://cran.r-project.org/package=stars) [@stars], [`tmap`](https://cran.r-project.org/package=tmap) [@tmap] and [mapview](https://cran.r-project.org/package=tmap) [@mapview] for creating interactive maps, [`sf`](https://cran.r-project.org/package=sf) [@sf] for processing vector data, and [`colorspace`](https://cran.r-project.org/package=colorspace) [@colorspace] for visualizations with accessible colors.
-
-Various approaches to time series and difference analyses with different indices will be applied using the example of the MOF AOI for the time period 1997 - 2021.
-
-## Defining the Area of Interest
-
 One major challenge is the fact that most of the earth surface related remote sensing activities are heavily *"disturbed"* by the atmosphere, especially by clouds. So to find cloud free satellite imagery is a common and cumbersome task. This task is supported by the `rstac` package which provides a convenient tool to find and filter adequate Sentinel-2 images out of the COG data storage. However, to address the AOI we need to provide the extend via the `bbox` argument of the corresponding function `stac_search()`. So first we need to derive and transform the required bounding box to WGS84 geo-coordinates, easily done with the `sf` functions `st_bbox()` and `st_transform()`. In addition we adapt the projection of the referencing vector objects to all other later projection needs.
-
-
-Please note to project to three different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.\
-
-
-```{r geometries}
-library(tmap)
-library(tmaptools)
-library(sf)
-utils::download.file(url="https://github.com/gisma/gismaData/raw/master/MOF/MOF_CORE.gpkg",destfile="../data/MOF_CORE.gpkg")
-
-forest_mask = sf::st_read("../data/MOF_CORE.gpkg")
-sf::st_crs(forest_mask) <- 4326
-fm=bb(forest_mask,projection=4326)
-forest_4326 =sf::st_transform(forest_mask,crs = 4326)
-forest_3035 =sf::st_transform(forest_mask,crs = 3035)
-forest_32632 =sf::st_transform(forest_mask,crs = 32632)
-
-
-# mapping the extents and boundaries of the choosen geometries
-tmap_mode("view")
-tmap_options(check.and.fix = TRUE) + 
-  tm_basemap(server = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldTopoMap","Esri.WorldImagery")) +
-  tm_shape(forest_mask) +   
-  tm_polygons(alpha = 0.4, col="mainTreeSp")
-```
-
-Our study area is pretty small, covering roughly 2.5 by 2.5 km forest area northwest of Marburg. The core part of the AOI is the Marburg Open Forest (MOF) a field research facility of the Philipps University Marburg.
-
 ### Querying images with `rstac`
 
-Using the `rstac` package, we first request all available images from 2017 to 2020 that intersect with our region of interest. Here, since the polygon has WGS84 as CRS, we do **not** need to transform the bounding box before using the `stac_search()` function.
+Using the `rstac` package, we first request all available images from 2018 to 208 that intersect with our region of interest. Here, since the polygon has WGS84 as CRS, we do **not** need to transform the bounding box before using the `stac_search()` function.
 
 ```{r stac2}
+#| eval: false
+#| echo: fenced
 # search the data stack for the given period and area
 library(rstac)
-
 s = stac("https://earth-search.aws.element84.com/v0")
+
 items <- s |>
   stac_search(collections = "sentinel-s2-l2a-cogs",
-              bbox = c(st_bbox(forest_4326)["xmin"],
-                       st_bbox(forest_4326)["ymin"],
-                       st_bbox(forest_4326)["xmax"],
-                       st_bbox(forest_4326)["ymax"]), 
-              datetime = "2018-01-01/2022-12-31",
-              limit = 1000) |>
+              bbox= as.vector(harz_bbox), 
+              datetime = c("2019-06-01/2019-09-01"),
+              limit = 500) |>
   post_request() 
 items
 
-# print date and time of first and last images
-range(sapply(items$features, function(x) {x$properties$datetime}))
 ```
 
-This gives us 315 matching images recorded between Januar 2019 and December 2023.
+This gives us 350 matching images recorded between Januar 2019 and December 2023.
 
 ### Creating a monthly Sentinel-2 data cube
 
@@ -177,14 +266,16 @@ To obtain a Sentinel data cube, a gdalcube image collection must be created from
 
 ```{r add_cube_assets}
 #| echo: true
+#| eval: false
 
 library(gdalcubes)
-assets = c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL")
-s2_collection = stac_image_collection(items$features, asset_names = assets, property_filter = function(x) {x[["eo:cloud_cover"]] < 50}) 
+s2_collection <- stac_image_collection(items$features,
+                                      asset_names = c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL"), 
+                                      property_filter = function(x) {x[["eo:cloud_cover"]] < 5}) 
 s2_collection
 ```
 
-The result is 107 images, i.e. approx. 1.8 images per month, from which we can now create a data cube. To do this, we use the UTM bounding box of our polygon as a spatial boundary, a spatial resolution of 10 metres, a bilinear spatial interpolation (useful for the spatially lower-resolution sentinel channels) and calculate monthly median values for all pixel values from the available images of a month. In addition, we add a buffer (b) on each side of the cube.
+The result is 118 images, i.e. approx. 1.8 images per month, from which we can now create a data cube. To do this, we use the UTM bounding box of our polygon as a spatial boundary, a spatial resolution of 10 metres, a bilinear spatial interpolation (useful for the spatially lower-resolution sentinel channels) and calculate monthly median values for all pixel values from the available images of a month. In addition, we add a buffer (b) on each side of the cube.
 
 
 
@@ -195,19 +286,19 @@ The *gdalcube image collection* can be considered as a proxy structure object wh
 
 ```{r create_cubeview, messages=FALSE, warnings=FALSE}
 #| echo: true
+#| eval: false
 
-b = 100
 v = cube_view(srs = "EPSG:32632", 
               dx = 10, 
               dy = 10, 
               dt = "P1M",  
               aggregation = "median", 
-              extent = list(t0 = "2018-01-01",
-                            t1 = "2022-12-31", 
-                            left = st_bbox(forest_32632)["xmin"] - b, 
-                            right = st_bbox(forest_32632)["xmax"] + b,
-                            bottom = st_bbox(forest_32632)["ymin"] - b, 
-                            top = st_bbox(forest_32632)["ymax"] + b),
+              extent = list(t0 = "2019-06-01",
+                            t1 = "2019-09-01", 
+                            left = st_bbox(harz_32632)["xmin"] , 
+                            right = st_bbox(harz_32632)["xmax"] ,
+                            bottom = st_bbox(harz_32632)["ymin"] , 
+                            top = st_bbox(harz_32632)["ymax"] ),
               resampling = "bilinear")
 v
 ```
@@ -221,28 +312,30 @@ Only calling a final *action* will start the processing on the COG-Server. In th
 ```{r get_data_write_ncdf}
 #| echo: true
 #| eval: false
+## ##
 #| 
 # we "download" the data and write it t a netcdf file
-#  s2.mask = image_mask("SCL", values = c(3,8,9))
-#  gdalcubes_options(parallel = 16, ncdf_compression_level = 5)
-#  raster_cube(s2_collection, v, mask = s2.mask) |>
-#    write_ncdf("../data/MOF_10_2.nc",overwrite=TRUE)
+  s2.mask = image_mask("SCL", values = c(3,8,9))
+  gdalcubes_options(parallel = 16, ncdf_compression_level = 5)
+  raster_cube(s2_collection, v, mask = s2.mask) |>
+    write_ncdf("data/harz_2019_summer_tile.nc",overwrite=TRUE)
 ```
 
-In the following examples we will show a simple plot in a generic pipe. However, a more common visualisation is quite simple. A typical pipe might be Save a resulting netCDF file `->` Convert it to a `stars` object `->` Visualise the results with `tmap`, `mapview`, `ggplot2` or whatever package you prefer to produce (interactive) map(s).
+In the following examples we will show a simple plot in a generic pipe. However, a more common visualisation is quite simple. A typical pipe might be *Save a resulting netCDF file* `->` *Convert it to a `stars` object* `->` *Visualise the results* with `tmap`, `mapview`, `ggplot2` or whatever package you prefer to produce (interactive) map(s).
 
-## Reductions
+## Reducers (Statistics)
 
 Possible *reducers* include `min"`, `mean"`, `median"`, `max"`, `count"` (count non-missing values), `sum"`, `var"` (variance), and `sd"` (standard deviation). Reducer expressions are always given as a string, starting with the reducer name, followed by the band name in parentheses. Note that it is possible to mix reducers and bands.
 
-### Counting
+### Counting image contribution per pixel
 
 To get an idea of the data, we can compute simple summary statistics using a 'reducer' function over dimensions. For example, using the `count` reducer, we can learn about the temporal coverage for each aggregated pixel, giving us an initial understanding of the temporal quality of the dataset.
 
 ```{r count, messages=FALSE, warnings=FALSE}
 #| echo: true
 #| eval: false
-ncdf_cube("../data/MOF_10_2.nc") |>
+
+ncdf_cube("data/harz_2019_summer_tile.nc") |>
   reduce_time("count(B04)") |> 
   plot(key.pos = 1,  col = viridis::viridis, nbreaks = 10)
 ```
@@ -258,53 +351,24 @@ Below, we derive mean monthly kNdvi values over all pixel time series.
 ```{r forest_kndvi, messages=FALSE, warnings=FALSE}
 #| echo: true
 #| eval: false
-ncdf_cube("../data/MOF_10_2.nc") |>
+#| 
+ncdf_cube("data/harz_2019_summer_tile.nc") |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
   plot(key.pos = 1,  col = ndvi.col, nbreaks = 12)
 ```
 
-## NDVI
 
-Below, we derive mean monthly Ndvi values over all pixel time series.
-
-```{r forest_ndvi, messages=FALSE, warnings=FALSE}
-#| echo: true
-#| eval: false
-#|  
-ncdf_cube("../data/MOF_10_2.nc") |>
-  apply_pixel("(B08-B04)/(B08+B04)", "NDVI") |>
-  reduce_time("mean(NsDVI)") |>
-  plot(key.pos = 1, zlim=c(-0.2,1), col = ndvi.col, nbreaks = 12)
-```
-
-
-## Retrieving Sentinel data part 2 'Copernicus Data Space Ecosystem' API Wrapper CDSE
+## Alternative 2: Copernicus Data Space Ecosystem API Wrapper CDSE
 The [CDSE package](https://zivankaraman.github.io/CDSE/articles/CDSE.html) provides another simple way to get Sentinel/Copernicus data sets.
 
-```{R}
+```{R cdse}
 #| echo: true
 #| eval: false
-####
-
-
-utils::download.file(url="https://github.com/gisma/gismaData/raw/master/MOF/MOF_CORE.gpkg",destfile="../data/MOF_CORE.gpkg")
-forest_mask = sf::`st_read("../data/MOF_CORE.gpkg")
-sf::st_crs(forest_mask) <- 4326
-fm=bb(forest_mask,projection=4326)
-
-# forest_4326 =st_transform(forest_mask,crs = 4326)
-# forest_3035 =st_transform(forest_mask,crs = 3035)
-# forest_32632 =st_transform(forest_mask,crs = 32632)
-
-# mapping the extents and boundaries of the choosen geometries
-tmap_mode("view")
-tmap_options(check.and.fix = TRUE) + 
-  tm_basemap(server = c("Esri.WorldImagery", "Esri.WorldTopoMap")) +
-  tm_shape(forest_mask) +   
-  tm_polygons(alpha = 0.4, col="mainTreeSp")
-
-
+#------------
+# NOTE: You must create an Copernicus account and provide the token credtials have a look at:
+#       https://zivankaraman.github.io/CDSE/articles/BeforeYouStart.html#accessing-cdse-data-and-services
+#------------
 
 id <- Sys.getenv("CDSE_ID")
 secret <- Sys.getenv("CDSE_SECRET")
@@ -313,154 +377,136 @@ collections <- GetCollections(as_data_frame = TRUE)
 collections
 
 
-images <- SearchCatalog(bbox =cm, from = "2018-05-01", to = "2021-05-31", 
+images <- SearchCatalog(bbox = st_bbox(train_areas_2019_2020), from = "2018-05-01", to = "2022-12-31", 
     collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
 
 images
 
 summary(images$areaCoverage)
 
-day <- images[order(images$tileCloudCover), ]$acquisitionDate[1:20]
+day <- images[order(images$tileCloudCover), ]$acquisitionDate[1:30]
 
-script_file_rb <- system.file("scripts", "RawBands.js", package = "CDSE")
-script_file_ndvi <- system.file("scripts", "NDVI_float32.js", package = "CDSE")
-script_file_tc <- system.file("scripts", "TrueColor.js", package = "CDSE")
+script_file_raw = system.file("scripts", "RawBands.js", package = "CDSE")
+script_file_savi = "savi.js"
+script_file_kndvi = "kndvi.js"
+script_file_evi = "evi.js"
 
-r_rb <- GetImage(bbox =  ext, time_range = day[5], script = script_file_rb, 
-                collection = "sentinel-2-l2a", format = "image/tiff", mosaicking_order = "leastCC", 
-                resolution = 10, mask = TRUE, buffer = 100, client = OAuthClient)
-names(r_rb) = c("B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12")
-terra::plot(r_rb, main = paste(names(r_rb), day), cex.main = 0.75)
+# first day
+raw_2018_07_01 = GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                          time_range = day[12], 
+                          script = script_file_raw, 
+                          collection = "sentinel-2-l2a", 
+                          format = "image/tiff", 
+                          mosaicking_order = "leastCC",
+                          resolution = 10, 
+                          mask = TRUE, 
+                          buffer = 0.01, 
+                          client = OAuthClient)
+names(raw_2018_07_01) = c("B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12")
+terra::plot(raw_2018_07_01, main = paste(names(raw_2018_07_01), day[12]), cex.main = 0.75)
 
-r_ndvi <- GetImage(bbox =  fm, time_range = day[5], script = script_file_ndvi, 
-                collection = "sentinel-2-l2a", format = "image/tiff", mosaicking_order = "leastCC", 
-                resolution = 10, mask = TRUE, buffer = 100, client = OAuthClient)
-names(r_ndvi) = c("NDVI")
-terra::plot(r_ndvi, main = paste(names(r_ndvi), day), cex.main = 0.75)
+kndvi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
+                             time_range = day[12], 
+                             script = script_file_kndvi, 
+                             collection = "sentinel-2-l2a", 
+                             format = "image/tiff", 
+                             mosaicking_order = "leastCC", 
+                             resolution = 10, 
+                             mask = TRUE, 
+                             buffer = 0.01, 
+                             client = OAuthClient)
+names(kndvi_2018_07_01 )[1] = c("kNDVI")
+terra::plot(kndvi_2018_07_01[[1]] , main = paste(names(kndvi_2018_07_01 ), day[12]), cex.main = 0.75)
 
-r_tc <- GetImage(bbox =  fm, time_range = day[5], script = script_file_tc, 
-                collection = "sentinel-2-l2a", format = "image/tiff", mosaicking_order = "leastCC", 
-                resolution = 10, mask = TRUE, buffer = 100, client = OAuthClient)
-names(r_tc) = c( "B02", "B03", "B04")
-terra::plotRGB(r_tc, main = paste("true color B02, B03, B04"), cex.main = 0.75)
+savi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                            time_range = day[12], 
+                            script = script_file_savi, 
+                            collection = "sentinel-2-l2a", 
+                            format = "image/tiff", 
+                            mosaicking_order = "leastCC", 
+                            resolution = 10,
+                            mask = TRUE, 
+                            buffer = 0.01, 
+                            client = OAuthClient)
+names(savi_2018_07_01)[1] = c( "SAVI")
+terra::plot(savi_2018_07_01[[1]], main = paste("SAVI", day[12]), cex.main = 0.75)
 
-images <- SearchCatalog(bbox = fm, from = "2018-01-01", to = "2023-12-31",
-                        collection = "sentinel-2-l2a", with_geometry = TRUE, 
-                        filter = "eo:cloud_cover < 5", client = OAuthClient)
+evi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                           time_range = day[12], 
+                           script = script_file_evi, 
+                           collection = "sentinel-2-l2a", 
+                           format = "image/tiff", 
+                           mosaicking_order = "leastCC", 
+                           resolution = 10, 
+                           mask = TRUE, 
+                           buffer = 0.01, 
+                           client = OAuthClient)
+names(evi_2018_07_01)[1] = c( "EVI")
+terra::plot(evi_2018_07_01[[1]], main = paste("EVI",day[12]), cex.main = 0.75)
 
+pred_stack_2018 = c(raw_2018_07_01,evi_2018_07_01[[1]],kndvi_2018_07_01[[1]],savi_2018_07_01[[1]])
 
+## second day
+raw_2022_06_23 = GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                          time_range = day[1], 
+                          script = script_file_raw, 
+                          collection = "sentinel-2-l2a", 
+                          format = "image/tiff", 
+                          mosaicking_order = "leastCC", 
+                          resolution = 10, 
+                          mask = TRUE, 
+                          buffer = 0.01, 
+                          client = OAuthClient)
+names(raw_2022_06_23) = c("B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12")
+terra::plot(raw_2022_06_23, main = paste(names(raw_2022_06_23), day[1]), cex.main = 0.75)
 
+kndvi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                             time_range = day[1], 
+                             script = script_file_kndvi, 
+                             collection = "sentinel-2-l2a", 
+                             format = "image/tiff",
+                             mosaicking_order = "leastCC", 
+                             resolution = 10, 
+                             mask = TRUE, 
+                             buffer = 0.01, 
+                             client = OAuthClient)
+names(kndvi_2022_06_23)[1] = c("kNDVI")
+terra::plot(kndvi_2022_06_23[[1]] , main = paste(names(kndvi_2022_06_23 ), day[1]), cex.main = 0.75)
 
-images <- SearchCatalog(aoi = forest_mask, from = "2018-01-01", to = "2023-12-31",
-                        collection = "sentinel-2-l2a", with_geometry = TRUE, 
-                        filter = "eo:cloud_cover < 10", client = OAuthClient)
-# Get the day with the minimal cloud cover for every month -----------------------------
-tmp1 <- images[, c("tileCloudCover", "acquisitionDate")]
-tmp1$month <- lubridate::month(images$acquisitionDate)
-agg1 <- stats::aggregate(tileCloudCover ~ month, data = tmp1, FUN = min)
-tmp2 <- merge.data.frame(agg1, tmp1, by = c("month", "tileCloudCover"), sort = FALSE)
-# in case of ties, get an arbitrary date (here the smallest acquisitionDate, 
-# could also be the biggest)
-agg2 <- stats::aggregate(acquisitionDate ~ month, data = tmp2, FUN = min)
-monthly <- merge.data.frame(agg2, tmp2, by = c("acquisitionDate", "month"), sort = FALSE)
+savi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                            time_range = day[1], 
+                            script = script_file_savi, 
+                            collection = "sentinel-2-l2a", 
+                            format = "image/tiff", 
+                            mosaicking_order = "leastCC", 
+                            resolution = 10,
+                            mask = TRUE, 
+                            buffer = 0.01, 
+                            client = OAuthClient)
+names(savi_2022_06_23)[1] = c( "SAVI")
+terra::plot(savi_2022_06_23[[1]], main = paste("SAVI",day[1]), cex.main = 0.75)
 
-days <- monthly$acquisitionDate
-# Retrieve images in parallel ----------------------------------------------------------
-script_file <- system.file("scripts", "NDVI_float32.js", package = "CDSE")
-tmp_folder <- tempfile("dir")
+evi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
+                           time_range = day[1], 
+                           script = script_file_evi, 
+                           collection = "sentinel-2-l2a", 
+                           format = "image/tiff",
+                           mosaicking_order = "leastCC",
+                           resolution = 10, 
+                           mask = TRUE, 
+                           buffer = 0.01, 
+                           client = OAuthClient)
+names(evi_2022_06_23)[1] = c( "EVI")
+terra::plot(evi_2022_06_23[[1]], main = paste("EVI",day[1]), cex.main = 0.75)
 
-lstRast <- lapply(days, GetImageByTimerange, bbox = fm, collection = "sentinel-2-l2a",
-    script = script_file, file = NULL, format = "image/tiff", mosaicking_order = "mostRecent",
-    resolution = 10, buffer = 0, mask = TRUE, client = OAuthClient,
-    url = getOption("CDSE.process_url"))
-
-# Plot the images ----------------------------------------------------------------------
-par(mfrow = c(3, 4))
-sapply(seq_along(days), FUN = function(i) {
-     ras <- lstRast[[i]]
-     day <- days[i]
-     #ras[ras < 0] <- 0
-     terra::plot(ras, main = paste("MOF NDVI on", day), range = c(0, 1),
-            cex.main = 0.7, pax = list(cex.axis = 0.5), plg = list(cex = 0.5),
-            col = colorRampPalette(c("darkred", "yellow", "darkgreen"))(99))
-     })
-
-```
-
-### Preparation of the data
-
-As soon as the download has been successful, the actual classification can begin.
-First, the data must be organized in a technically suitable way as a multichannel image.
-In addition, a current or temporally corresponding Corine land use data set is loaded to generate a binary forest/non-forest mask.
-The already available Copernicus account can be used to download the Corine data (https://land.copernicus.eu/pan-european/corine-land-cover).
-After the (manual) download, unzip the data into the subdirectory 'level0' (be careful, there are countless subdirectories here after unzipping the archive).
-We need the file `U2018_CLC2018_V2020_20u1.tif`.
-Alternatively, the already correctly processed and projected \*data set from the github repository (see script) can be used.
-
-```{R stack, message=FALSE, warnings=FALSE}
-#| echo: true
-#| eval: false
-#--- Reading the data from the directories
-
-##--- This describes how to process the Corine land use and land cover dataset
-## The necessary file can also be downloaded from the repository
-## An account is required for the download https://land.copernicus.eu/pan-european/corine-land-cover
-## Therefore, download the data manually and copy it into the directory and unzip it
-## Then execute the commented snippet below
-
-# corine_eu = raster(file.path(envrmt$path_data_lev0,"u2018_clc2018_v2020_20u1_raster100m/DATA/U2018_CLC2018_V2020_20u1.tif"))
-# tmp = projectRaster(pred_stack_2019[[1]],crs = crs(corine_eu))
-# corine_crop = raster::crop(corine_eu,tmp)
-# corine_utm = projectRaster(corine_crop,crs = crs(pred_stack_2019))
-# corine = resample(corine_utm,pred_stack_2019[[1]])
-# raster::writeRaster(corine,file.path(envrmt$path_data_lev0,"/corine.tif"),overwrite=TRUE)
-
-# Alternatively, download the example data set
-utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine.tif",destfile=file.path(root_folder,"data/corine.tif"))
-corine = rast(file.path(root_folder,"data/corine.tif"))
-plot(corine)
-
-# Create a forest mask
-# Agro-forestry areas code=22, Broad-leaved forest code=23,
-# Coniferous forest code=24, Mixed forest code=25
-mask = classify(corine,c(-100,22,0,22,26,1,26,500,0))
-plot(mask)
-
-# RGB stack of the two years
-utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine.tif",destfile=file.path(root_folder,"data/corine.tif"))
-utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine.tif",destfile=file.path(root_folder,"data/corine.tif"))
-pred_stack_2019 = raster::stack(list.files(file.path(envrmt$path_data_lev1,"BOA"),pattern = "20190619",full.names = TRUE))
-pred_stack_2020 = raster::stack(list.files(file.path(envrmt$path_data_lev1,"BOA"),pattern = "20200623",full.names = TRUE))
-
-
-# Stack loop over the data
-for (pat in c("EVI", "MSAVI2", "NDVI", "SAVI")){
-pred_stack_2019 = raster::stack(pred_stack_2019, stack(list.files(file.path(envrmt$path_data_lev1, pat), pattern = "20190619", full.names = TRUE)))
-pred_stack_2020 = raster::stack(pred_stack_2020,stack(list.files(file.path(envrmt$path_data_lev1,pat),pattern = "20200623",full.names = TRUE)))
-}
-# get rid of NA
-pred_stack_2019 = reclassify(pred_stack_2019, cbind(NA, 0))
-pred_stack_2020 = reclassify(pred_stack_2020, cbind(NA, 0))
-
-# Assign human-readable names to the data layers
-names(pred_stack_2019) = c("band1", "band2", "band3", "band4", "band5", "band6", "band7", "band8", "band9", "band10", "band11", "EVI", "MSAVI2", "NDVI", "SAVI")
-names(pred_stack_2020) = c("band1", "band2", "band3", "band4", "band5", "band6", "band7", "band8", "band9", "band10", "band11", "EVI", "MSAVI2", "NDVI", "SAVI")
-saveRDS(pred_stack_2019,paste0(envrmt$path_data,"pred_stack_2019.rds"))
-saveRDS(pred_stack_2020,paste0(envrmt$path_data,"pred_stack_2020.rds"))
-pred_stack_2019 = readRDS(paste0(envrmt$path_data,"pred_stack_2019.rds"))
-pred_stack_2020 = readRDS(paste0(envrmt$path_data,"pred_stack_2020.rds"))
-
-
-# visual inspection of the stacks
-plot(pred_stack_2019)
-plot(pred_stack_2020)
+pred_stack_2022 = c(raw_2022_06_23,evi_2022_06_23[[1]],kndvi_2022_06_23[[1]],savi_2022_06_23[[1]])
 
 ```
 
-### First impression – K-means cluster classification
 
-Probably the best-known unsupervised classification technique is K-means clustering, which is also referred to as the *"simplest machine learning algorithm"*.
-It is often used to obtain an initial overview of whether the raster data can be sufficiently separated in feature space.
+
+
+## Step2: Overview – Unsupervised classification (k-means clustering)
 
 In our example (applied to 5 classes and executed with the function `unsuperClass` from the `RStoolbox` package), this looks as follows.
 The cluster algorithm can achieve a fairly acceptable separation of the clearings/bald spots with 5 clusters, which makes a classification seem promising.
@@ -470,111 +516,43 @@ Also experiment with other cluster settings and discuss the results.
 #| echo: true
 #| eval: false
 ## k-means über RStoolbox
-# Modell
-prediction_kmeans_2019 = RStoolbox::unsuperClass(pred_stack_2019, nClasses = 5,norm = TRUE, algorithm = "MacQueen")
-# Klassifikation
-plot(prediction_kmeans_2019$map)
 
-prediction_kmeans_2020 = RStoolbox::unsuperClass(pred_stack_2020, nClasses = 5,norm = TRUE, algorithm = "MacQueen")
-plot(prediction_kmeans_2020$map)
+#"EVI"   "kNDVI" "SAVI"
+prediction_kmeans_2018 = RStoolbox::unsuperClass(pred_stack_2018, nClasses = 5,norm = TRUE, algorithm = "MacQueen")
+# Klassifikation
+plot(prediction_kmeans_2018$map)
+
+prediction_kmeans_2022 = RStoolbox::unsuperClass(pred_stack_2022, nClasses = 5,norm = TRUE, algorithm = "MacQueen")
+plot(prediction_kmeans_2022$map)
 ```
 
-![](images/kmeans-2020.png) ![](images/kmeans-2019.png)
+![](images/kmeans-2018.png) ![](images/kmeans-2022.png)
 
-## Step 2 - Generating training data
+
+
+## Step 3 - Generating training data
 
 For a supervised classification, we need data that indicates which surface class defined areas of the satellite image belong to.
 This data is referred to as training data and is very often obtained by manual digitization.
 This can be done quite comfortably in RStudio if only a few training areas have to be digitized quickly and effectively.
 
-For larger tasks, it makes sense to use the convenient method described in the QGIS 3.16 documentation, for example in the [digitizing tutorial](https://docs.qgis.org/3.16/en/docs/training_manual/create_vector_data/create_new_vector.html#basic-ty-digitizing-polygons).
-
-## Digitizing training data
-
 We assume that we want to classify two types of land cover: *clearcut* and *other*.
-With mapedit, each class must be digitized individually.
-Once the training areas are available as vector data, the features of the respective raster stack can be extracted into a table according to the digitized classes and corrected for possible missing values.
 
+For larger tasks, it makes sense to use the convenient method described in the current QGIS  documentation, for example in the [digitizing tutorial](https://docs.qgis.org/3.34/en/docs/training_manual/create_vector_data/create_new_vector.html#basic-ty-digitizing-polygons).
 
+[Digitizing training data in R](digitize2.qmd){.btn .btn-outline-primary .btn role="button" data-toggle="tooltip" title="Digitizing training data using mapedit"}
 
-If this part has already been completed, the logical variable *digitize* (defined at the beginning of the script) can be set to *FALSE* and the *else* part of the branch can be run – in other words, only the existing data is read.
+Assuming we have digitized trainingdata using either QGIS or R We need now to extract the values according to the assigned areas: 
 
-
-## Excursus: Creating training areas with mapedit 
-
-### Using color composites for better training results
-
-For this exercise, we use `mapedit`, a small but powerful package that allows you to digitize and edit vector data in Rstudio or an external browser.
-In combination with `mapview`, any \[color composite\] (https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/composites/) can also be used as a basis for digitization.
 
 ```{R}
 #| echo: true
 #| eval: false
-
-m1 = tm_shape(pred_stack_2019) + tm_rgb(r=4, g=3, b=2) +
-  tm_layout(legend.outside.position = "right",
-            legend.outside = T,
-            panel.label.height=0.6,
-            panel.label.size=0.6,
-            panel.labels = c("r=1, g=2, b=3")) +
-  tm_grid()
-
-m2 = tm_shape(pred_stack_2019) + tm_rgb(r=8, g=4, b=3) +
-  tm_layout(legend.outside.position = "right",
-            legend.outside = T,
-            panel.label.height=0.6,
-            panel.label.size=0.6,
-            panel.labels = c("r=8, g=4, b=3")) +
-  tm_grid()
-tmap::tmap_arrange(m1,m2)
-  
-```
-
-![](images/rgb.png)
-
-The planes can be switched using the plane control.
-In true-color composites, the visible spectral channels Red (B04), Green (B03), and Blue (B02) are mapped to the corresponding red, green, and blue color channels, respectively, producing an image of the surface that closely resembles the natural "color" as it would be seen by a human sitting on the spacecraft.
-False color images are often created using the spectral channels for near-infrared, red, and green.
-They are particularly useful for assessing vegetation because plants reflect near-infrared and green light while absorbing red light (red-edge effect).
-Dense vegetation appears a darker red.
-Cities and open ground appear gray or light brown, water appears blue or black.
-
-```{R digitize, echo=TRUE}
-#| echo: true
-#| eval: false
-
-#---- Digitization of training data ----
-
-if (digitize) {
-# For the supervised classification, we need training areas. You can digitize them as shown below or alternatively use QGis, for example
-
-# clearcut
-
-# For the false color composite r = 8, g = 4, b = 3, maxpixels = 1693870)
-# maxpixels has significantly higher memory requirements, vegetation in red
-# below the true color composite
-train_area_2019 <- mapview::viewRGB(pred_stack_2019, r = 4, g = 3, b = 2, maxpixels = 1693870) %>% mapedit::editMap()
-# Adding the attributes class (text) and id/year (integer)
-clearcut_2019 <- train_area_2019$finished$geometry %>% st_sf() %>% mutate(class = "clearcut", id = 1,year=2019)
-train_area_2020 <- mapview::viewRGB(pred_stack_2020, r = 4, g = 3, b = 2,maxpixels = 1693870) %>% mapedit::editMap()
-clearcut_2020 <- train_area_2020$finished$geometry %>% st_sf() %>% mutate(class = "clearcut", id = 1,year=2020)
-
-# other: all areas not belonging to clear cutting as representative as possible
-train_area_2019 <- mapview::viewRGB(pred_stack_2019, r = 4, g = 3, b = 2) %>% mapedit::editMap()
-other_2019 <- train_area_2019$finished$geometry %>% st_sf() %>% mutate(class = "other", id = 2,year=2019)
-train_area_2020 <- mapview::viewRGB(pred_stack_2020, r = 4, g = 3, b = 2) %>% mapedit::editMap()
-other_2020 <- train_area_2020$finished$geometry %>% st_sf() %>% mutate(class = "other", id = 2,year=2020)
-
-train_areas_2019_2020 <- rbind(clearcut_2019,clearcut_2020, other_2019,other_2020) # Reproject to the raster file
-train_areas_2019 = sf::st_transform(train_areas_2019_2020,crs = sf::st_crs(pred_stack_2019))
-mapview(filter(train_areas_2019_2020,year==2019), zcol="class")
-# save geometries
-st_write(train_areas_2019_2020,paste0(envrmt$path_data,"train_areas_2019_2020.gpkg"))
-
+# use the provided training data set
 # Extract the training data for the digitized areas
-tDF_2019 = exactextractr::exact_extract(pred_stack_2019, filter(train_areas_2019_2020,year==2019), force_df = TRUE,
+tDF_2019 = exactextractr::exact_extract(pred_stack_2018, filter(train_areas_2019_2020,year==2019), force_df = TRUE,
 include_cell = TRUE,include_xy = TRUE,full_colnames = TRUE,include_cols = "class")
-tDF_2020 = exactextractr::exact_extract(pred_stack_2020, filter(train_areas_2019_2020,year==2020), force_df = TRUE,
+tDF_2020 = exactextractr::exact_extract(pred_stack_2022, filter(train_areas_2019_2020,year==2020), force_df = TRUE,
 include_cell = TRUE,include_xy = TRUE,full_colnames = TRUE,include_cols = "class")
 
 # again, copy together into a file
@@ -593,29 +571,12 @@ summary(tDF)
 
 # Save as R internal data format
 # is stored in the repo and can therefore be loaded (line below)
-saveRDS(tDF, paste0(envrmt$path_data,"tDF.rds"))
-
-
-
-} else {
-tDF = readRDS(paste0(envrmt$path_data,"tDF.rds"))
-}
+saveRDS(tDF, paste0("../data/tDF_2018_2022.rds"))
 ```
 
-The result is a table with training data for 2019 and 2020.
-The data set contains all raster information for all bands covered by the polygons for the classes "clearcut" and "other".
+## Step 4 - supervised classification
 
-```{R raw_train, echo=TRUE}
-#| echo: true
-#| eval: false
-head(tDF)
-```
-
-
-## Step 3 - Model training, testing model quality, classification
-
-Classifiers (e.g. the maximum likelihood classifier) or machine learning algorithms (such as Random Forest) use the training data to determine descriptive models that represent statistical signatures, classification trees or other functions.
-Within the limits of the quality of the training data, such models are suitable and representative for making predictions for areas if the predictors from the model are available for the entire area.
+Classifiers (e.g. the maximum likelihood classifier) or machine learning algorithms (such as Random Forest) use the training data to determine descriptive models that represent statistical signatures, classification trees or other functions. Within the limits of the quality of the training data, such models are suitable and representative for making predictions for areas if the predictors from the model are available for the entire area.
 
 We now want to predict the spatial characteristics of clear-felling/no forest using a maximum likelihood classification and random forest, and apply standard methods of random validation and model quality assessment.
 
@@ -623,25 +584,18 @@ The goal is to separate clearcuts from all other pixels and to quantify the diff
 
 ### Maximum Likelihood Classification
 
-Maximum likelihood classification assumes that the distribution of data for each class and in each channel is normally distributed.
-Under this assumption, the probability that a particular pixel belongs to a particular class is calculated.
-Since the probabilities can also be specified as a threshold, without this restriction, *all* pixels are assigned regardless of how unlikely they are.
-Each pixel is assigned to the class that has the highest probability (i.e., the maximum probability).
+Maximum likelihood classification assumes that the distribution of data for each class and in each channel is normally distributed. Under this assumption, the probability that a particular pixel belongs to a particular class is calculated. Since the probabilities can also be specified as a threshold, without this restriction, *all* pixels are assigned regardless of how unlikely they are. Each pixel is assigned to the class that has the highest probability (i.e., the maximum probability).
 
 ![](images/max.png)
 
-Since the maximum likelihood algorithm requires training data, it is a supervised learning method.
-This means that we, as users, have to provide the algorithm with data that conveys knowledge about the classes to be predicted.
-This data is then divided into training and test data.
+Since the maximum likelihood algorithm requires training data, it is a supervised learning method. This means that we, as users, have to provide the algorithm with data that conveys knowledge about the classes to be predicted. This data is then divided into training and test data.
 
 ```{R maxlike , message = FALSE, warnings = FALSE}
 #| echo: true
 #| eval: false
 # ---- Maximum Likelihood Classification ----
 
-tDF = readRDS(paste0(envrmt$path_data,"tDF.rds"))
-
-## Here the Random Forest is accessed via the caret utility package
+## Here the caret utility package is used
 # Setting a "seed" enables reproducible randomness
 set.seed(123)
 
@@ -662,33 +616,26 @@ sp_trainDat = trainDat
 sp_testDat = testDat 
 sp::coordinates(sp_trainDat) = ~x+y
 sp::coordinates(sp_testDat) = ~x+y
-crs(sp_trainDat) = crs(pred_stack_2019)
-crs(sp_testDat) = crs(pred_stack_2019)
+crs(sp_trainDat) = crs(pred_stack_2018)
+crs(sp_testDat) = crs(pred_stack_2018)
 
 
 # superClass method "mlc" trains the model and then classifies it
-#raster::beginCluster(30)
-prediction_mlc_2019 <- superClass(pred_stack_2019, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class", model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
+prediction_mlc_2018 <- superClass(pred_stack_2018, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class", model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
 
-prediction_mlc_2020 <- superClass(pred_stack_2020, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class",model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
-saveRDS(prediction_mlc_2019, paste0(envrmt$path_data,"prediction_mlc_2019.rds"))
-saveRDS(prediction_mlc_2020, paste0(envrmt$path_data,"prediction_mlc_2020.rds"))
+prediction_mlc_2022 <- superClass(pred_stack_2022, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class",model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
+
+saveRDS(prediction_mlc_2018, "../data/prediction_mlc_2018.rds")
+saveRDS(prediction_mlc_2022, "../data/prediction_mlc_2022.rds")
 ```
 
 ### Random forest
 
-Random forests can be used for both regression and classification tasks, with the latter being particularly relevant in environmental remote sensing.
-Like any machine learning method, the random forest model learns to recognize patterns and structures in the data itself.
-Since the random forest algorithm also requires training data, it is also a supervised learning method.
-![](images/Random_forest_diagram_complete.png)!
+Random forests can be used for both regression and classification tasks, with the latter being particularly relevant in environmental remote sensing. Like any machine learning method, the random forest model learns to recognize patterns and structures in the data itself. Since the random forest algorithm also requires training data, it is also a supervised learning method. ![](images/Random_forest_diagram_complete.png)!
 
-Figure: Simplified illustration of data classification by random forest during training.
-Venkata Jagannath \[CC BY-SA 4.0\] via wikipedia.org
+Figure: Simplified illustration of data classification by random forest during training. Venkata Jagannath \[CC BY-SA 4.0\] via wikipedia.org
 
-A random forest algorithm learns from the data by creating random decision trees – hence the name.
-For classification tasks, the algorithm takes a suitable instance of a decision tree from the training data set and assigns the corresponding class to the pixel.
-This is repeated with all available decision trees.
-Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.
+A random forest algorithm learns from the data by creating random decision trees – hence the name. For classification tasks, the algorithm takes a suitable instance of a decision tree from the training data set and assigns the corresponding class to the pixel. This is repeated with all available decision trees. Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.
 
 ```{R random_forest, eval=FALSE, message=FALSE, include=FALSE, warnings=FALSE}
 #| echo: true
@@ -701,76 +648,52 @@ ctrlh = trainControl(method = "cv",
 
 #--- random forest model training
 rf_model = train(trainDat[,2:16], # Columns 2 to 16 contain the training data (called predictors)
-trainDat[,1], # Column 1 contains the variable to be classified (called response)
-method = "rf", # Method here rf for random forest
-metric = "Kappa", # quality/performance measure KAppa
-trControl = ctrlh, # the training control generated above is to be read in
-importance = TRUE) # The importance of the variables is also saved
+                 trainDat[,1], # Column 1 contains the variable to be classified (called response)
+                 method = "rf", # Method here rf for random forest
+                 metric = "Kappa", # quality/performance measure KAppa
+                 trControl = ctrlh, # the training control generated above is to be read in
+                 importance = TRUE) # The importance of the variables is also saved
 
 rf_model
 
-#saveRDS(rf_model, paste0(envrmt$path_data,"rf_model.rds"))
-```
-
-### Estimation model quality
-
-The test data are now used for the independent quality check of the model.
-A confusion matrix indicates how accurately the model predicts the correct classes.
-The main diagonal of the matrix indicates the cases in which the model applies.
-In our classification of only two classes, however, a special case applies: [evaluation of a binary classifier](https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers).
-Detailed explanations for the function used here can be found in the [caret help](https://topepo.github.io/caret/measuring-performance.html#measures-for-predicted-classes).
-
-The main statements about model quality are:
-
--   *'Positive' Class* = **clearcut**: is measured with the sensitivity (*true positive rate*), which indicates the probability that a positive object is correctly classified as positive.
--   *'Negative Class'* = **other**: is measured with the specificity (*true negative rate*) and indicates the probability that a negative object is correctly classified as negative.
--   *Positive and negative predictive values* indicate the actual performance for *clearcut* and *other*. They are corrected for the actual frequency distribution and are a measure of the precision and performance of the model with regard to the respective classes.
-
-Despite the high values, we see that the *clearcut* class drops off significantly here.
-This can certainly be taken as an indication of the need to improve the classification.
-
-Overall, however, the model can be considered good.
-
-```{R konfusiomatrix2019, echo=FALSE, message=FALSE, warnings=FALSE}
-#| echo: true
-#| eval: false
-# ----Calculation of the confusion matrix  ----
-cm_rf <- confusionMatrix(data = predict(rf_model, newdata = testDat), testDat$class)
-cm_rf
+saveRDS(rf_model, "../data/rf_model.rds")
 ```
 
 ### Prediction on the original data
 
-Now we are ready to apply the verified model to our data set.
-In remote sensing, this is usually called classification.
+Now we are ready to apply the verified model to our data set. In remote sensing, this is usually called classification.
 
-```{R klassifikation2019, message = FALSE, warnings = FALSE}
+```{R klassifikation2018, message = FALSE, warnings = FALSE}
 #| echo: true
 #| eval: false
+#| 
 # Klassifikation (auch Vorhersage genannt)
-prediction_rf_2019  = raster::predict(pred_stack_2019 ,rf_model)
-prediction_rf_2020  = raster::predict(pred_stack_2020 ,rf_model)
-saveRDS(prediction_rf_2019, paste0(envrmt$path_data,"prediction_rf_2019.rds"))
-saveRDS(prediction_rf_2020, paste0(envrmt$path_data,"prediction_rf_2020.rds"))
+prediction_rf_2018  = raster::predict(pred_stack_2018 ,rf_model)
+prediction_rf_2022  = raster::predict(pred_stack_2022 ,rf_model)
+saveRDS(prediction_rf_2018, "../data/prediction_rf_2018.rds")
+saveRDS(prediction_rf_2022, "../data/prediction_rf_2020.rds")
 
 ```
 
 ```{R vergleichklassifikationen}
 #| echo: true
 #| eval: false
-prediction_rf_2019 = readRDS(paste0(envrmt$path_data,"prediction_rf_2019.rds"))
-prediction_rf_2020 = readRDS(paste0(envrmt$path_data,"prediction_rf_2020.rds"))
-prediction_mlc_2019 = readRDS(paste0(envrmt$path_data,"prediction_mlc_2019.rds"))
-prediction_mlc_2020 = readRDS(paste0(envrmt$path_data,"prediction_mlc_2020.rds"))
+## ##
+prediction_rf_2018 = readRDS("../data/prediction_rf_2018.rds")
+prediction_rf_2022 = readRDS("../data/prediction_rf_2022.rds")
+prediction_mlc_2018 = readRDS("../data/prediction_mlc_2018.rds")
+prediction_mlc_2022 = readRDS("../data/prediction_mlc_2022.rds")
+
 ## ---- Visualisierung mit mapview ----
-mapview::mapshot(mapview::viewRGB(mask*pred_stack_2020, r = 4, g =3, b = 2,maxpixels =  1693870)+
-  mapview(mask*prediction_rf_2019 , alpha.regions = 0.5, maxpixels =  1693870,
+
+mapview::mapshot(mapview::viewRGB(mask*pred_stack_2022, r = 4, g =3, b = 2,maxpixels =  1693870)+
+  mapview(mask*prediction_rf_2018 , alpha.regions = 0.5, maxpixels =  1693870,
           col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = TRUE) +
-  mapview(mask*prediction_rf_2020, alpha.regions = 0.5, maxpixels =  1693870,
+  mapview(mask*prediction_rf_2022, alpha.regions = 0.5, maxpixels =  1693870,
           col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = FALSE) +
-  mapview(mask*prediction_mlc_2019$map,alpha.regions = 0.5, maxpixels =  1693870,
+  mapview(mask*prediction_mlc_2018$map,alpha.regions = 0.5, maxpixels =  1693870,
           col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = FALSE) +
-  mapview(mask*prediction_mlc_2020$map,alpha.regions = 0.5, maxpixels =  1693870,
+  mapview(mask*prediction_mlc_2022$map,alpha.regions = 0.5, maxpixels =  1693870,
           col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = FALSE),url = "compare-class.html")
 
 ```
@@ -779,33 +702,50 @@ mapview::mapshot(mapview::viewRGB(mask*pred_stack_2020, r = 4, g =3, b = 2,maxpi
 
 </iframe>
 
-<figcaption>*Comparison of the two years and RF and MLC classification* </figcaption>
+<figcaption>*Comparison of the two years and RF and MLC classification*</figcaption>
 
 <p>
 
-A visual comparison shows that the Random Forest and Maximum Likelihood classifications provide results of comparable quality.
-But does this impression stand up to quantitative analysis?
+A visual comparison shows that the Random Forest and Maximum Likelihood classifications provide results of comparable quality. But does this impression stand up to quantitative analysis?
+
+### Step 5: Estimation model quality
+
+The test data are now used for the independent quality check of the model. A confusion matrix indicates how accurately the model predicts the correct classes. The main diagonal of the matrix indicates the cases in which the model applies. In our classification of only two classes, however, a special case applies: [evaluation of a binary classifier](https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers). Detailed explanations for the function used here can be found in the [caret help](https://topepo.github.io/caret/measuring-performance.html#measures-for-predicted-classes).
+
+The main statements about model quality are:
+
+-   *'Positive' Class* = **clearcut**: is measured with the sensitivity (*true positive rate*), which indicates the probability that a positive object is correctly classified as positive.
+-   *'Negative Class'* = **other**: is measured with the specificity (*true negative rate*) and indicates the probability that a negative object is correctly classified as negative.
+-   *Positive and negative predictive values* indicate the actual performance for *clearcut* and *other*. They are corrected for the actual frequency distribution and are a measure of the precision and performance of the model with regard to the respective classes.
+
+Despite the high values, we see that the *clearcut* class drops off significantly here. This can certainly be taken as an indication of the need to improve the classification.
+
+Overall, however, the model can be considered good.
+
+```{R konfusiomatrix2018, echo=FALSE, message=FALSE, warnings=FALSE}
+#| echo: true
+#| eval: false
+## ##
+# ----Calculation of the confusion matrix  ----
+cm_rf <- confusionMatrix(data = predict(rf_model, newdata = testDat), testDat$class)
+cm_rf
+```
 
 
 ## Further support
 
-
-Consider the following resources as examples of how a specific conceptual and technical approach to answering a question can be *"crystallized"* step by step from the wide range of instructions available on the internet.
-After a lot of research and critical cross-checking, a *"state of research"* that is currently considered to be certain within the scientific community can be identified, which can be regarded as a sufficient basis for good scientific practice.
+Consider the following resources as examples of how a specific conceptual and technical approach to answering a question can be *"crystallized"* step by step from the wide range of instructions available on the internet. After a lot of research and critical cross-checking, a *"state of research"* that is currently considered to be certain within the scientific community can be identified, which can be regarded as a sufficient basis for good scientific practice.
 
 Work/read through the following selection of blogs and guides, even for practice purposes.
 
-
-- [The core of GIScience](http://www.charim.net/sites/default/files/handbook/datamanagement/3/3.3/The%20core%20of%20GIScience%2C%20a%20system%20-based%20approach.pdf) [Download](ftp://ftp.itc.nl/pub/ders/CoreBook2014_metadata.pdf) The editors Tolpekin & Stein 2012   are providing an excellent insight into GI concepts.
+-   [The core of GIScience](http://www.charim.net/sites/default/files/handbook/datamanagement/3/3.3/The%20core%20of%20GIScience%2C%20a%20system%20-based%20approach.pdf) [Download](ftp://ftp.itc.nl/pub/ders/CoreBook2014_metadata.pdf) The editors Tolpekin & Stein 2012 are providing an excellent insight into GI concepts.
 -   Robert J. Hijmans [rspatial - supervised classification](https://rspatial.org/raster/rs/5-supclassification.html)
 -   Ivan Lizarazo [RPubs Tutorial](https://rpubs.com/ials2un/rf_landcover)
 -   Sydney Goldstein [blog](https://urbanspatial.github.io/classifying_satellite_imagery_in_R/)
 -   João Gonçalves [supervised classification](https://www.r-exercises.com/2018/03/07/advanced-techniques-with-raster-data-part-2-supervised-classification/)
 -   Valentin Stefan [pixel-based supervised classification](https://valentinitnelav.github.io/satellite-image-classification-r/)
 
-In the articles, you will always find both technical instructions and conceptual or specific technical questions and solutions.
-They are by no means a substitute for specialized scientific knowledge.
-But they show how technical and conceptual understanding can be developed step by step and, by "replicating" and applying, support the skills needed to approach questions independently.
+In the articles, you will always find both technical instructions and conceptual or specific technical questions and solutions. They are by no means a substitute for specialized scientific knowledge. But they show how technical and conceptual understanding can be developed step by step and, by "replicating" and applying, support the skills needed to approach questions independently.
 
 I would like to explicitly quote Valentin Stefan, the author of the blog post [pixel-based supervised classification](https://valentinitnelav.github.io/satellite-image-classification-r/):
 
@@ -813,6 +753,6 @@ I would like to explicitly quote Valentin Stefan, the author of the blog post [p
 *"\[...\] Consider this content a blog post and nothing more. It does not claim to be an exhaustive exercise or a substitute for your critical thinking \[...\]."* :::
 :::
 
-You can download all the necessary scripts and data from the github repository (https://github.com/gisma/geoinfo/archive/refs/heads/main.zip).
-Alternatively, you can also set up the repo as a project in Rstudio (Rstudio github (https://www.r-bloggers.com/2015/07/rstudio-and-github/).
-\>
+You can download all the necessary scripts and data from the github repository (https://github.com/gisma/geoinfo/archive/refs/heads/main.zip). Alternatively, you can also set up the repo as a project in Rstudio (Rstudio github (https://www.r-bloggers.com/2015/07/rstudio-and-github/). \>
+
+------------------------------------------------------------------------
