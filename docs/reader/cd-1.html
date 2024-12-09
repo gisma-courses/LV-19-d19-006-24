@@ -446,7 +446,7 @@ background-size: cover;
 <section id="goals" class="level2">
 <h2 class="anchored" data-anchor-id="goals">Goals</h2>
 <p>This example shows how change detection methods can be applied conventionally to individual satellite scenes and in a modern way in cloud computing environments using <a href="https://cran.r-project.org/package=%20rstac"><code>rstac</code></a> <span class="citation" data-cites="rstac">(<a href="#ref-rstac" role="doc-biblioref">Brazil Data Cube Team 2021</a>)</span> and <a href="https://cran.r-project.org/package=gdalcubes"><code>gdalcubes</code></a> <span class="citation" data-cites="gdalcubes">(<a href="#ref-gdalcubes" role="doc-biblioref">Appel and Pebesma 2019</a>)</span> or <a href="https://cran.r-project.org/package=openeo"><code>openeo</code></a> <span class="citation" data-cites="openeo">(<a href="#ref-openeo" role="doc-biblioref">Lahn 2024</a>)</span>. In addition to classical supervised classification methods such as Maximum Likelihood and Random Forest, the <a href="https://cran.r-project.org/package=bfast"><code>bfast</code></a> <span class="citation" data-cites="bfast">(<a href="#ref-bfast" role="doc-biblioref">Verbesselt, Zeileis, and Herold 2012</a>)</span> is used, which includes an unsupervised method for detecting structural breaks in vegetation index time series.</p>
-<p>Other packages used in this tutorial include <a href="https://cran.r-project.org/package=stars"><code>stars</code></a> <span class="citation" data-cites="stars">(<a href="#ref-stars" role="doc-biblioref">Pebesma 2019</a>)</span>, <a href="https://cran.r-project.org/package=tmap"><code>tmap</code></a> <span class="citation" data-cites="tmap">(<a href="#ref-tmap" role="doc-biblioref">Tennekes 2018</a>)</span> and <a href="https://cran.r-project.org/package=tmap">mapview</a> for creating interactive maps, <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> for processing vector data, and <a href="https://cran.r-project.org/package=colorspace"><code>colorspace</code></a> <span class="citation" data-cites="colorspace">(<a href="#ref-colorspace" role="doc-biblioref">Zeileis et al. 2020</a>)</span> for visualizations with accessible colors.</p>
+<p>Other packages used in this tutorial include <a href="https://cran.r-project.org/package=stars"><code>stars</code></a> <span class="citation" data-cites="stars">(<a href="#ref-stars" role="doc-biblioref">Pebesma 2019</a>)</span>, <a href="https://cran.r-project.org/package=tmap"><code>tmap</code></a> <span class="citation" data-cites="tmap">(<a href="#ref-tmap" role="doc-biblioref">Tennekes 2018</a>)</span> and <a href="https://cran.r-project.org/package=tmap">mapview</a> <span class="citation" data-cites="mapview">(<a href="#ref-mapview" role="doc-biblioref">Appelhans et al. 2019</a>)</span> for creating interactive maps, <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> <span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma 2018</a>)</span> for processing vector data, and <a href="https://cran.r-project.org/package=colorspace"><code>colorspace</code></a> <span class="citation" data-cites="colorspace">(<a href="#ref-colorspace" role="doc-biblioref">Zeileis et al. 2020</a>)</span> for visualizations with accessible colors.</p>
 <p>This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.</p>
 </section>
 <section id="information-from-satellite-imagery" class="level2">
@@ -459,7 +459,8 @@ background-size: cover;
 <li><a href="../reader/cd-1.html#theoretical-principles">Theoretical principles</a></li>
 <li><a href="../reader/cd-1.html#change-detection-case-study-harz-mountains">Case Study Harz Mountains</a>
 <ul>
-<li><a href="../reader/cd-1.html#setting-up-the-work-environment">Preparing the work environment</a> - - <a href="../reader/cd-1.html#step-1-retrieving-sentinel-data">Retrieving Sentinel and auxilliary data</a></li>
+<li><a href="../reader/cd-1.html#setting-up-the-work-environment">Preparing the work environment</a></li>
+<li><a href="../reader/cd-1.html#step-1-retrieving-sentinel-data">Retrieving Sentinel and auxilliary data</a></li>
 <li><a href="../reader/cd-1.html#step2-overview-unsupervised-classification-k-means-clustering">Unsupervised classification</a> (k-means clustering)</li>
 <li><a href="../reader/cd-1.html#step-3---generating-training-data">Recording training areas</a>.</li>
 <li><a href="../reader/cd-1.html#step-4---supervised-classification">Supervised classification</a> (Random Forest, Maximum Likelihood)</li>
@@ -1135,6 +1136,9 @@ background-size: cover;
 <div id="ref-gdalcubes" class="csl-entry" role="listitem">
 Appel, Marius, and Edzer Pebesma. 2019. <span>“On-Demand Processing of Data Cubes from Satellite Image Collections with the Gdalcubes Library.”</span> <em>Data</em> 4 (3). <a href="https://www.mdpi.com/2306-5729/4/3/92">https://www.mdpi.com/2306-5729/4/3/92</a>.
 </div>
+<div id="ref-mapview" class="csl-entry" role="listitem">
+Appelhans, Tim, Florian Detsch, Christoph Reudenbach, and Stefan Woellauer. 2019. <em>Mapview: Interactive Viewing of Spatial Data in r</em>. <a href="https://CRAN.R-project.org/package=mapview">https://CRAN.R-project.org/package=mapview</a>.
+</div>
 <div id="ref-rstac" class="csl-entry" role="listitem">
 Brazil Data Cube Team. 2021. <em>Rstac: Client Library for SpatioTemporal Asset Catalog</em>. <a href="https://github.com/brazil-data-cube/rstac">https://github.com/brazil-data-cube/rstac</a>.
 </div>
@@ -1147,8 +1151,11 @@ Lahn, Florian. 2024. <em>Openeo: Client Interface for ’openEO’ Servers</em>.
 <div id="ref-cast" class="csl-entry" role="listitem">
 Meyer, Hanna, Carles Milà, Marvin Ludwig, Jan Linnenbrink, and Fabian Schumacher. 2024. <em>CAST: ’Caret’ Applications for Spatial-Temporal Models</em>. <a href="https://github.com/HannaMeyer/CAST">https://github.com/HannaMeyer/CAST</a>.
 </div>
+<div id="ref-sf" class="csl-entry" role="listitem">
+Pebesma, Edzer. 2018. <span>“<span class="nocase">Simple Features for R: Standardized Support for Spatial Vector Data</span>.”</span> <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+</div>
 <div id="ref-stars" class="csl-entry" role="listitem">
-Pebesma, Edzer. 2019. <em>Stars: Spatiotemporal Arrays, Raster and Vector Data Cubes</em>. <a href="https://CRAN.R-project.org/package=stars">https://CRAN.R-project.org/package=stars</a>.
+———. 2019. <em>Stars: Spatiotemporal Arrays, Raster and Vector Data Cubes</em>. <a href="https://CRAN.R-project.org/package=stars">https://CRAN.R-project.org/package=stars</a>.
 </div>
 <div id="ref-tmap" class="csl-entry" role="listitem">
 Tennekes, Martijn. 2018. <span>“<span class="nocase">tmap</span>: Thematic Maps in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 84 (6): 1–39. <a href="https://doi.org/10.18637/jss.v084.i06">https://doi.org/10.18637/jss.v084.i06</a>.

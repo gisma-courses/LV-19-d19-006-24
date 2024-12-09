@@ -30,7 +30,7 @@ However, the resulting algorithm can be applied to different or larger areas and
 
 This example shows how change detection methods can be applied conventionally to individual satellite scenes and in a modern way in cloud computing environments using [`rstac`](https://cran.r-project.org/package= rstac) [@rstac] and [`gdalcubes`](https://cran.r-project.org/package=gdalcubes) [@gdalcubes] or [`openeo`](https://cran.r-project.org/package=openeo) [@openeo]. In addition to classical supervised classification methods such as Maximum Likelihood and Random Forest, the [`bfast`](https://cran.r-project.org/package=bfast) [@bfast] is used, which includes an unsupervised method for detecting structural breaks in vegetation index time series.
 
-Other packages used in this tutorial include [`stars`](https://cran.r-project.org/package=stars) [@stars], [`tmap`](https://cran.r-project.org/package=tmap) [@tmap] and [mapview](https://cran.r-project.org/package=tmap)  for creating interactive maps, [`sf`](https://cran.r-project.org/package=sf) for processing vector data, and [`colorspace`](https://cran.r-project.org/package=colorspace) [@colorspace] for visualizations with accessible colors.
+Other packages used in this tutorial include [`stars`](https://cran.r-project.org/package=stars) [@stars], [`tmap`](https://cran.r-project.org/package=tmap) [@tmap] and [mapview](https://cran.r-project.org/package=tmap) [@mapview]  for creating interactive maps, [`sf`](https://cran.r-project.org/package=sf) [@sf] for processing vector data, and [`colorspace`](https://cran.r-project.org/package=colorspace) [@colorspace] for visualizations with accessible colors.
 
 This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.
 
@@ -48,7 +48,8 @@ We will cover the following topics:
 
 * [Theoretical principles](cd-1.qmd#theoretical-principles) 
 * [Case Study Harz Mountains](cd-1.qmd#change-detection-case-study-harz-mountains)
-   - [Preparing the work environment](cd-1.qmd#setting-up-the-work-environment)       -      - [Retrieving Sentinel and auxilliary data](cd-1.qmd#step-1-retrieving-sentinel-data)
+   - [Preparing the work environment](cd-1.qmd#setting-up-the-work-environment) 
+   - [Retrieving Sentinel and auxilliary data](cd-1.qmd#step-1-retrieving-sentinel-data)
    - [Unsupervised classification](cd-1.qmd#step2-overview-unsupervised-classification-k-means-clustering) (k-means clustering)
    - [Recording training areas](cd-1.qmd#step-3---generating-training-data).
    - [Supervised classification](cd-1.qmd#step-4---supervised-classification) (Random Forest, Maximum Likelihood)
