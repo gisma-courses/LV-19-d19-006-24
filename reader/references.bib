@@ -24,6 +24,23 @@
   url = {https://CRAN.R-project.org/package=mapview},
 }
 
+@Manual{openeo,
+  title = {openeo: Client Interface for 'openEO' Servers},
+  author = {Florian Lahn},
+  year = {2024},
+  note = {R package version 1.3.1},
+  url = {https://CRAN.R-project.org/package=openeo},
+}
+
+@Article{bfast,
+  title = {Near real-time disturbance detection using satellite image time series},
+  author = {Jan Verbesselt and Achim Zeileis and Martin Herold},
+  journal = {Remote Sensing of Environment},
+  year = {2012},
+  volume = {123},
+  pages = {98--108},
+  doi = {10.1016/j.rse.2012.02.022},
+}
 @Manual{rgdal,
   title = {rgdal: Bindings for the 'Geospatial' Data Abstraction Library},
   author = {Roger Bivand and Tim Keitt and Barry Rowlingson},
@@ -239,3 +256,39 @@ author = {Robert A. Monserud and Rik Leemans}
     note = {R package version 0.2.6},
     url = {https://CRAN.R-project.org/package=RStoolbox},
   }
+
+
+@Article{bfast_rs2020,
+AUTHOR = {Wu, Ling and Li, Zhaoliang and Liu, Xiangnan and Zhu, Lihong and Tang, Yibo and Zhang, Biyao and Xu, Boliang and Liu, Meiling and Meng, Yuanyuan and Liu, Boyuan},
+TITLE = {Multi-Type Forest Change Detection Using BFAST and Monthly Landsat Time Series for Monitoring Spatiotemporal Dynamics of Forests in Subtropical Wetland},
+JOURNAL = {Remote Sensing},
+VOLUME = {12},
+YEAR = {2020},
+NUMBER = {2},
+ARTICLE-NUMBER = {341},
+URL = {https://www.mdpi.com/2072-4292/12/2/341},
+ISSN = {2072-4292},
+ABSTRACT = {Land cover changes, especially excessive economic forest plantations, have significantly threatened the ecological security of West Dongting Lake wetland in China. This work aimed to investigate the spatiotemporal dynamics of forests in the West Dongting Lake region from 2000 to 2018 using a reconstructed monthly Landsat NDVI time series. The multi-type forest changes, including conversion from forest to another land cover category, conversion from another land cover category to forest, and conversion from forest to forest (such as flooding and replantation post-deforestation), and land cover categories before and after change were effectively detected by integrating Breaks For Additive Seasonal and Trend (BFAST) and random forest algorithms with the monthly NDVI time series, with an overall accuracy of 87.8%. On the basis of focusing on all the forest regions extracted through creating a forest mask for each image in time series and merging these to produce an ‘anytime’ forest mask, the spatiotemporal dynamics of forest were analyzed on the basis of the acquired information of multi-type forest changes and classification. The forests are principally distributed in the core zone of West Donting Lake surrounding the water body and the southwestern mountains. The forest changes in the core zone and low elevation region are prevalent and frequent. The variation of forest areas in West Dongting Lake experienced three steps: rapid expansion of forest plantation from 2000 to 2005, relatively steady from 2006 to 2011, and continuous decline since 2011, mainly caused by anthropogenic factors, such as government policies and economic profits. This study demonstrated the applicability of the integrated BFAST method to detect multi-type forest changes by using dense Landsat time series in the subtropical wetland ecosystem with low data availability.},
+DOI = {10.3390/rs12020341}
+}
+
+@Article{caret,
+    title = {Building Predictive Models in R Using the caret Package},
+    volume = {28},
+    url = {https://www.jstatsoft.org/index.php/jss/article/view/v028i05},
+    doi = {10.18637/jss.v028.i05},
+    number = {5},
+    journal = {Journal of Statistical Software},
+    author = {{Kuhn} and {Max}},
+    year = {2008},
+    pages = {1–26},
+  }
+   @Manual{cast,
+    title = {CAST: 'caret' Applications for Spatial-Temporal Models},
+    author = {Hanna Meyer and Carles Milà and Marvin Ludwig and Jan Linnenbrink and Fabian Schumacher},
+    year = {2024},
+    note = {R package version 1.0.2, 
+https://hannameyer.github.io/CAST/},
+    url = {https://github.com/HannaMeyer/CAST},
+  }
+

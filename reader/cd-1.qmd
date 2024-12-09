@@ -3,9 +3,9 @@ title: Change Detection - Sentinel
 author: Chris Reudenbach
 date: '2024-12-06'
 bibliography: references.bib
-subtitle: 'Clusteranalyse, Maximum-Likelihood and ML'
-title-block-banner: ../reader/images/harz2-sp.jpg
-title-block-banner-color: black
+subtitle: 'Clusteranalysis, Maximum-Likelihood and ML'
+title-block-banner: ../reader/images/grubenwiese-sp.jpg
+title-block-banner-color: white
 editor: 
   markdown: 
     wrap: sentence
@@ -20,12 +20,19 @@ In geospatial or environmental informatics, the detection of changes to the Eart
 These results are often linked to biophysical, geophysical or anthropogenic processes in order to gain both a deeper understanding and the possibility of developing predictive models.
 Methods of image analysis are of outstanding importance for generating spatial information from the underlying processes.
 Since both the quantity and quality of this "image data" are playing an increasingly important role in environmental monitoring and modeling, it is becoming more and more necessary to integrate "big data" concepts into the analyses.
-This means performing reproducible analyses with large amounts of data (\>\> 10 GB).
-This is essential for both scientific knowledge gain and future societal challenges.
+This means performing reproducible analyses with large amounts of data (\>\> 1 TB). This is essential for both scientific knowledge gain and future societal challenges.
 
 As already explained in the introduction, we start with a scalable change detection analysis of forest damage in low mountain ranges, which is a typical application-oriented task.
 Scalable means that we limit the analysis to a manageable area, the Nordwestharz, and to two time slices.
 However, the resulting algorithm can be applied to different or larger areas and to more time slices.
+
+## Goals
+
+This example shows how change detection methods can be applied conventionally to individual satellite scenes and in a modern way in cloud computing environments using [`rstac`](https://cran.r-project.org/package= rstac) [@rstac] and [`gdalcubes`](https://cran.r-project.org/package=gdalcubes) [@gdalcubes] or [`openeo`](https://cran.r-project.org/package=openeo) [@openeo]. In addition to classical supervised classification methods such as Maximum Likelihood and Random Forest, the [`bfast`](https://cran.r-project.org/package=bfast) [@bfast] is used, which includes an unsupervised method for detecting structural breaks in vegetation index time series.
+
+Other packages used in this tutorial include [`stars`](https://cran.r-project.org/package=stars) [@stars], [`tmap`](https://cran.r-project.org/package=tmap) [@tmap] and [mapview](https://cran.r-project.org/package=tmap)  for creating interactive maps, [`sf`](https://cran.r-project.org/package=sf) for processing vector data, and [`colorspace`](https://cran.r-project.org/package=colorspace) [@colorspace] for visualizations with accessible colors.
+
+This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.
 
 ## Information from satellite imagery
 
@@ -39,12 +46,13 @@ In this unit, you will learn about the classification of satellite image data. T
 
 We will cover the following topics:
 
-0. Theoretical principles 
-1. Preparing the work environment and automated data collection
-2. Overview – Unsupervised classification (k-means clustering)
-3. Recording training areas.
-4. Supervised classification (Random Forest, Maximum Likelihood)
-5. Estimating model quality
+* [Theoretical principles](cd-1.qmd#theoretical-principles) 
+* [Case Study Harz Mountains](cd-1.qmd#change-detection-case-study-harz-mountains)
+   - [Preparing the work environment](cd-1.qmd#setting-up-the-work-environment)       - [Retrieving Sentinel and auxilliary data](cd-1.qmd#step-1-retrieving-sentinel-data)
+   - [Unsupervised classification](cd-1.qmd#step2-overview-unsupervised-classification-k-means-clustering) (k-means clustering)
+   - [Recording training areas](cd-1.qmd#step-3---generating-training-data).
+   - [Supervised classification]cd-1.qmd#step-4---supervised-classification) (Random Forest, Maximum Likelihood)
+   - [Estimating model quality](cd-1.qmd#step-5-estimation-model-quality)
 
 ## Theoretical principles
 
@@ -106,13 +114,7 @@ From a pragmatic point of view, classification tasks generally require the follo
 
 ## Change detection case study: Harz Mountains
 
-### Goals
 
-This example shows how complex times series methods from external R packages can be applied in cloud computing environments using [`[rstac`](https://cran.r-project.org/package=rstac) [@rstac] and [`gdalcubes`](https://cran.r-project.org/package=gdalcubes) [@gdalcubes]. We will use the [`bfast` R package](https://cran.r-project.org/package=bfast) containing unsupervised change detection methods identifying structural breakpoints in vegetation index time series. Specifically, we will use the `bfastmonitor()` function to monitor changes on a dedicated timeperiod of a time series of Sentinel-2 imagery.
-
-Other packages used in this tutorial include [`stars`](https://cran.r-project.org/package=stars) [@stars], [`tmap`](https://cran.r-project.org/package=tmap) [@tmap] and [mapview](https://cran.r-project.org/package=tmap) [@mapview] for creating interactive maps, [`sf`](https://cran.r-project.org/package=sf) [@sf] for processing vector data, and [`colorspace`](https://cran.r-project.org/package=colorspace) [@colorspace] for visualizations with accessible colors.
-
-This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.
 
 ### Setting up the work environment
 
@@ -125,7 +127,7 @@ However, the work environment is usually loaded first.
 require("pacman")
 #remotes::install_github("zivankaraman/CDSE")
 # packages installing if necessary and loading
-pacman::p_load(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes, sf, dplyr,CDSE, downloader, tidyverse,RStoolbox,rprojroot, exactextractr, randomForest, ranger, e1071, caret, link2GI, rstac, OpenStreetMap,colorspace,ows4R,httr)
+pacman::p_load(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes, sf,webshot, dplyr,CDSE,webshot, downloader, tidyverse,RStoolbox,rprojroot, exactextractr, randomForest, ranger, e1071, caret, link2GI, rstac, OpenStreetMap,colorspace,ows4R,httr)
 #--- Switch to determine whether digitization is required. If set to FALSE, the
 root_folder = find_rstudio_root_file()
 
@@ -149,69 +151,68 @@ Please note to project to three different CRS is for this examples convenience a
 #| eval: false
 #| echo: true
 
-library(tmap)
-library(tmaptools)
-library(sf)
-library(httr)
-library(ows4R)
+# download the Harz region from the UBA WFS server
+# nre_regions <- "https://geodienste.bfn.de/ogc/wfs/gliederungen?"
+# regions_client <- WFSClient$new(nre_regions, 
+#                             serviceVersion = "2.0.0",)
+# regions_client$getFeatureTypes(pretty = TRUE)
+# 
+# url <- parse_url(nre_regions)
+# url$query <- list(service = "wfs",
+#                   #version = "2.0.0", # optional
+#                   request = "GetFeature",
+#                   typename = "Haupteinheiten",
+#                   srsName = "EPSG:4326"
+#                   )
+# request <- build_url(url)
+# 
+# nre_regions_sf <- read_sf(request)
+# harz = nre_regions_sf |> 
+#   filter(NAME_ORD3 %in% c( "Oberharz")) 
+# plot(harz)
+# harz_bbox = bb(harz,projection=4326)
+# harz_32632 =sf::st_transform(harz,crs = 32632)
+# harz_bbox_32632 = bb(harz_32632,projection=32632)
 
-
-nre_regions <- "https://geodienste.bfn.de/ogc/wfs/gliederungen?"
-regions_client <- WFSClient$new(nre_regions, 
-                            serviceVersion = "2.0.0",)
-regions_client$getFeatureTypes(pretty = TRUE)
-
-url <- parse_url(nre_regions)
-url$query <- list(service = "wfs",
-                  #version = "2.0.0", # optional
-                  request = "GetFeature",
-                  typename = "Haupteinheiten",
-                  srsName = "EPSG:4326"
-                  )
-request <- build_url(url)
-
-nre_regions_sf <- read_sf(request)
-harz = nre_regions_sf |> 
-  filter(NAME_ORD3 %in% c( "Oberharz")) 
-plot(harz)
-harz_bbox = bb(harz,projection=4326)
-harz_32632 =sf::st_transform(harz,crs = 32632)
-harz_bbox_32632 = bb(harz_32632,projection=32632)
-
+# Download training data which is also used for the extend
 utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/train_areas_2019_2020.gpkg",destfile=file.path("../data/train_areas_2019_2020.gpkg"))
 train_areas_2019_2020 = st_read(file.path("../data/train_areas_2019_2020.gpkg"))
 
 # mapping the extents and boundaries of the choosen geometries
-tmap_mode("view")
-tmap_options(check.and.fix = TRUE) + 
-  tm_basemap(server = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldTopoMap","Esri.WorldImagery")) +
-  tm_shape(harz) +   
-  tm_polygons(alpha = 0.4)
+# tmap_mode("view")
+# tmap_options(check.and.fix = TRUE) + 
+#   tm_basemap(server = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldTopoMap","Esri.WorldImagery")) +
+#   #tm_shape(harz) +   
+#   tm_polygons(alpha = 0.4)
 
 #--- Reading the data from the directories
 
 ##--- This describes how to process the Corine land use and land cover dataset
 ## The necessary file can also be downloaded from the repository
 ## An account is required for the download https://land.copernicus.eu/pan-european/corine-land-cover
-## Therefore, download the data manually and copy it into the directory and unzip it
-## Then execute the commented snippet below
-
-corine_raw = rast(file.path("../data/U2018_CLC2018_V2020_20u1.tif"))
-corine = terra::project(corine_raw,"EPSG:4326" )
-corine_harz = terra::crop(corine,vect(train_areas_2019_2020))
-plot(corine_harz)
-terra::writeRaster(corine_harz,file.path("../data/corine_harz.tif"),overwrite=TRUE)
-
-# Alternatively, download the example data set
-# utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine_harz.tif",destfile=file.path(root_folder,"../data/corine_harz.tif"))
-# corine_harz = rast(file.path(root_folder,"../data/corine_harz.tif"))
-
-mapview(corine_harz)+train_areas_2019_2020
+## Therefore, download the data manually and unzip 
+## U2018_CLC2018_V2020_20u1.tif into the data directory 
+## Then continue
+if (!file.exists(file.path(root_folder,"data/corine_harz.tif"))){
+  corine = rast(file.path("../data/U2018_CLC2018_V2020_20u1.tif"))
+  corine = terra::project(corine,"EPSG:4326" )
+  corine_harz = terra::crop(corine,vect(train_areas_2019_2020))
+  terra::writeRaster(corine_harz,file.path(root_folder,"data/corine_harz.tif"),overwrite=TRUE)
+  }
+corine_harz = rast(file.path(root_folder,"data/corine_harz.tif"))
 # Create a forest mask from corine
 # Agro-forestry areas code=22, Broad-leaved forest code=23,
 # Coniferous forest code=24, Mixed forest code=25
-harz_forest_mask = classify(corine_harz,c(-100,22,0,22,26,1,26,500,0))
-plot(harz_forest_mask)
+m <- c(-100, 22, 0,
+       22, 26, 1,
+       26, 500, 0)
+rclmat <- matrix(m, ncol=3, byrow=TRUE)
+harz_forest_mask <- classify(corine_harz, rclmat, include.lowest=TRUE)
+
+
+mapview(corine_harz)+mapview(train_areas_2019_2020,zcol="class")+harz_forest_mask
+
+# create extents
 e <- ext(harz_forest_mask)
 p <- as.polygons(e, crs="EPSG:4326")
 cm=sf::st_as_sf(p)
@@ -255,8 +256,8 @@ s = stac("https://earth-search.aws.element84.com/v0")
 items <- s |>
   stac_search(collections = "sentinel-s2-l2a-cogs",
               bbox= as.vector(harz_bbox), 
-              datetime = c("2019-06-01/2019-09-01"),
-              limit = 500) |>
+              datetime = c("2019-06-01/2021-09-01"),
+              limit = 1000) |>
   post_request() 
 items
 
@@ -274,7 +275,8 @@ To obtain a Sentinel data cube, a gdalcube image collection must be created from
 
 library(gdalcubes)
 s2_collection <- stac_image_collection(items$features,
-                                      asset_names = c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL"), 
+                                      asset_names = c("B04","B08","SCL"),
+#c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL"), 
                                       property_filter = function(x) {x[["eo:cloud_cover"]] < 5}) 
 s2_collection
 ```
@@ -298,7 +300,7 @@ v = cube_view(srs = "EPSG:32632",
               dt = "P1M",  
               aggregation = "median", 
               extent = list(t0 = "2019-06-01",
-                            t1 = "2019-09-01", 
+                            t1 = "2021-09-01", 
                             left = st_bbox(harz_32632)["xmin"] , 
                             right = st_bbox(harz_32632)["xmax"] ,
                             bottom = st_bbox(harz_32632)["ymin"] , 
@@ -320,43 +322,21 @@ Only calling a final *action* will start the processing on the COG-Server. In th
 #| 
 # we "download" the data and write it t a netcdf file
   s2.mask = image_mask("SCL", values = c(3,8,9))
-  gdalcubes_options(parallel = 16, ncdf_compression_level = 5)
+  gdalcubes_options(parallel = 16, 
+                    ncdf_compression_level = 5)
   raster_cube(s2_collection, v, mask = s2.mask) |>
-    write_ncdf("data/harz_2019_summer_tile.nc",overwrite=TRUE)
+    write_ncdf("data/harz_2019_2021_kndvi.nc",overwrite=TRUE)
 ```
-
-In the following examples we will show a simple plot in a generic pipe. However, a more common visualisation is quite simple. A typical pipe might be *Save a resulting netCDF file* `->` *Convert it to a `stars` object* `->` *Visualise the results* with `tmap`, `mapview`, `ggplot2` or whatever package you prefer to produce (interactive) map(s).
-
-#### Reducers (Statistics)
-
-Possible *reducers* include `min"`, `mean"`, `median"`, `max"`, `count"` (count non-missing values), `sum"`, `var"` (variance), and `sd"` (standard deviation). Reducer expressions are always given as a string, starting with the reducer name, followed by the band name in parentheses. Note that it is possible to mix reducers and bands.
-
-#### Counting image contribution per pixel
-
-To get an idea of the data, we can compute simple summary statistics using a 'reducer' function over dimensions. For example, using the `count` reducer, we can learn about the temporal coverage for each aggregated pixel, giving us an initial understanding of the temporal quality of the dataset.
-
-```{r count, messages=FALSE, warnings=FALSE}
-#| echo: true
-#| eval: false
-
-ncdf_cube("data/harz_2019_summer_tile.nc") |>
-  reduce_time("count(B04)") |> 
-  plot(key.pos = 1,  col = viridis::viridis, nbreaks = 10)
-```
-
-We can see that most time series contain valid observations of around 60 months, which should be sufficient for our example. Similarly, it is also possible to reduce over space, leading to summary time series.
-
-Below you will find various examples dealing with the common NDVI and the [kNDVI](https://advances.sciencemag.org/content/7/9/eabc7447) Indices.
 
 #### kNDVI
 
-Below, we derive mean monthly kNdvi values over all pixel time series.
+Below, we derive mean monthly [kNDVI](https://advances.sciencemag.org/content/7/9/eabc7447) values over all pixel time series.
 
 ```{r forest_kndvi, messages=FALSE, warnings=FALSE}
 #| echo: true
 #| eval: false
 #| 
-ncdf_cube("data/harz_2019_summer_tile.nc") |>
+ncdf_cube("data/harz_2019_2021_kndvi.nc") |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
   plot(key.pos = 1,  col = ndvi.col, nbreaks = 12)
@@ -388,14 +368,16 @@ images
 
 summary(images$areaCoverage)
 
+# best 30 days without clouds
 day <- images[order(images$tileCloudCover), ]$acquisitionDate[1:30]
 
+# read specific processing scripts
 script_file_raw = system.file("scripts", "RawBands.js", package = "CDSE")
 script_file_savi = "savi.js"
 script_file_kndvi = "kndvi.js"
 script_file_evi = "evi.js"
 
-# first day
+# first day 2018_07_01
 raw_2018_07_01 = GetImage(bbox = st_bbox(train_areas_2019_2020), 
                           time_range = day[12], 
                           script = script_file_raw, 
@@ -450,7 +432,7 @@ terra::plot(evi_2018_07_01[[1]], main = paste("EVI",day[12]), cex.main = 0.75)
 
 pred_stack_2018 = c(raw_2018_07_01,evi_2018_07_01[[1]],kndvi_2018_07_01[[1]],savi_2018_07_01[[1]])
 
-## second day
+## second day 2022_06_23
 raw_2022_06_23 = GetImage(bbox = st_bbox(train_areas_2019_2020), 
                           time_range = day[1], 
                           script = script_file_raw, 
@@ -505,12 +487,17 @@ terra::plot(evi_2022_06_23[[1]], main = paste("EVI",day[1]), cex.main = 0.75)
 
 pred_stack_2022 = c(raw_2022_06_23,evi_2022_06_23[[1]],kndvi_2022_06_23[[1]],savi_2022_06_23[[1]])
 
+terra::writeRaster(pred_stack_2018,file.path(root_folder,"data/pred_stack_2018.tif"),overwrite=TRUE)
+terra::writeRaster(pred_stack_2022,file.path(root_folder,"data/pred_stack_2022.tif"),overwrite=TRUE)
+
 ```
 
 
 
 
-## Step2: Overview – Unsupervised classification (k-means clustering)
+## Step2: Overview – Unsupervised classification 
+
+### k-means clustering
 
 In our example (applied to 5 classes and executed with the function `unsuperClass` from the `RStoolbox` package), this looks as follows.
 The cluster algorithm can achieve a fairly acceptable separation of the clearings/bald spots with 5 clusters, which makes a classification seem promising.
@@ -522,15 +509,144 @@ Also experiment with other cluster settings and discuss the results.
 ## k-means über RStoolbox
 
 #"EVI"   "kNDVI" "SAVI"
-prediction_kmeans_2018 = RStoolbox::unsuperClass(pred_stack_2018, nClasses = 5,norm = TRUE, algorithm = "MacQueen")
+prediction_kmeans_2018 = RStoolbox::unsuperClass(pred_stack_2018, 
+                                                 nClasses = 5,
+                                                 norm = TRUE, 
+                                                 algorithm = "MacQueen")
 # Klassifikation
 plot(prediction_kmeans_2018$map)
 
-prediction_kmeans_2022 = RStoolbox::unsuperClass(pred_stack_2022, nClasses = 5,norm = TRUE, algorithm = "MacQueen")
+prediction_kmeans_2022 = RStoolbox::unsuperClass(pred_stack_2022, 
+                                                 nClasses = 5,norm = TRUE, 
+                                                 algorithm = "MacQueen")
 plot(prediction_kmeans_2022$map)
 ```
 
 ![](images/kmeans-2018.png) ![](images/kmeans-2022.png)
+
+### bfast:  Spatial identification of magnitudes and time periods of kNDVI changes
+
+To apply a more complex time series method such as *Breaks For Additive Seasonal and Trend* (BFAST), which is often used for land cover changes (e.g. [@bfast_rs2020]), the `bfastmonitor()` function in `gdalcubes` can be used, the data cube operations below allow you to provide custom user-defined R functions instead of string expressions that translate to built-in reducers.
+
+In our example, `bfastmonitor` returns *change date* and *change magnitude* values per time series so we can use `reduce_time()`. The script below:
+1. calculates the [kNDVI](https://advances.sciencemag.org/content/7/9/eabc7447), 
+1. applies `bfastmonitor()`, and properly handles errors e.g. due to missing data with `tryCatch()`, and 
+1. finally writes out the resulting change dates and magnitudes of change for all pixels of the time series as a netCDF file. 
+
+The results shows the changes starting at 7/2019 until 10/2021.
+
+```{r calc_bfast , messages=FALSE, warnings=FALSE}
+#| echo: true
+#| eval: false
+figtrim <- function(path) {
+  img <- magick::image_trim(magick::image_read(path))
+  magick::image_write(img, path)
+  path
+}
+
+gdalcubes_options(parallel = 12)
+
+## start analysis
+system.time(
+  ncdf_cube(file.path(root_folder,"data/harz_2019_2021_kndvi.nc")) |>
+    reduce_time(names = c("change_date", "change_magnitude", "kndvi"), 
+                FUN = function(x) {
+                  kndvi = tanh(((x['B08',]-x['B04',])/(x['B08',]+x['B04',]))^2)
+                  if (all(is.na(kndvi))) {
+                    return(c(NA,NA))
+                    }
+                  kndvi_ts = ts(kndvi, start = c(2019, 1), frequency = 12)
+                  library(bfast)
+                  tryCatch({
+                    result = bfastmonitor(kndvi_ts, 
+                                          start = c(2020,1), 
+                                          history = "all", 
+                                          level = 0.01)
+                    return(c(result$breakpoint, result$magnitude))
+                    }, error = function(x) {return(c(NA,NA))
+                      })
+                  }) |>
+    write_ncdf(file.path(root_folder,"data/bfast_results.nc"),overwrite = TRUE))
+```
+
+Now we can use the netCDF file and map the results with any preferred visualisation tool. In this case `tmap`.
+
+```{r plot_bfast, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE}
+
+# plotting it from the local ncdf  
+tmap_mode("view")
+gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
+  stars::st_as_stars() -> x
+
+tm_shape(osm_forest) + tm_rgb() +
+  tm_shape(x[1]) + 
+  tm_raster(n = 6)  +
+  tm_layout(
+    legend.show = TRUE,
+    panel.label.height=0.6,
+    panel.label.size=0.6,
+    legend.text.size = 0.4,
+    legend.outside = TRUE) +
+  tm_grid()
+
+tm_shape(osm_forest) + tm_rgb() +
+  tm_shape(x[2])  + tm_raster() +
+  tm_layout(legend.title.size = 1,
+            panel.label.height=0.6,
+            panel.label.size=0.6,
+            legend.text.size = 0.4,
+            legend.outside = TRUE) +
+  tm_grid()
+
+```
+
+
+```{r plot_bfast_worker, echo=FALSE, message=FALSE, warning=FALSE}
+#| echo: true
+#| eval: false
+
+# plotting it from the local ncdf  
+tmap_mode("view")
+
+# Period of Change Map
+gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
+  stars::st_as_stars() -> x
+
+tmap::tmap_save(tm_shape(osm_forest) + tm_rgb() +
+  tm_shape(x[1] ) + 
+  tm_raster(n = 6)  +
+  tm_layout(legend.title.size = 1,
+    legend.show = TRUE,
+    panel.label.height=0.6,
+    panel.label.size=0.6,
+    legend.text.size = 0.4,
+    legend.outside = TRUE) +
+  tm_grid(), file = "m1.html" ) 
+
+# Magnitude Change Map 
+tmap::tmap_save(tm_shape(osm_forest) + tm_rgb() +
+  tm_shape(x[2])  + tm_raster() +
+  tm_layout(legend.title.size = 1,
+    legend.show = TRUE,
+    panel.label.height=0.6,
+    panel.label.size=0.6,
+    legend.text.size = 0.4,
+    legend.outside = TRUE) +
+  tm_grid(),file = "m2.html" ) 
+
+
+```
+
+
+<iframe valign="center" src="m2.html" width="640" height="800" frameborder="0">
+</iframe>
+<figcaption>*Magnitude Change Map *</figcaption>
+
+<p>
+
+<iframe valign="center" src="m1.html" width="640" height="800" frameborder="0">
+</iframe>
+<figcaption>*Period of Change Map *</figcaption>
 
 
 
@@ -552,6 +668,9 @@ Assuming we have digitized trainingdata using either QGIS or R We need now to ex
 ```{R}
 #| echo: true
 #| eval: false
+
+pred_stack_2018 = rast(file.path(root_folder,"data/pred_stack_2018.tif"))
+pred_stack_2022 = rast(file.path(root_folder,"data/pred_stack_2022.tif"))
 # use the provided training data set
 # Extract the training data for the digitized areas
 tDF_2019 = exactextractr::exact_extract(pred_stack_2018, filter(train_areas_2019_2020,year==2019), force_df = TRUE,
@@ -600,7 +719,7 @@ Since the maximum likelihood algorithm requires training data, it is a supervise
 ## Here the caret utility package is used
 # Setting a "seed" enables reproducible randomness
 set.seed(123)
-
+tDF = readRDS( file.path(root_folder,"data/tDF_2018_2022.rds"))
 # Randomly draw 15% of the data (training/test)
 idx = createDataPartition(tDF$class,list = FALSE,p = 0.05)
 trainDat = tDF[idx,]
@@ -627,17 +746,13 @@ prediction_mlc_2018 <- superClass(pred_stack_2018, trainData = sp_trainDat[,1:16
 
 prediction_mlc_2022 <- superClass(pred_stack_2022, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class",model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
 
-saveRDS(prediction_mlc_2018, "../data/prediction_mlc_2018.rds")
-saveRDS(prediction_mlc_2022, "../data/prediction_mlc_2022.rds")
+terra::writeRaster(prediction_mlc_2018, "../data/prediction_mlc_2018.tif",overwrite=TRUE)
+terra::writeRaster(prediction_mlc_2022, "../data/prediction_mlc_2022.tif",overwrite=TRUE)
 ```
 
 ### Random forest
 
-Random forests can be used for both regression and classification tasks, with the latter being particularly relevant in environmental remote sensing. Like any machine learning method, the random forest model learns to recognize patterns and structures in the data itself. Since the random forest algorithm also requires training data, it is also a supervised learning method. ![](images/Random_forest_diagram_complete.png)!
-
-Figure: Simplified illustration of data classification by random forest during training. Venkata Jagannath \[CC BY-SA 4.0\] via wikipedia.org
-
-A random forest algorithm learns from the data by creating random decision trees – hence the name. For classification tasks, the algorithm takes a suitable instance of a decision tree from the training data set and assigns the corresponding class to the pixel. This is repeated with all available decision trees. Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.
+A simplified version of the workflow proposed by Max Kuhn [@caret] and improved by Hanna Meyer et al. [@cast] is used for the random forest classification. For further understanding visit The [CAST documentation](https://hannameyer.github.io/CAST/)
 
 ```{R random_forest, eval=FALSE, message=FALSE, include=FALSE, warnings=FALSE}
 #| echo: true
@@ -652,13 +767,14 @@ ctrlh = trainControl(method = "cv",
 rf_model = train(trainDat[,2:16], # Columns 2 to 16 contain the training data (called predictors)
                  trainDat[,1], # Column 1 contains the variable to be classified (called response)
                  method = "rf", # Method here rf for random forest
-                 metric = "Kappa", # quality/performance measure KAppa
+                 metric = "Kappa", # quality/performance measure Kappa
                  trControl = ctrlh, # the training control generated above is to be read in
                  importance = TRUE) # The importance of the variables is also saved
 
 rf_model
 
-saveRDS(rf_model, "../data/rf_model.rds")
+saveRDS(rf_model, file.path(root_folder,"data/rf_model.rds"))
+rf_model = readRDS(file.path(root_folder,"data/rf_model.rds"))
 ```
 
 ### Prediction on the original data
@@ -669,44 +785,38 @@ Now we are ready to apply the verified model to our data set. In remote sensing,
 #| echo: true
 #| eval: false
 #| 
-# Klassifikation (auch Vorhersage genannt)
+# Classification (also known as prediction)
 prediction_rf_2018  = raster::predict(pred_stack_2018 ,rf_model)
 prediction_rf_2022  = raster::predict(pred_stack_2022 ,rf_model)
-saveRDS(prediction_rf_2018, "../data/prediction_rf_2018.rds")
-saveRDS(prediction_rf_2022, "../data/prediction_rf_2020.rds")
+saveRDS(prediction_rf_2018, file.path(root_folder,"data/prediction_rf_2018.rds"))
+saveRDS(prediction_rf_2022, file.path(root_folder,"data/prediction_rf_2022.rds"))
 
 ```
 
-```{R vergleichklassifikationen}
+```{R comparison_classifications}
 #| echo: true
 #| eval: false
 ## ##
-prediction_rf_2018 = readRDS("../data/prediction_rf_2018.rds")
-prediction_rf_2022 = readRDS("../data/prediction_rf_2022.rds")
-prediction_mlc_2018 = readRDS("../data/prediction_mlc_2018.rds")
-prediction_mlc_2022 = readRDS("../data/prediction_mlc_2022.rds")
+prediction_rf_2018 = readRDS(file.path(root_folder,"data/prediction_rf_2018.rds"))
+prediction_rf_2022 = readRDS(file.path(root_folder,"data/prediction_rf_2022.rds"))
+prediction_mlc_2018 = readRDS(file.path(root_folder,"data/prediction_mlc_2018.rds"))
+prediction_mlc_2022 = readRDS(file.path(root_folder,"data/prediction_mlc_2022.rds"))
 
 ## ---- Visualisierung mit mapview ----
-
-mapview::mapshot(mapview::viewRGB(mask*pred_stack_2022, r = 4, g =3, b = 2,maxpixels =  1693870)+
+mask = resample(harz_forest_mask,pred_stack_2022)
+mapview::mapshot(
   mapview(mask*prediction_rf_2018 , alpha.regions = 0.5, maxpixels =  1693870,
-          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = TRUE) +
+          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, 2, 1), legend = TRUE) +
   mapview(mask*prediction_rf_2022, alpha.regions = 0.5, maxpixels =  1693870,
-          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = FALSE) +
-  mapview(mask*prediction_mlc_2018$map,alpha.regions = 0.5, maxpixels =  1693870,
-          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = FALSE) +
-  mapview(mask*prediction_mlc_2022$map,alpha.regions = 0.5, maxpixels =  1693870,
-          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, nclasses, 1), legend = FALSE),url = "compare-class.html")
-
+          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, 2, 1), legend = FALSE) ,url = "compare-class1.html" )
+plot(prediction_mlc_2018$map)
+plot(prediction_mlc_2022$map)
 ```
 
-<iframe valign="center" src="compare-class.html" width="1024" height="960" frameborder="0" allowfullscreen="allowfullscreen">
+<iframe valign="center" src="compare-class1.html" width="640" height="960" frameborder="0" allowfullscreen="allowfullscreen">
 
 </iframe>
 
-<figcaption>*Comparison of the two years and RF and MLC classification*</figcaption>
-
-<p>
 
 A visual comparison shows that the Random Forest and Maximum Likelihood classifications provide results of comparable quality. But does this impression stand up to quantitative analysis?
 
@@ -755,6 +865,3 @@ I would like to explicitly quote Valentin Stefan, the author of the blog post [p
 *"\[...\] Consider this content a blog post and nothing more. It does not claim to be an exhaustive exercise or a substitute for your critical thinking \[...\]."* :::
 :::
 
-You can download all the necessary scripts and data from the github repository (https://github.com/gisma/geoinfo/archive/refs/heads/main.zip). Alternatively, you can also set up the repo as a project in Rstudio (Rstudio github (https://www.r-bloggers.com/2015/07/rstudio-and-github/). \>
-
-------------------------------------------------------------------------

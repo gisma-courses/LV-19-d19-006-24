@@ -131,23 +131,22 @@ div.csl-indent {
       .quarto-title-block .quarto-title-banner h5,
       .quarto-title-block .quarto-title-banner h6
       {
-        color: black;
+        color: white;
       }
 
       .quarto-title-block .quarto-title-banner {
-        color: black;
-background-image: url(../reader/images/harz2-sp.jpg);
-background-size: cover;
+        color: white;
+background: ../reader/images/grubenwiese-sp.jpg;
       }
 </style>
 
 
 <link rel="stylesheet" href="../css/styles.css">
 <meta property="og:title" content="Advanced GIS and Remote Sensing - Change Detection - Sentinel">
-<meta property="og:description" content="Clusteranalyse, Maximum-Likelihood and ML">
+<meta property="og:description" content="Clusteranalysis, Maximum-Likelihood and ML">
 <meta property="og:site_name" content="Advanced GIS and Remote Sensing">
 <meta name="twitter:title" content="Advanced GIS and Remote Sensing - Change Detection - Sentinel">
-<meta name="twitter:description" content="Clusteranalyse, Maximum-Likelihood and ML">
+<meta name="twitter:description" content="Clusteranalysis, Maximum-Likelihood and ML">
 <meta name="twitter:creator" content="@gisma">
 <meta name="twitter:card" content="summary">
 </head>
@@ -207,7 +206,7 @@ background-size: cover;
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Change Detection - Sentinel</h1>
-            <p class="subtitle lead">Clusteranalyse, Maximum-Likelihood and ML</p>
+            <p class="subtitle lead">Clusteranalysis, Maximum-Likelihood and ML</p>
                       </div>
   </div>
     
@@ -410,6 +409,7 @@ background-size: cover;
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
   <li><a href="#information-from-satellite-imagery" id="toc-information-from-satellite-imagery" class="nav-link" data-scroll-target="#information-from-satellite-imagery">Information from satellite imagery</a></li>
   <li><a href="#theoretical-principles" id="toc-theoretical-principles" class="nav-link" data-scroll-target="#theoretical-principles">Theoretical principles</a>
   <ul class="collapse">
@@ -418,7 +418,6 @@ background-size: cover;
   </ul></li>
   <li><a href="#change-detection-case-study-harz-mountains" id="toc-change-detection-case-study-harz-mountains" class="nav-link" data-scroll-target="#change-detection-case-study-harz-mountains">Change detection case study: Harz Mountains</a>
   <ul class="collapse">
-  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
   <li><a href="#setting-up-the-work-environment" id="toc-setting-up-the-work-environment" class="nav-link" data-scroll-target="#setting-up-the-work-environment">Setting up the work environment</a></li>
   <li><a href="#defining-the-area-of-interest" id="toc-defining-the-area-of-interest" class="nav-link" data-scroll-target="#defining-the-area-of-interest">Defining the Area of Interest</a></li>
   </ul></li>
@@ -427,7 +426,11 @@ background-size: cover;
   <li><a href="#aternative-1-using-gdalcubes" id="toc-aternative-1-using-gdalcubes" class="nav-link" data-scroll-target="#aternative-1-using-gdalcubes">Aternative 1: Using <code>gdalcubes</code></a></li>
   <li><a href="#alternative-2-copernicus-data-space-ecosystem-api-wrapper-cdse" id="toc-alternative-2-copernicus-data-space-ecosystem-api-wrapper-cdse" class="nav-link" data-scroll-target="#alternative-2-copernicus-data-space-ecosystem-api-wrapper-cdse">Alternative 2: Copernicus Data Space Ecosystem API Wrapper CDSE</a></li>
   </ul></li>
-  <li><a href="#step2-overview-unsupervised-classification-k-means-clustering" id="toc-step2-overview-unsupervised-classification-k-means-clustering" class="nav-link" data-scroll-target="#step2-overview-unsupervised-classification-k-means-clustering">Step2: Overview – Unsupervised classification (k-means clustering)</a></li>
+  <li><a href="#step2-overview-unsupervised-classification" id="toc-step2-overview-unsupervised-classification" class="nav-link" data-scroll-target="#step2-overview-unsupervised-classification">Step2: Overview – Unsupervised classification</a>
+  <ul class="collapse">
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering">k-means clustering</a></li>
+  <li><a href="#bfast-spatial-identification-of-magnitudes-and-time-periods-of-kndvi-changes" id="toc-bfast-spatial-identification-of-magnitudes-and-time-periods-of-kndvi-changes" class="nav-link" data-scroll-target="#bfast-spatial-identification-of-magnitudes-and-time-periods-of-kndvi-changes">bfast: Spatial identification of magnitudes and time periods of kNDVI changes</a></li>
+  </ul></li>
   <li><a href="#step-3---generating-training-data" id="toc-step-3---generating-training-data" class="nav-link" data-scroll-target="#step-3---generating-training-data">Step 3 - Generating training data</a></li>
   <li><a href="#step-4---supervised-classification" id="toc-step-4---supervised-classification" class="nav-link" data-scroll-target="#step-4---supervised-classification">Step 4 - supervised classification</a>
   <ul class="collapse">
@@ -450,8 +453,14 @@ background-size: cover;
 <p>In the geosciences, remote sensing is the only measurement technique that allows complete coverage of large spatial areas, up to the entire Earth’s surface. Its successful application requires both the use of existing methods and the adaptation and development of new ones.</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In geospatial or environmental informatics, the detection of changes to the Earth’s surface using satellite, aircraft or drone images, known as change detection analysis, is an important application. These results are often linked to biophysical, geophysical or anthropogenic processes in order to gain both a deeper understanding and the possibility of developing predictive models. Methods of image analysis are of outstanding importance for generating spatial information from the underlying processes. Since both the quantity and quality of this “image data” are playing an increasingly important role in environmental monitoring and modeling, it is becoming more and more necessary to integrate “big data” concepts into the analyses. This means performing reproducible analyses with large amounts of data (&gt;&gt; 10 GB). This is essential for both scientific knowledge gain and future societal challenges.</p>
+<p>In geospatial or environmental informatics, the detection of changes to the Earth’s surface using satellite, aircraft or drone images, known as change detection analysis, is an important application. These results are often linked to biophysical, geophysical or anthropogenic processes in order to gain both a deeper understanding and the possibility of developing predictive models. Methods of image analysis are of outstanding importance for generating spatial information from the underlying processes. Since both the quantity and quality of this “image data” are playing an increasingly important role in environmental monitoring and modeling, it is becoming more and more necessary to integrate “big data” concepts into the analyses. This means performing reproducible analyses with large amounts of data (&gt;&gt; 1 TB). This is essential for both scientific knowledge gain and future societal challenges.</p>
 <p>As already explained in the introduction, we start with a scalable change detection analysis of forest damage in low mountain ranges, which is a typical application-oriented task. Scalable means that we limit the analysis to a manageable area, the Nordwestharz, and to two time slices. However, the resulting algorithm can be applied to different or larger areas and to more time slices.</p>
+</section>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<p>This example shows how change detection methods can be applied conventionally to individual satellite scenes and in a modern way in cloud computing environments using <a href="https://cran.r-project.org/package=%20rstac"><code>rstac</code></a> <span class="citation" data-cites="rstac">(<a href="#ref-rstac" role="doc-biblioref">Brazil Data Cube Team 2021</a>)</span> and <a href="https://cran.r-project.org/package=gdalcubes"><code>gdalcubes</code></a> <span class="citation" data-cites="gdalcubes">(<a href="#ref-gdalcubes" role="doc-biblioref">Appel and Pebesma 2019</a>)</span> or <a href="https://cran.r-project.org/package=openeo"><code>openeo</code></a> <span class="citation" data-cites="openeo">(<a href="#ref-openeo" role="doc-biblioref">Lahn 2024</a>)</span>. In addition to classical supervised classification methods such as Maximum Likelihood and Random Forest, the <a href="https://cran.r-project.org/package=bfast"><code>bfast</code></a> <span class="citation" data-cites="bfast">(<a href="#ref-bfast" role="doc-biblioref">Verbesselt, Zeileis, and Herold 2012</a>)</span> is used, which includes an unsupervised method for detecting structural breaks in vegetation index time series.</p>
+<p>Other packages used in this tutorial include <a href="https://cran.r-project.org/package=stars"><code>stars</code></a> <span class="citation" data-cites="stars">(<a href="#ref-stars" role="doc-biblioref">Pebesma 2019</a>)</span>, <a href="https://cran.r-project.org/package=tmap"><code>tmap</code></a> <span class="citation" data-cites="tmap">(<a href="#ref-tmap" role="doc-biblioref">Tennekes 2018</a>)</span> and <a href="https://cran.r-project.org/package=tmap">mapview</a> for creating interactive maps, <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> for processing vector data, and <a href="https://cran.r-project.org/package=colorspace"><code>colorspace</code></a> <span class="citation" data-cites="colorspace">(<a href="#ref-colorspace" role="doc-biblioref">Zeileis et al. 2020</a>)</span> for visualizations with accessible colors.</p>
+<p>This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.</p>
 </section>
 <section id="information-from-satellite-imagery" class="level2">
 <h2 class="anchored" data-anchor-id="information-from-satellite-imagery">Information from satellite imagery</h2>
@@ -459,14 +468,17 @@ background-size: cover;
 <p>To obtain useful or meaningful information, e.g.&nbsp;about the land cover in an area, we have to analyze the data according to the question at hand. Probably the best known and most widely used approach is the supervised classification of image data into categories of interest.</p>
 <p>In this unit, you will learn about the classification of satellite image data. This includes both data acquisition on the Copernicus portal and the various steps from digitising the training data to evaluating the quality of the classifications.</p>
 <p>We will cover the following topics:</p>
-<ol start="0" type="1">
-<li>Theoretical principles</li>
-<li>Preparing the work environment and automated data collection</li>
-<li>Overview – Unsupervised classification (k-means clustering)</li>
-<li>Recording training areas.</li>
-<li>Supervised classification (Random Forest, Maximum Likelihood)</li>
-<li>Estimating model quality</li>
-</ol>
+<ul>
+<li><a href="../reader/cd-1.html#theoretical-principles">Theoretical principles</a></li>
+<li><a href="../reader/cd-1.html#change-detection-case-study-harz-mountains">Case Study Harz Mountains</a>
+<ul>
+<li><a href="../reader/cd-1.html#setting-up-the-work-environment">Preparing the work environment</a> - <a href="../reader/cd-1.html#step-1-retrieving-sentinel-data">Retrieving Sentinel and auxilliary data</a></li>
+<li><a href="../reader/cd-1.html#step2-overview-unsupervised-classification-k-means-clustering">Unsupervised classification</a> (k-means clustering)</li>
+<li><a href="../reader/cd-1.html#step-3---generating-training-data">Recording training areas</a>.</li>
+<li><a href="#supervised-classification">Supervised classification</a>cd-1.qmd#step-4—supervised-classification) (Random Forest, Maximum Likelihood)</li>
+<li><a href="../reader/cd-1.html#step-5-estimation-model-quality">Estimating model quality</a></li>
+</ul></li>
+</ul>
 </section>
 <section id="theoretical-principles" class="level2">
 <h2 class="anchored" data-anchor-id="theoretical-principles">Theoretical principles</h2>
@@ -504,12 +516,6 @@ background-size: cover;
 </section>
 <section id="change-detection-case-study-harz-mountains" class="level2">
 <h2 class="anchored" data-anchor-id="change-detection-case-study-harz-mountains">Change detection case study: Harz Mountains</h2>
-<section id="goals" class="level3">
-<h3 class="anchored" data-anchor-id="goals">Goals</h3>
-<p>This example shows how complex times series methods from external R packages can be applied in cloud computing environments using <a href="https://cran.r-project.org/package=rstac"><code>[rstac</code></a> <span class="citation" data-cites="rstac">(<a href="#ref-rstac" role="doc-biblioref">Brazil Data Cube Team 2021</a>)</span> and <a href="https://cran.r-project.org/package=gdalcubes"><code>gdalcubes</code></a> <span class="citation" data-cites="gdalcubes">(<a href="#ref-gdalcubes" role="doc-biblioref">Appel and Pebesma 2019</a>)</span>. We will use the <a href="https://cran.r-project.org/package=bfast"><code>bfast</code> R package</a> containing unsupervised change detection methods identifying structural breakpoints in vegetation index time series. Specifically, we will use the <code>bfastmonitor()</code> function to monitor changes on a dedicated timeperiod of a time series of Sentinel-2 imagery.</p>
-<p>Other packages used in this tutorial include <a href="https://cran.r-project.org/package=stars"><code>stars</code></a> <span class="citation" data-cites="stars">(<a href="#ref-stars" role="doc-biblioref">Pebesma 2019</a>)</span>, <a href="https://cran.r-project.org/package=tmap"><code>tmap</code></a> <span class="citation" data-cites="tmap">(<a href="#ref-tmap" role="doc-biblioref">Tennekes 2018</a>)</span> and <a href="https://cran.r-project.org/package=tmap">mapview</a> <span class="citation" data-cites="mapview">(<a href="#ref-mapview" role="doc-biblioref">Appelhans et al. 2019</a>)</span> for creating interactive maps, <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> <span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma 2018</a>)</span> for processing vector data, and <a href="https://cran.r-project.org/package=colorspace"><code>colorspace</code></a> <span class="citation" data-cites="colorspace">(<a href="#ref-colorspace" role="doc-biblioref">Zeileis et al. 2020</a>)</span> for visualizations with accessible colors.</p>
-<p>This study employs a variety of approaches to time series and difference analyses with different indices, using the Harz Mountains as a case study for the period between 2018 and 2023. The objective is to analyze or classify the data.</p>
-</section>
 <section id="setting-up-the-work-environment" class="level3">
 <h3 class="anchored" data-anchor-id="setting-up-the-work-environment">Setting up the work environment</h3>
 <p>You can either use the data saved from the previous exercise or define, download and edit a new area. However, the work environment is usually loaded first.</p>
@@ -518,7 +524,7 @@ background-size: cover;
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(<span class="st">"pacman"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#remotes::install_github("zivankaraman/CDSE")</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># packages installing if necessary and loading</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes, sf, dplyr,CDSE, downloader, tidyverse,RStoolbox,rprojroot, exactextractr, randomForest, ranger, e1071, caret, link2GI, rstac, OpenStreetMap,colorspace,ows4R,httr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes, sf,webshot, dplyr,CDSE,webshot, downloader, tidyverse,RStoolbox,rprojroot, exactextractr, randomForest, ranger, e1071, caret, link2GI, rstac, OpenStreetMap,colorspace,ows4R,httr)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#--- Switch to determine whether digitization is required. If set to FALSE, the</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>root_folder <span class="ot">=</span> <span class="fu">find_rstudio_root_file</span>()</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -535,72 +541,71 @@ background-size: cover;
 <p>Please note to project to three different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.<br>
 </p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmaptools)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ows4R)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>nre_regions <span class="ot">&lt;-</span> <span class="st">"https://geodienste.bfn.de/ogc/wfs/gliederungen?"</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>regions_client <span class="ot">&lt;-</span> WFSClient<span class="sc">$</span><span class="fu">new</span>(nre_regions, </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">serviceVersion =</span> <span class="st">"2.0.0"</span>,)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>regions_client<span class="sc">$</span><span class="fu">getFeatureTypes</span>(<span class="at">pretty =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">parse_url</span>(nre_regions)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>url<span class="sc">$</span>query <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">service =</span> <span class="st">"wfs"</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                  <span class="co">#version = "2.0.0", # optional</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">request =</span> <span class="st">"GetFeature"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">typename =</span> <span class="st">"Haupteinheiten"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">srsName =</span> <span class="st">"EPSG:4326"</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                  )</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>request <span class="ot">&lt;-</span> <span class="fu">build_url</span>(url)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>nre_regions_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(request)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>harz <span class="ot">=</span> nre_regions_sf <span class="sc">|&gt;</span> </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME_ORD3 <span class="sc">%in%</span> <span class="fu">c</span>( <span class="st">"Oberharz"</span>)) </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(harz)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>harz_bbox <span class="ot">=</span> <span class="fu">bb</span>(harz,<span class="at">projection=</span><span class="dv">4326</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>harz_32632 <span class="ot">=</span>sf<span class="sc">::</span><span class="fu">st_transform</span>(harz,<span class="at">crs =</span> <span class="dv">32632</span>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>harz_bbox_32632 <span class="ot">=</span> <span class="fu">bb</span>(harz_32632,<span class="at">projection=</span><span class="dv">32632</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">download.file</span>(<span class="at">url=</span><span class="st">"https://github.com/gisma/gismaData/raw/master/geoinfo/train_areas_2019_2020.gpkg"</span>,<span class="at">destfile=</span><span class="fu">file.path</span>(<span class="st">"../data/train_areas_2019_2020.gpkg"</span>))</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>train_areas_2019_2020 <span class="ot">=</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(<span class="st">"../data/train_areas_2019_2020.gpkg"</span>))</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># mapping the extents and boundaries of the choosen geometries</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"view"</span>)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_options</span>(<span class="at">check.and.fix =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="fu">c</span>(<span class="st">"Esri.WorldGrayCanvas"</span>, <span class="st">"OpenStreetMap"</span>, <span class="st">"Esri.WorldTopoMap"</span>,<span class="st">"Esri.WorldImagery"</span>)) <span class="sc">+</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(harz) <span class="sc">+</span>   </span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>)</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#--- Reading the data from the directories</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="do">##--- This describes how to process the Corine land use and land cover dataset</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="do">## The necessary file can also be downloaded from the repository</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="do">## An account is required for the download https://land.copernicus.eu/pan-european/corine-land-cover</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="do">## Therefore, download the data manually and copy it into the directory and unzip it</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Then execute the commented snippet below</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>corine_raw <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">file.path</span>(<span class="st">"../data/U2018_CLC2018_V2020_20u1.tif"</span>))</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>corine <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">project</span>(corine_raw,<span class="st">"EPSG:4326"</span> )</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>corine_harz <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">crop</span>(corine,<span class="fu">vect</span>(train_areas_2019_2020))</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(corine_harz)</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">writeRaster</span>(corine_harz,<span class="fu">file.path</span>(<span class="st">"../data/corine_harz.tif"</span>),<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, download the example data set</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine_harz.tif",destfile=file.path(root_folder,"../data/corine_harz.tif"))</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co"># corine_harz = rast(file.path(root_folder,"../data/corine_harz.tif"))</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(corine_harz)<span class="sc">+</span>train_areas_2019_2020</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a forest mask from corine</span></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Agro-forestry areas code=22, Broad-leaved forest code=23,</span></span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Coniferous forest code=24, Mixed forest code=25</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>harz_forest_mask <span class="ot">=</span> <span class="fu">classify</span>(corine_harz,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>,<span class="dv">22</span>,<span class="dv">0</span>,<span class="dv">22</span>,<span class="dv">26</span>,<span class="dv">1</span>,<span class="dv">26</span>,<span class="dv">500</span>,<span class="dv">0</span>))</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(harz_forest_mask)</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">ext</span>(harz_forest_mask)</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(e, <span class="at">crs=</span><span class="st">"EPSG:4326"</span>)</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>cm<span class="ot">=</span>sf<span class="sc">::</span><span class="fu">st_as_sf</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the Harz region from the UBA WFS server</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># nre_regions &lt;- "https://geodienste.bfn.de/ogc/wfs/gliederungen?"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># regions_client &lt;- WFSClient$new(nre_regions, </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                             serviceVersion = "2.0.0",)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># regions_client$getFeatureTypes(pretty = TRUE)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># url &lt;- parse_url(nre_regions)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># url$query &lt;- list(service = "wfs",</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                   #version = "2.0.0", # optional</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                   request = "GetFeature",</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                   typename = "Haupteinheiten",</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#                   srsName = "EPSG:4326"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                   )</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># request &lt;- build_url(url)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># nre_regions_sf &lt;- read_sf(request)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># harz = nre_regions_sf |&gt; </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(NAME_ORD3 %in% c( "Oberharz")) </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(harz)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># harz_bbox = bb(harz,projection=4326)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># harz_32632 =sf::st_transform(harz,crs = 32632)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># harz_bbox_32632 = bb(harz_32632,projection=32632)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Download training data which is also used for the extend</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">download.file</span>(<span class="at">url=</span><span class="st">"https://github.com/gisma/gismaData/raw/master/geoinfo/train_areas_2019_2020.gpkg"</span>,<span class="at">destfile=</span><span class="fu">file.path</span>(<span class="st">"../data/train_areas_2019_2020.gpkg"</span>))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>train_areas_2019_2020 <span class="ot">=</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(<span class="st">"../data/train_areas_2019_2020.gpkg"</span>))</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># mapping the extents and boundaries of the choosen geometries</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># tmap_mode("view")</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co"># tmap_options(check.and.fix = TRUE) + </span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#   tm_basemap(server = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldTopoMap","Esri.WorldImagery")) +</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   #tm_shape(harz) +   </span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   tm_polygons(alpha = 0.4)</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#--- Reading the data from the directories</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="do">##--- This describes how to process the Corine land use and land cover dataset</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="do">## The necessary file can also be downloaded from the repository</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="do">## An account is required for the download https://land.copernicus.eu/pan-european/corine-land-cover</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Therefore, download the data manually and unzip </span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="do">## U2018_CLC2018_V2020_20u1.tif into the data directory </span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="do">## Then continue</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/corine_harz.tif"</span>))){</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  corine <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">file.path</span>(<span class="st">"../data/U2018_CLC2018_V2020_20u1.tif"</span>))</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  corine <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">project</span>(corine,<span class="st">"EPSG:4326"</span> )</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  corine_harz <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">crop</span>(corine,<span class="fu">vect</span>(train_areas_2019_2020))</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  terra<span class="sc">::</span><span class="fu">writeRaster</span>(corine_harz,<span class="fu">file.path</span>(root_folder,<span class="st">"data/corine_harz.tif"</span>),<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>corine_harz <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/corine_harz.tif"</span>))</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a forest mask from corine</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Agro-forestry areas code=22, Broad-leaved forest code=23,</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Coniferous forest code=24, Mixed forest code=25</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">22</span>, <span class="dv">0</span>,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>       <span class="dv">22</span>, <span class="dv">26</span>, <span class="dv">1</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>       <span class="dv">26</span>, <span class="dv">500</span>, <span class="dv">0</span>)</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>rclmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(m, <span class="at">ncol=</span><span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>harz_forest_mask <span class="ot">&lt;-</span> <span class="fu">classify</span>(corine_harz, rclmat, <span class="at">include.lowest=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">mapview</span>(corine_harz)<span class="sc">+</span><span class="fu">mapview</span>(train_areas_2019_2020,<span class="at">zcol=</span><span class="st">"class"</span>)<span class="sc">+</span>harz_forest_mask</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co"># create extents</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fu">ext</span>(harz_forest_mask)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(e, <span class="at">crs=</span><span class="st">"EPSG:4326"</span>)</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>cm<span class="ot">=</span>sf<span class="sc">::</span><span class="fu">st_as_sf</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -635,8 +640,8 @@ background-size: cover;
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">items &lt;- s |&gt;</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="in">  stac_search(collections = "sentinel-s2-l2a-cogs",</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in">              bbox= as.vector(harz_bbox), </span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in">              datetime = c("2019-06-01/2019-09-01"),</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">              limit = 500) |&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in">              datetime = c("2019-06-01/2021-09-01"),</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">              limit = 1000) |&gt;</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="in">  post_request() </span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in">items</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -649,9 +654,10 @@ background-size: cover;
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gdalcubes)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>s2_collection <span class="ot">&lt;-</span> <span class="fu">stac_image_collection</span>(items<span class="sc">$</span>features,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">asset_names =</span> <span class="fu">c</span>(<span class="st">"B01"</span>,<span class="st">"B02"</span>,<span class="st">"B03"</span>,<span class="st">"B04"</span>,<span class="st">"B05"</span>,<span class="st">"B06"</span>, <span class="st">"B07"</span>,<span class="st">"B08"</span>,<span class="st">"B8A"</span>,<span class="st">"B09"</span>,<span class="st">"B11"</span>,<span class="st">"SCL"</span>), </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">property_filter =</span> <span class="cf">function</span>(x) {x[[<span class="st">"eo:cloud_cover"</span>]] <span class="sc">&lt;</span> <span class="dv">5</span>}) </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>s2_collection</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">asset_names =</span> <span class="fu">c</span>(<span class="st">"B04"</span>,<span class="st">"B08"</span>,<span class="st">"SCL"</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL"), </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">property_filter =</span> <span class="cf">function</span>(x) {x[[<span class="st">"eo:cloud_cover"</span>]] <span class="sc">&lt;</span> <span class="dv">5</span>}) </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>s2_collection</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The result is 118 images, i.e.&nbsp;approx. 1.8 images per month, from which we can now create a data cube. To do this, we use the UTM bounding box of our polygon as a spatial boundary, a spatial resolution of 10 metres, a bilinear spatial interpolation (useful for the spatially lower-resolution sentinel channels) and calculate monthly median values for all pixel values from the available images of a month. In addition, we add a buffer (b) on each side of the cube.</p>
 <p>The <em>gdalcube image collection</em> can be considered as a proxy structure object which will be applied on the COGs.</p>
@@ -662,7 +668,7 @@ background-size: cover;
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">dt =</span> <span class="st">"P1M"</span>,  </span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">aggregation =</span> <span class="st">"median"</span>, </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">extent =</span> <span class="fu">list</span>(<span class="at">t0 =</span> <span class="st">"2019-06-01"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t1 =</span> <span class="st">"2019-09-01"</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t1 =</span> <span class="st">"2021-09-01"</span>, </span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">left =</span> <span class="fu">st_bbox</span>(harz_32632)[<span class="st">"xmin"</span>] , </span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">right =</span> <span class="fu">st_bbox</span>(harz_32632)[<span class="st">"xmax"</span>] ,</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">bottom =</span> <span class="fu">st_bbox</span>(harz_32632)[<span class="st">"ymin"</span>] , </span>
@@ -677,35 +683,20 @@ background-size: cover;
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| </span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># we "download" the data and write it t a netcdf file</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  s2.mask <span class="ot">=</span> <span class="fu">image_mask</span>(<span class="st">"SCL"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">9</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gdalcubes_options</span>(<span class="at">parallel =</span> <span class="dv">16</span>, <span class="at">ncdf_compression_level =</span> <span class="dv">5</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">raster_cube</span>(s2_collection, v, <span class="at">mask =</span> s2.mask) <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write_ncdf</span>(<span class="st">"data/harz_2019_summer_tile.nc"</span>,<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gdalcubes_options</span>(<span class="at">parallel =</span> <span class="dv">16</span>, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ncdf_compression_level =</span> <span class="dv">5</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">raster_cube</span>(s2_collection, v, <span class="at">mask =</span> s2.mask) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write_ncdf</span>(<span class="st">"data/harz_2019_2021_kndvi.nc"</span>,<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the following examples we will show a simple plot in a generic pipe. However, a more common visualisation is quite simple. A typical pipe might be <em>Save a resulting netCDF file</em> <code>-&gt;</code> <em>Convert it to a <code>stars</code> object</em> <code>-&gt;</code> <em>Visualise the results</em> with <code>tmap</code>, <code>mapview</code>, <code>ggplot2</code> or whatever package you prefer to produce (interactive) map(s).</p>
-</section>
-<section id="reducers-statistics" class="level4">
-<h4 class="anchored" data-anchor-id="reducers-statistics">Reducers (Statistics)</h4>
-<p>Possible <em>reducers</em> include <code>min"</code>, <code>mean"</code>, <code>median"</code>, <code>max"</code>, <code>count"</code> (count non-missing values), <code>sum"</code>, <code>var"</code> (variance), and <code>sd"</code> (standard deviation). Reducer expressions are always given as a string, starting with the reducer name, followed by the band name in parentheses. Note that it is possible to mix reducers and bands.</p>
-</section>
-<section id="counting-image-contribution-per-pixel" class="level4">
-<h4 class="anchored" data-anchor-id="counting-image-contribution-per-pixel">Counting image contribution per pixel</h4>
-<p>To get an idea of the data, we can compute simple summary statistics using a ‘reducer’ function over dimensions. For example, using the <code>count</code> reducer, we can learn about the temporal coverage for each aggregated pixel, giving us an initial understanding of the temporal quality of the dataset.</p>
-<div class="cell" data-messages="false" data-warnings="false">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncdf_cube</span>(<span class="st">"data/harz_2019_summer_tile.nc"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce_time</span>(<span class="st">"count(B04)"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">key.pos =</span> <span class="dv">1</span>,  <span class="at">col =</span> viridis<span class="sc">::</span>viridis, <span class="at">nbreaks =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We can see that most time series contain valid observations of around 60 months, which should be sufficient for our example. Similarly, it is also possible to reduce over space, leading to summary time series.</p>
-<p>Below you will find various examples dealing with the common NDVI and the <a href="https://advances.sciencemag.org/content/7/9/eabc7447">kNDVI</a> Indices.</p>
 </section>
 <section id="kndvi" class="level4">
 <h4 class="anchored" data-anchor-id="kndvi">kNDVI</h4>
-<p>Below, we derive mean monthly kNdvi values over all pixel time series.</p>
+<p>Below, we derive mean monthly <a href="https://advances.sciencemag.org/content/7/9/eabc7447">kNDVI</a> values over all pixel time series.</p>
 <div class="cell" data-messages="false" data-warnings="false">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncdf_cube</span>(<span class="st">"data/harz_2019_summer_tile.nc"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply_pixel</span>(<span class="st">"tanh(((B08-B04)/(B08+B04))^2)"</span>, <span class="st">"kNDVI"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce_time</span>(<span class="st">"mean(kNDVI)"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">key.pos =</span> <span class="dv">1</span>,  <span class="at">col =</span> ndvi.col, <span class="at">nbreaks =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncdf_cube</span>(<span class="st">"data/harz_2019_2021_kndvi.nc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply_pixel</span>(<span class="st">"tanh(((B08-B04)/(B08+B04))^2)"</span>, <span class="st">"kNDVI"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce_time</span>(<span class="st">"mean(kNDVI)"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">key.pos =</span> <span class="dv">1</span>,  <span class="at">col =</span> ndvi.col, <span class="at">nbreaks =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -713,159 +704,277 @@ background-size: cover;
 <h3 class="anchored" data-anchor-id="alternative-2-copernicus-data-space-ecosystem-api-wrapper-cdse">Alternative 2: Copernicus Data Space Ecosystem API Wrapper CDSE</h3>
 <p>The <a href="https://zivankaraman.github.io/CDSE/articles/CDSE.html">CDSE package</a> provides another simple way to get Sentinel/Copernicus data sets.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: You must create an Copernicus account and provide the token credtials have a look at:</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#       https://zivankaraman.github.io/CDSE/articles/BeforeYouStart.html#accessing-cdse-data-and-services</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#------------</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDSE_ID"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>secret <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDSE_SECRET"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>OAuthClient <span class="ot">&lt;-</span> <span class="fu">GetOAuthClient</span>(<span class="at">id =</span> id, <span class="at">secret =</span> secret)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>collections <span class="ot">&lt;-</span> <span class="fu">GetCollections</span>(<span class="at">as_data_frame =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>collections</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>images <span class="ot">&lt;-</span> <span class="fu">SearchCatalog</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), <span class="at">from =</span> <span class="st">"2018-05-01"</span>, <span class="at">to =</span> <span class="st">"2022-12-31"</span>, </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, <span class="at">with_geometry =</span> <span class="cn">TRUE</span>, <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>images</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(images<span class="sc">$</span>areaCoverage)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>day <span class="ot">&lt;-</span> images[<span class="fu">order</span>(images<span class="sc">$</span>tileCloudCover), ]<span class="sc">$</span>acquisitionDate[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>script_file_raw <span class="ot">=</span> <span class="fu">system.file</span>(<span class="st">"scripts"</span>, <span class="st">"RawBands.js"</span>, <span class="at">package =</span> <span class="st">"CDSE"</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>script_file_savi <span class="ot">=</span> <span class="st">"savi.js"</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>script_file_kndvi <span class="ot">=</span> <span class="st">"kndvi.js"</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>script_file_evi <span class="ot">=</span> <span class="st">"evi.js"</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># first day</span></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>raw_2018_07_01 <span class="ot">=</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>                          <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                          <span class="at">script =</span> script_file_raw, </span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>                          <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>                          <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>,</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>                          <span class="at">resolution =</span> <span class="dv">10</span>, </span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>                          <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>                          <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(raw_2018_07_01) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"B01"</span>, <span class="st">"B02"</span>, <span class="st">"B03"</span>, <span class="st">"B04"</span>, <span class="st">"B05"</span>, <span class="st">"B06"</span>, <span class="st">"B07"</span>, <span class="st">"B08"</span>, <span class="st">"B8A"</span>, <span class="st">"B09"</span>, <span class="st">"B11"</span>, <span class="st">"B12"</span>)</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(raw_2018_07_01, <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(raw_2018_07_01), day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>kndvi_2018_07_01 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020),</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>                             <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>                             <span class="at">script =</span> script_file_kndvi, </span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>                             <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>                             <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>                             <span class="at">resolution =</span> <span class="dv">10</span>, </span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>                             <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>                             <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(kndvi_2018_07_01 )[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"kNDVI"</span>)</span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(kndvi_2018_07_01[[<span class="dv">1</span>]] , <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(kndvi_2018_07_01 ), day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>savi_2018_07_01 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>                            <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>                            <span class="at">script =</span> script_file_savi, </span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>                            <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>                            <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="dv">10</span>,</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>                            <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>                            <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(savi_2018_07_01)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"SAVI"</span>)</span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(savi_2018_07_01[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"SAVI"</span>, day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>evi_2018_07_01 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>                           <span class="at">script =</span> script_file_evi, </span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>                           <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>                           <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="dv">10</span>, </span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>                           <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>                           <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(evi_2018_07_01)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"EVI"</span>)</span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(evi_2018_07_01[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"EVI"</span>,day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>pred_stack_2018 <span class="ot">=</span> <span class="fu">c</span>(raw_2018_07_01,evi_2018_07_01[[<span class="dv">1</span>]],kndvi_2018_07_01[[<span class="dv">1</span>]],savi_2018_07_01[[<span class="dv">1</span>]])</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="do">## second day</span></span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>raw_2022_06_23 <span class="ot">=</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>                          <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>                          <span class="at">script =</span> script_file_raw, </span>
-<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>                          <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>                          <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>                          <span class="at">resolution =</span> <span class="dv">10</span>, </span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>                          <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>                          <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(raw_2022_06_23) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"B01"</span>, <span class="st">"B02"</span>, <span class="st">"B03"</span>, <span class="st">"B04"</span>, <span class="st">"B05"</span>, <span class="st">"B06"</span>, <span class="st">"B07"</span>, <span class="st">"B08"</span>, <span class="st">"B8A"</span>, <span class="st">"B09"</span>, <span class="st">"B11"</span>, <span class="st">"B12"</span>)</span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(raw_2022_06_23, <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(raw_2022_06_23), day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>kndvi_2022_06_23 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>                             <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>                             <span class="at">script =</span> script_file_kndvi, </span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>                             <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>                             <span class="at">format =</span> <span class="st">"image/tiff"</span>,</span>
-<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>                             <span class="at">resolution =</span> <span class="dv">10</span>, </span>
-<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>                             <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>                             <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(kndvi_2022_06_23)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"kNDVI"</span>)</span>
-<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(kndvi_2022_06_23[[<span class="dv">1</span>]] , <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(kndvi_2022_06_23 ), day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>savi_2022_06_23 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>                            <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
-<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>                            <span class="at">script =</span> script_file_savi, </span>
-<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>                            <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>                            <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="dv">10</span>,</span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>                            <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>                            <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(savi_2022_06_23)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"SAVI"</span>)</span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(savi_2022_06_23[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"SAVI"</span>,day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>evi_2022_06_23 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
-<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>                           <span class="at">script =</span> script_file_evi, </span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>                           <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>                           <span class="at">format =</span> <span class="st">"image/tiff"</span>,</span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>,</span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="dv">10</span>, </span>
-<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>                           <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>                           <span class="at">client =</span> OAuthClient)</span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(evi_2022_06_23)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"EVI"</span>)</span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(evi_2022_06_23[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"EVI"</span>,day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
-<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>pred_stack_2022 <span class="ot">=</span> <span class="fu">c</span>(raw_2022_06_23,evi_2022_06_23[[<span class="dv">1</span>]],kndvi_2022_06_23[[<span class="dv">1</span>]],savi_2022_06_23[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: You must create an Copernicus account and provide the token credtials have a look at:</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#       https://zivankaraman.github.io/CDSE/articles/BeforeYouStart.html#accessing-cdse-data-and-services</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#------------</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDSE_ID"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>secret <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDSE_SECRET"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>OAuthClient <span class="ot">&lt;-</span> <span class="fu">GetOAuthClient</span>(<span class="at">id =</span> id, <span class="at">secret =</span> secret)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>collections <span class="ot">&lt;-</span> <span class="fu">GetCollections</span>(<span class="at">as_data_frame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>collections</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>images <span class="ot">&lt;-</span> <span class="fu">SearchCatalog</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), <span class="at">from =</span> <span class="st">"2018-05-01"</span>, <span class="at">to =</span> <span class="st">"2022-12-31"</span>, </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, <span class="at">with_geometry =</span> <span class="cn">TRUE</span>, <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>images</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(images<span class="sc">$</span>areaCoverage)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># best 30 days without clouds</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>day <span class="ot">&lt;-</span> images[<span class="fu">order</span>(images<span class="sc">$</span>tileCloudCover), ]<span class="sc">$</span>acquisitionDate[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># read specific processing scripts</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>script_file_raw <span class="ot">=</span> <span class="fu">system.file</span>(<span class="st">"scripts"</span>, <span class="st">"RawBands.js"</span>, <span class="at">package =</span> <span class="st">"CDSE"</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>script_file_savi <span class="ot">=</span> <span class="st">"savi.js"</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>script_file_kndvi <span class="ot">=</span> <span class="st">"kndvi.js"</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>script_file_evi <span class="ot">=</span> <span class="st">"evi.js"</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># first day 2018_07_01</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>raw_2018_07_01 <span class="ot">=</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>                          <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>                          <span class="at">script =</span> script_file_raw, </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>                          <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>                          <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>                          <span class="at">resolution =</span> <span class="dv">10</span>, </span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>                          <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>                          <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(raw_2018_07_01) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"B01"</span>, <span class="st">"B02"</span>, <span class="st">"B03"</span>, <span class="st">"B04"</span>, <span class="st">"B05"</span>, <span class="st">"B06"</span>, <span class="st">"B07"</span>, <span class="st">"B08"</span>, <span class="st">"B8A"</span>, <span class="st">"B09"</span>, <span class="st">"B11"</span>, <span class="st">"B12"</span>)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(raw_2018_07_01, <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(raw_2018_07_01), day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>kndvi_2018_07_01 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020),</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>                             <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>                             <span class="at">script =</span> script_file_kndvi, </span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>                             <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>                             <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>                             <span class="at">resolution =</span> <span class="dv">10</span>, </span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>                             <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>                             <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(kndvi_2018_07_01 )[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"kNDVI"</span>)</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(kndvi_2018_07_01[[<span class="dv">1</span>]] , <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(kndvi_2018_07_01 ), day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>savi_2018_07_01 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>                            <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>                            <span class="at">script =</span> script_file_savi, </span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>                            <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>                            <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="dv">10</span>,</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>                            <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>                            <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(savi_2018_07_01)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"SAVI"</span>)</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(savi_2018_07_01[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"SAVI"</span>, day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>evi_2018_07_01 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time_range =</span> day[<span class="dv">12</span>], </span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>                           <span class="at">script =</span> script_file_evi, </span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>                           <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>                           <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="dv">10</span>, </span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>                           <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>                           <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(evi_2018_07_01)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"EVI"</span>)</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(evi_2018_07_01[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"EVI"</span>,day[<span class="dv">12</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>pred_stack_2018 <span class="ot">=</span> <span class="fu">c</span>(raw_2018_07_01,evi_2018_07_01[[<span class="dv">1</span>]],kndvi_2018_07_01[[<span class="dv">1</span>]],savi_2018_07_01[[<span class="dv">1</span>]])</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="do">## second day 2022_06_23</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>raw_2022_06_23 <span class="ot">=</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>                          <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>                          <span class="at">script =</span> script_file_raw, </span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>                          <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>                          <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>                          <span class="at">resolution =</span> <span class="dv">10</span>, </span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>                          <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>                          <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>                          <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(raw_2022_06_23) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"B01"</span>, <span class="st">"B02"</span>, <span class="st">"B03"</span>, <span class="st">"B04"</span>, <span class="st">"B05"</span>, <span class="st">"B06"</span>, <span class="st">"B07"</span>, <span class="st">"B08"</span>, <span class="st">"B8A"</span>, <span class="st">"B09"</span>, <span class="st">"B11"</span>, <span class="st">"B12"</span>)</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(raw_2022_06_23, <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(raw_2022_06_23), day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>kndvi_2022_06_23 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>                             <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>                             <span class="at">script =</span> script_file_kndvi, </span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>                             <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>                             <span class="at">format =</span> <span class="st">"image/tiff"</span>,</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>                             <span class="at">resolution =</span> <span class="dv">10</span>, </span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>                             <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>                             <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(kndvi_2022_06_23)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"kNDVI"</span>)</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(kndvi_2022_06_23[[<span class="dv">1</span>]] , <span class="at">main =</span> <span class="fu">paste</span>(<span class="fu">names</span>(kndvi_2022_06_23 ), day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>savi_2022_06_23 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>                            <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>                            <span class="at">script =</span> script_file_savi, </span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>                            <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>                            <span class="at">format =</span> <span class="st">"image/tiff"</span>, </span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>, </span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="dv">10</span>,</span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>                            <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>                            <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(savi_2022_06_23)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"SAVI"</span>)</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(savi_2022_06_23[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"SAVI"</span>,day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>evi_2022_06_23 <span class="ot">&lt;-</span> <span class="fu">GetImage</span>(<span class="at">bbox =</span> <span class="fu">st_bbox</span>(train_areas_2019_2020), </span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time_range =</span> day[<span class="dv">1</span>], </span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>                           <span class="at">script =</span> script_file_evi, </span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>                           <span class="at">collection =</span> <span class="st">"sentinel-2-l2a"</span>, </span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>                           <span class="at">format =</span> <span class="st">"image/tiff"</span>,</span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mosaicking_order =</span> <span class="st">"leastCC"</span>,</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="dv">10</span>, </span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mask =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>                           <span class="at">buffer =</span> <span class="fl">0.01</span>, </span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>                           <span class="at">client =</span> OAuthClient)</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(evi_2022_06_23)[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">c</span>( <span class="st">"EVI"</span>)</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(evi_2022_06_23[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"EVI"</span>,day[<span class="dv">1</span>]), <span class="at">cex.main =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>pred_stack_2022 <span class="ot">=</span> <span class="fu">c</span>(raw_2022_06_23,evi_2022_06_23[[<span class="dv">1</span>]],kndvi_2022_06_23[[<span class="dv">1</span>]],savi_2022_06_23[[<span class="dv">1</span>]])</span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">writeRaster</span>(pred_stack_2018,<span class="fu">file.path</span>(root_folder,<span class="st">"data/pred_stack_2018.tif"</span>),<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">writeRaster</span>(pred_stack_2022,<span class="fu">file.path</span>(root_folder,<span class="st">"data/pred_stack_2022.tif"</span>),<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="step2-overview-unsupervised-classification-k-means-clustering" class="level2">
-<h2 class="anchored" data-anchor-id="step2-overview-unsupervised-classification-k-means-clustering">Step2: Overview – Unsupervised classification (k-means clustering)</h2>
+<section id="step2-overview-unsupervised-classification" class="level2">
+<h2 class="anchored" data-anchor-id="step2-overview-unsupervised-classification">Step2: Overview – Unsupervised classification</h2>
+<section id="k-means-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-clustering">k-means clustering</h3>
 <p>In our example (applied to 5 classes and executed with the function <code>unsuperClass</code> from the <code>RStoolbox</code> package), this looks as follows. The cluster algorithm can achieve a fairly acceptable separation of the clearings/bald spots with 5 clusters, which makes a classification seem promising. Also experiment with other cluster settings and discuss the results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## k-means über RStoolbox</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#"EVI"   "kNDVI" "SAVI"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>prediction_kmeans_2018 <span class="ot">=</span> RStoolbox<span class="sc">::</span><span class="fu">unsuperClass</span>(pred_stack_2018, <span class="at">nClasses =</span> <span class="dv">5</span>,<span class="at">norm =</span> <span class="cn">TRUE</span>, <span class="at">algorithm =</span> <span class="st">"MacQueen"</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Klassifikation</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction_kmeans_2018<span class="sc">$</span>map)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>prediction_kmeans_2022 <span class="ot">=</span> RStoolbox<span class="sc">::</span><span class="fu">unsuperClass</span>(pred_stack_2022, <span class="at">nClasses =</span> <span class="dv">5</span>,<span class="at">norm =</span> <span class="cn">TRUE</span>, <span class="at">algorithm =</span> <span class="st">"MacQueen"</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction_kmeans_2022<span class="sc">$</span>map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## k-means über RStoolbox</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#"EVI"   "kNDVI" "SAVI"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>prediction_kmeans_2018 <span class="ot">=</span> RStoolbox<span class="sc">::</span><span class="fu">unsuperClass</span>(pred_stack_2018, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">nClasses =</span> <span class="dv">5</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">norm =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">algorithm =</span> <span class="st">"MacQueen"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Klassifikation</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction_kmeans_2018<span class="sc">$</span>map)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>prediction_kmeans_2022 <span class="ot">=</span> RStoolbox<span class="sc">::</span><span class="fu">unsuperClass</span>(pred_stack_2022, </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">nClasses =</span> <span class="dv">5</span>,<span class="at">norm =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">algorithm =</span> <span class="st">"MacQueen"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction_kmeans_2022<span class="sc">$</span>map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="images/kmeans-2018.png" class="img-fluid"> <img src="images/kmeans-2022.png" class="img-fluid"></p>
+</section>
+<section id="bfast-spatial-identification-of-magnitudes-and-time-periods-of-kndvi-changes" class="level3">
+<h3 class="anchored" data-anchor-id="bfast-spatial-identification-of-magnitudes-and-time-periods-of-kndvi-changes">bfast: Spatial identification of magnitudes and time periods of kNDVI changes</h3>
+<p>To apply a more complex time series method such as <em>Breaks For Additive Seasonal and Trend</em> (BFAST), which is often used for land cover changes (e.g. <span class="citation" data-cites="bfast_rs2020">(<a href="#ref-bfast_rs2020" role="doc-biblioref">Wu et al. 2020</a>)</span>), the <code>bfastmonitor()</code> function in <code>gdalcubes</code> can be used, the data cube operations below allow you to provide custom user-defined R functions instead of string expressions that translate to built-in reducers.</p>
+<p>In our example, <code>bfastmonitor</code> returns <em>change date</em> and <em>change magnitude</em> values per time series so we can use <code>reduce_time()</code>. The script below: 1. calculates the <a href="https://advances.sciencemag.org/content/7/9/eabc7447">kNDVI</a>, 1. applies <code>bfastmonitor()</code>, and properly handles errors e.g.&nbsp;due to missing data with <code>tryCatch()</code>, and 1. finally writes out the resulting change dates and magnitudes of change for all pixels of the time series as a netCDF file.</p>
+<p>The results shows the changes starting at 7/2019 until 10/2021.</p>
+<div class="cell" data-messages="false" data-warnings="false">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>figtrim <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  img <span class="ot">&lt;-</span> magick<span class="sc">::</span><span class="fu">image_trim</span>(magick<span class="sc">::</span><span class="fu">image_read</span>(path))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  magick<span class="sc">::</span><span class="fu">image_write</span>(img, path)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  path</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">gdalcubes_options</span>(<span class="at">parallel =</span> <span class="dv">12</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">## start analysis</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ncdf_cube</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/harz_2019_2021_kndvi.nc"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">reduce_time</span>(<span class="at">names =</span> <span class="fu">c</span>(<span class="st">"change_date"</span>, <span class="st">"change_magnitude"</span>, <span class="st">"kndvi"</span>), </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                  kndvi <span class="ot">=</span> <span class="fu">tanh</span>(((x[<span class="st">'B08'</span>,]<span class="sc">-</span>x[<span class="st">'B04'</span>,])<span class="sc">/</span>(x[<span class="st">'B08'</span>,]<span class="sc">+</span>x[<span class="st">'B04'</span>,]))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">is.na</span>(kndvi))) {</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">return</span>(<span class="fu">c</span>(<span class="cn">NA</span>,<span class="cn">NA</span>))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                  kndvi_ts <span class="ot">=</span> <span class="fu">ts</span>(kndvi, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">library</span>(bfast)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">tryCatch</span>({</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                    result <span class="ot">=</span> <span class="fu">bfastmonitor</span>(kndvi_ts, </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2020</span>,<span class="dv">1</span>), </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">history =</span> <span class="st">"all"</span>, </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">level =</span> <span class="fl">0.01</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">return</span>(<span class="fu">c</span>(result<span class="sc">$</span>breakpoint, result<span class="sc">$</span>magnitude))</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                    }, <span class="at">error =</span> <span class="cf">function</span>(x) {<span class="fu">return</span>(<span class="fu">c</span>(<span class="cn">NA</span>,<span class="cn">NA</span>))</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                      })</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>                  }) <span class="sc">|&gt;</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write_ncdf</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/bfast_results.nc"</span>),<span class="at">overwrite =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can use the netCDF file and map the results with any preferred visualisation tool. In this case <code>tmap</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting it from the local ncdf  </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"view"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>gdalcubes<span class="sc">::</span><span class="fu">ncdf_cube</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/bfast_results.nc"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  stars<span class="sc">::</span><span class="fu">st_as_stars</span>() <span class="ot">-&gt;</span> x</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(osm_forest) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(x[<span class="dv">1</span>]) <span class="sc">+</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">n =</span> <span class="dv">6</span>)  <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.label.height=</span><span class="fl">0.6</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.label.size=</span><span class="fl">0.6</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text.size =</span> <span class="fl">0.4</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_grid</span>()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(osm_forest) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(x[<span class="dv">2</span>])  <span class="sc">+</span> <span class="fu">tm_raster</span>() <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.label.height=</span><span class="fl">0.6</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.label.size=</span><span class="fl">0.6</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.text.size =</span> <span class="fl">0.4</span>,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.outside =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting it from the local ncdf  </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"view"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Period of Change Map</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>gdalcubes<span class="sc">::</span><span class="fu">ncdf_cube</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/bfast_results.nc"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  stars<span class="sc">::</span><span class="fu">st_as_stars</span>() <span class="ot">-&gt;</span> x</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>tmap<span class="sc">::</span><span class="fu">tmap_save</span>(<span class="fu">tm_shape</span>(osm_forest) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(x[<span class="dv">1</span>] ) <span class="sc">+</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">n =</span> <span class="dv">6</span>)  <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.label.height=</span><span class="fl">0.6</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.label.size=</span><span class="fl">0.6</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text.size =</span> <span class="fl">0.4</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_grid</span>(), <span class="at">file =</span> <span class="st">"m1.html"</span> ) </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Magnitude Change Map </span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>tmap<span class="sc">::</span><span class="fu">tmap_save</span>(<span class="fu">tm_shape</span>(osm_forest) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(x[<span class="dv">2</span>])  <span class="sc">+</span> <span class="fu">tm_raster</span>() <span class="sc">+</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.label.height=</span><span class="fl">0.6</span>,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.label.size=</span><span class="fl">0.6</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text.size =</span> <span class="fl">0.4</span>,</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_grid</span>(),<span class="at">file =</span> <span class="st">"m2.html"</span> ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<iframe valign="center" src="m2.html" width="640" height="800" frameborder="0">
+</iframe>
+<figcaption>
+<em>Magnitude Change Map </em>
+</figcaption>
+<p>
+<iframe valign="center" src="m1.html" width="640" height="800" frameborder="0">
+</iframe>
+</p><figcaption>
+<em>Period of Change Map </em>
+</figcaption>
+</section>
 </section>
 <section id="step-3---generating-training-data" class="level2">
 <h2 class="anchored" data-anchor-id="step-3---generating-training-data">Step 3 - Generating training data</h2>
@@ -875,30 +984,32 @@ background-size: cover;
 <p><a href="../reader/digitize.html" class="btn btn-outline-primary" role="button" data-toggle="tooltip" title="Digitizing training data using mapedit">Digitizing training data in R</a></p>
 <p>Assuming we have digitized trainingdata using either QGIS or R We need now to extract the values according to the assigned areas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use the provided training data set</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the training data for the digitized areas</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>tDF_2019 <span class="ot">=</span> exactextractr<span class="sc">::</span><span class="fu">exact_extract</span>(pred_stack_2018, <span class="fu">filter</span>(train_areas_2019_2020,year<span class="sc">==</span><span class="dv">2019</span>), <span class="at">force_df =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">include_cell =</span> <span class="cn">TRUE</span>,<span class="at">include_xy =</span> <span class="cn">TRUE</span>,<span class="at">full_colnames =</span> <span class="cn">TRUE</span>,<span class="at">include_cols =</span> <span class="st">"class"</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>tDF_2020 <span class="ot">=</span> exactextractr<span class="sc">::</span><span class="fu">exact_extract</span>(pred_stack_2022, <span class="fu">filter</span>(train_areas_2019_2020,year<span class="sc">==</span><span class="dv">2020</span>), <span class="at">force_df =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="at">include_cell =</span> <span class="cn">TRUE</span>,<span class="at">include_xy =</span> <span class="cn">TRUE</span>,<span class="at">full_colnames =</span> <span class="cn">TRUE</span>,<span class="at">include_cols =</span> <span class="st">"class"</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># again, copy together into a file</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>tDF_2019 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(tDF_2019)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>tDF_2019<span class="sc">$</span>year <span class="ot">=</span> <span class="dv">2019</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>tDF_2020 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(tDF_2020)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>tDF_2020<span class="sc">$</span>year <span class="ot">=</span> <span class="dv">2020</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete any rows that contain NA (no data) values</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>tDF_2019 <span class="ot">=</span> tDF_2019[<span class="fu">complete.cases</span>(tDF_2019) ,]</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>tDF_2020 <span class="ot">=</span> tDF_2020[<span class="fu">complete.cases</span>(tDF_2020) ,]</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>tDF<span class="ot">=</span> <span class="fu">rbind</span>(tDF_2019,tDF_2020)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># check the extracted data</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tDF)</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Save as R internal data format</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># is stored in the repo and can therefore be loaded (line below)</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tDF, <span class="fu">paste0</span>(<span class="st">"../data/tDF_2018_2022.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pred_stack_2018 <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/pred_stack_2018.tif"</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pred_stack_2022 <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/pred_stack_2022.tif"</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># use the provided training data set</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the training data for the digitized areas</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>tDF_2019 <span class="ot">=</span> exactextractr<span class="sc">::</span><span class="fu">exact_extract</span>(pred_stack_2018, <span class="fu">filter</span>(train_areas_2019_2020,year<span class="sc">==</span><span class="dv">2019</span>), <span class="at">force_df =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="at">include_cell =</span> <span class="cn">TRUE</span>,<span class="at">include_xy =</span> <span class="cn">TRUE</span>,<span class="at">full_colnames =</span> <span class="cn">TRUE</span>,<span class="at">include_cols =</span> <span class="st">"class"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>tDF_2020 <span class="ot">=</span> exactextractr<span class="sc">::</span><span class="fu">exact_extract</span>(pred_stack_2022, <span class="fu">filter</span>(train_areas_2019_2020,year<span class="sc">==</span><span class="dv">2020</span>), <span class="at">force_df =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">include_cell =</span> <span class="cn">TRUE</span>,<span class="at">include_xy =</span> <span class="cn">TRUE</span>,<span class="at">full_colnames =</span> <span class="cn">TRUE</span>,<span class="at">include_cols =</span> <span class="st">"class"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># again, copy together into a file</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>tDF_2019 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(tDF_2019)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>tDF_2019<span class="sc">$</span>year <span class="ot">=</span> <span class="dv">2019</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>tDF_2020 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(tDF_2020)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>tDF_2020<span class="sc">$</span>year <span class="ot">=</span> <span class="dv">2020</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete any rows that contain NA (no data) values</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>tDF_2019 <span class="ot">=</span> tDF_2019[<span class="fu">complete.cases</span>(tDF_2019) ,]</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>tDF_2020 <span class="ot">=</span> tDF_2020[<span class="fu">complete.cases</span>(tDF_2020) ,]</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>tDF<span class="ot">=</span> <span class="fu">rbind</span>(tDF_2019,tDF_2020)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># check the extracted data</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tDF)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Save as R internal data format</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># is stored in the repo and can therefore be loaded (line below)</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tDF, <span class="fu">paste0</span>(<span class="st">"../data/tDF_2018_2022.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-4---supervised-classification" class="level2">
@@ -910,84 +1021,76 @@ background-size: cover;
 <h3 class="anchored" data-anchor-id="maximum-likelihood-classification-1">Maximum Likelihood Classification</h3>
 <p>Since the maximum likelihood algorithm requires training data, it is a supervised learning method. This means that we, as users, have to provide the algorithm with data that conveys knowledge about the classes to be predicted. This data is then divided into training and test data.</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Maximum Likelihood Classification ----</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Here the caret utility package is used</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting a "seed" enables reproducible randomness</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly draw 15% of the data (training/test)</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">createDataPartition</span>(tDF<span class="sc">$</span>class,<span class="at">list =</span> <span class="cn">FALSE</span>,<span class="at">p =</span> <span class="fl">0.05</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>trainDat <span class="ot">=</span> tDF[idx,]</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>testDat <span class="ot">=</span> tDF[<span class="sc">-</span>idx,]</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Response variable (= "class" column) must be of the "factor" data type</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>trainDat<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(trainDat<span class="sc">$</span>class)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>testDat<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testDat<span class="sc">$</span>class)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># superClass() function from the RSToolbox package requires the table to be converted into the</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># required (old) SpatialdataPoint object</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>sp_trainDat <span class="ot">=</span> trainDat</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>sp_testDat <span class="ot">=</span> testDat </span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(sp_trainDat) <span class="ot">=</span> <span class="er">~</span>x<span class="sc">+</span>y</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(sp_testDat) <span class="ot">=</span> <span class="er">~</span>x<span class="sc">+</span>y</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(sp_trainDat) <span class="ot">=</span> <span class="fu">crs</span>(pred_stack_2018)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(sp_testDat) <span class="ot">=</span> <span class="fu">crs</span>(pred_stack_2018)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="co"># superClass method "mlc" trains the model and then classifies it</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2018 <span class="ot">&lt;-</span> <span class="fu">superClass</span>(pred_stack_2018, <span class="at">trainData =</span> sp_trainDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>],<span class="at">valData =</span> sp_testDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">responseCol =</span> <span class="st">"class"</span>, <span class="at">model =</span> <span class="st">"mlc"</span>, <span class="at">tuneLength =</span> <span class="dv">1</span>, <span class="at">trainPartition =</span> <span class="fl">0.3</span>,<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2022 <span class="ot">&lt;-</span> <span class="fu">superClass</span>(pred_stack_2022, <span class="at">trainData =</span> sp_trainDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>],<span class="at">valData =</span> sp_testDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">responseCol =</span> <span class="st">"class"</span>,<span class="at">model =</span> <span class="st">"mlc"</span>, <span class="at">tuneLength =</span> <span class="dv">1</span>, <span class="at">trainPartition =</span> <span class="fl">0.3</span>,<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(prediction_mlc_2018, <span class="st">"../data/prediction_mlc_2018.rds"</span>)</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(prediction_mlc_2022, <span class="st">"../data/prediction_mlc_2022.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Maximum Likelihood Classification ----</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Here the caret utility package is used</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting a "seed" enables reproducible randomness</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>tDF <span class="ot">=</span> <span class="fu">readRDS</span>( <span class="fu">file.path</span>(root_folder,<span class="st">"data/tDF_2018_2022.rds"</span>))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly draw 15% of the data (training/test)</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">createDataPartition</span>(tDF<span class="sc">$</span>class,<span class="at">list =</span> <span class="cn">FALSE</span>,<span class="at">p =</span> <span class="fl">0.05</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>trainDat <span class="ot">=</span> tDF[idx,]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>testDat <span class="ot">=</span> tDF[<span class="sc">-</span>idx,]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Response variable (= "class" column) must be of the "factor" data type</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>trainDat<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(trainDat<span class="sc">$</span>class)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>testDat<span class="sc">$</span>class <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testDat<span class="sc">$</span>class)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># superClass() function from the RSToolbox package requires the table to be converted into the</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># required (old) SpatialdataPoint object</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>sp_trainDat <span class="ot">=</span> trainDat</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>sp_testDat <span class="ot">=</span> testDat </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(sp_trainDat) <span class="ot">=</span> <span class="er">~</span>x<span class="sc">+</span>y</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(sp_testDat) <span class="ot">=</span> <span class="er">~</span>x<span class="sc">+</span>y</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(sp_trainDat) <span class="ot">=</span> <span class="fu">crs</span>(pred_stack_2018)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(sp_testDat) <span class="ot">=</span> <span class="fu">crs</span>(pred_stack_2018)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co"># superClass method "mlc" trains the model and then classifies it</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2018 <span class="ot">&lt;-</span> <span class="fu">superClass</span>(pred_stack_2018, <span class="at">trainData =</span> sp_trainDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>],<span class="at">valData =</span> sp_testDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">responseCol =</span> <span class="st">"class"</span>, <span class="at">model =</span> <span class="st">"mlc"</span>, <span class="at">tuneLength =</span> <span class="dv">1</span>, <span class="at">trainPartition =</span> <span class="fl">0.3</span>,<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2022 <span class="ot">&lt;-</span> <span class="fu">superClass</span>(pred_stack_2022, <span class="at">trainData =</span> sp_trainDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>],<span class="at">valData =</span> sp_testDat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">responseCol =</span> <span class="st">"class"</span>,<span class="at">model =</span> <span class="st">"mlc"</span>, <span class="at">tuneLength =</span> <span class="dv">1</span>, <span class="at">trainPartition =</span> <span class="fl">0.3</span>,<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">writeRaster</span>(prediction_mlc_2018, <span class="st">"../data/prediction_mlc_2018.tif"</span>,<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">writeRaster</span>(prediction_mlc_2022, <span class="st">"../data/prediction_mlc_2022.tif"</span>,<span class="at">overwrite=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="random-forest-1" class="level3">
 <h3 class="anchored" data-anchor-id="random-forest-1">Random forest</h3>
-<p>Random forests can be used for both regression and classification tasks, with the latter being particularly relevant in environmental remote sensing. Like any machine learning method, the random forest model learns to recognize patterns and structures in the data itself. Since the random forest algorithm also requires training data, it is also a supervised learning method. <img src="images/Random_forest_diagram_complete.png" class="img-fluid">!</p>
-<p>Figure: Simplified illustration of data classification by random forest during training. Venkata Jagannath [CC BY-SA 4.0] via wikipedia.org</p>
-<p>A random forest algorithm learns from the data by creating random decision trees – hence the name. For classification tasks, the algorithm takes a suitable instance of a decision tree from the training data set and assigns the corresponding class to the pixel. This is repeated with all available decision trees. Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.</p>
+<p>A simplified version of the workflow proposed by Max Kuhn <span class="citation" data-cites="caret">(<a href="#ref-caret" role="doc-biblioref">Kuhn and Max 2008</a>)</span> and improved by Hanna Meyer et al. <span class="citation" data-cites="cast">(<a href="#ref-cast" role="doc-biblioref">Meyer et al. 2024</a>)</span> is used for the random forest classification. For further understanding visit The <a href="https://hannameyer.github.io/CAST/">CAST documentation</a></p>
 </section>
 <section id="prediction-on-the-original-data" class="level3">
 <h3 class="anchored" data-anchor-id="prediction-on-the-original-data">Prediction on the original data</h3>
 <p>Now we are ready to apply the verified model to our data set. In remote sensing, this is usually called classification.</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Klassifikation (auch Vorhersage genannt)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>prediction_rf_2018  <span class="ot">=</span> raster<span class="sc">::</span><span class="fu">predict</span>(pred_stack_2018 ,rf_model)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>prediction_rf_2022  <span class="ot">=</span> raster<span class="sc">::</span><span class="fu">predict</span>(pred_stack_2022 ,rf_model)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(prediction_rf_2018, <span class="st">"../data/prediction_rf_2018.rds"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(prediction_rf_2022, <span class="st">"../data/prediction_rf_2020.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Classification (also known as prediction)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>prediction_rf_2018  <span class="ot">=</span> raster<span class="sc">::</span><span class="fu">predict</span>(pred_stack_2018 ,rf_model)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>prediction_rf_2022  <span class="ot">=</span> raster<span class="sc">::</span><span class="fu">predict</span>(pred_stack_2022 ,rf_model)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(prediction_rf_2018, <span class="fu">file.path</span>(root_folder,<span class="st">"data/prediction_rf_2018.rds"</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(prediction_rf_2022, <span class="fu">file.path</span>(root_folder,<span class="st">"data/prediction_rf_2022.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ##</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>prediction_rf_2018 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">"../data/prediction_rf_2018.rds"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>prediction_rf_2022 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">"../data/prediction_rf_2022.rds"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2018 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">"../data/prediction_mlc_2018.rds"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2022 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">"../data/prediction_mlc_2022.rds"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- Visualisierung mit mapview ----</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>mapview<span class="sc">::</span><span class="fu">mapshot</span>(mapview<span class="sc">::</span><span class="fu">viewRGB</span>(mask<span class="sc">*</span>pred_stack_2022, <span class="at">r =</span> <span class="dv">4</span>, <span class="at">g =</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">2</span>,<span class="at">maxpixels =</span>  <span class="dv">1693870</span>)<span class="sc">+</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(mask<span class="sc">*</span>prediction_rf_2018 , <span class="at">alpha.regions =</span> <span class="fl">0.5</span>, <span class="at">maxpixels =</span>  <span class="dv">1693870</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">mapviewPalette</span>(<span class="st">"mapviewRasterColors"</span>),<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, nclasses, <span class="dv">1</span>), <span class="at">legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(mask<span class="sc">*</span>prediction_rf_2022, <span class="at">alpha.regions =</span> <span class="fl">0.5</span>, <span class="at">maxpixels =</span>  <span class="dv">1693870</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">mapviewPalette</span>(<span class="st">"mapviewRasterColors"</span>),<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, nclasses, <span class="dv">1</span>), <span class="at">legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(mask<span class="sc">*</span>prediction_mlc_2018<span class="sc">$</span>map,<span class="at">alpha.regions =</span> <span class="fl">0.5</span>, <span class="at">maxpixels =</span>  <span class="dv">1693870</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">mapviewPalette</span>(<span class="st">"mapviewRasterColors"</span>),<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, nclasses, <span class="dv">1</span>), <span class="at">legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(mask<span class="sc">*</span>prediction_mlc_2022<span class="sc">$</span>map,<span class="at">alpha.regions =</span> <span class="fl">0.5</span>, <span class="at">maxpixels =</span>  <span class="dv">1693870</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">mapviewPalette</span>(<span class="st">"mapviewRasterColors"</span>),<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, nclasses, <span class="dv">1</span>), <span class="at">legend =</span> <span class="cn">FALSE</span>),<span class="at">url =</span> <span class="st">"compare-class.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ##</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>prediction_rf_2018 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/prediction_rf_2018.rds"</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>prediction_rf_2022 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/prediction_rf_2022.rds"</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2018 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/prediction_mlc_2018.rds"</span>))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>prediction_mlc_2022 <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(root_folder,<span class="st">"data/prediction_mlc_2022.rds"</span>))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- Visualisierung mit mapview ----</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>mask <span class="ot">=</span> <span class="fu">resample</span>(harz_forest_mask,pred_stack_2022)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>mapview<span class="sc">::</span><span class="fu">mapshot</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(mask<span class="sc">*</span>prediction_rf_2018 , <span class="at">alpha.regions =</span> <span class="fl">0.5</span>, <span class="at">maxpixels =</span>  <span class="dv">1693870</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">mapviewPalette</span>(<span class="st">"mapviewRasterColors"</span>),<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mapview</span>(mask<span class="sc">*</span>prediction_rf_2022, <span class="at">alpha.regions =</span> <span class="fl">0.5</span>, <span class="at">maxpixels =</span>  <span class="dv">1693870</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">mapviewPalette</span>(<span class="st">"mapviewRasterColors"</span>),<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">legend =</span> <span class="cn">FALSE</span>) ,<span class="at">url =</span> <span class="st">"compare-class1.html"</span> )</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction_mlc_2018<span class="sc">$</span>map)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction_mlc_2022<span class="sc">$</span>map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<iframe valign="center" src="compare-class.html" width="1024" height="960" frameborder="0" allowfullscreen="allowfullscreen">
+<iframe valign="center" src="compare-class1.html" width="640" height="960" frameborder="0" allowfullscreen="allowfullscreen">
 </iframe>
-<figcaption>
-<em>Comparison of the two years and RF and MLC classification</em>
-</figcaption>
-<p>
-</p><p>A visual comparison shows that the Random Forest and Maximum Likelihood classifications provide results of comparable quality. But does this impression stand up to quantitative analysis?</p>
+<p>A visual comparison shows that the Random Forest and Maximum Likelihood classifications provide results of comparable quality. But does this impression stand up to quantitative analysis?</p>
 </section>
 <section id="step-5-estimation-model-quality" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-estimation-model-quality">Step 5: Estimation model quality</h3>
@@ -1001,10 +1104,10 @@ background-size: cover;
 <p>Despite the high values, we see that the <em>clearcut</em> class drops off significantly here. This can certainly be taken as an indication of the need to improve the classification.</p>
 <p>Overall, however, the model can be considered good.</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ##</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----Calculation of the confusion matrix  ----</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>cm_rf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">predict</span>(rf_model, <span class="at">newdata =</span> testDat), testDat<span class="sc">$</span>class)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cm_rf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ##</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----Calculation of the confusion matrix  ----</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>cm_rf <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">predict</span>(rf_model, <span class="at">newdata =</span> testDat), testDat<span class="sc">$</span>class)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>cm_rf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1032,8 +1135,6 @@ background-size: cover;
 </div>
 </div>
 </div>
-<p>You can download all the necessary scripts and data from the github repository (https://github.com/gisma/geoinfo/archive/refs/heads/main.zip). Alternatively, you can also set up the repo as a project in Rstudio (Rstudio github (https://www.r-bloggers.com/2015/07/rstudio-and-github/). &gt;</p>
-<hr>
 
 
 
@@ -1043,20 +1144,29 @@ background-size: cover;
 <div id="ref-gdalcubes" class="csl-entry" role="listitem">
 Appel, Marius, and Edzer Pebesma. 2019. <span>“On-Demand Processing of Data Cubes from Satellite Image Collections with the Gdalcubes Library.”</span> <em>Data</em> 4 (3). <a href="https://www.mdpi.com/2306-5729/4/3/92">https://www.mdpi.com/2306-5729/4/3/92</a>.
 </div>
-<div id="ref-mapview" class="csl-entry" role="listitem">
-Appelhans, Tim, Florian Detsch, Christoph Reudenbach, and Stefan Woellauer. 2019. <em>Mapview: Interactive Viewing of Spatial Data in r</em>. <a href="https://CRAN.R-project.org/package=mapview">https://CRAN.R-project.org/package=mapview</a>.
-</div>
 <div id="ref-rstac" class="csl-entry" role="listitem">
 Brazil Data Cube Team. 2021. <em>Rstac: Client Library for SpatioTemporal Asset Catalog</em>. <a href="https://github.com/brazil-data-cube/rstac">https://github.com/brazil-data-cube/rstac</a>.
 </div>
-<div id="ref-sf" class="csl-entry" role="listitem">
-Pebesma, Edzer. 2018. <span>“<span class="nocase">Simple Features for R: Standardized Support for Spatial Vector Data</span>.”</span> <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+<div id="ref-caret" class="csl-entry" role="listitem">
+Kuhn, and Max. 2008. <span>“Building Predictive Models in r Using the Caret Package.”</span> <em>Journal of Statistical Software</em> 28 (5): 1–26. <a href="https://doi.org/10.18637/jss.v028.i05">https://doi.org/10.18637/jss.v028.i05</a>.
+</div>
+<div id="ref-openeo" class="csl-entry" role="listitem">
+Lahn, Florian. 2024. <em>Openeo: Client Interface for ’openEO’ Servers</em>. <a href="https://CRAN.R-project.org/package=openeo">https://CRAN.R-project.org/package=openeo</a>.
+</div>
+<div id="ref-cast" class="csl-entry" role="listitem">
+Meyer, Hanna, Carles Milà, Marvin Ludwig, Jan Linnenbrink, and Fabian Schumacher. 2024. <em>CAST: ’Caret’ Applications for Spatial-Temporal Models</em>. <a href="https://github.com/HannaMeyer/CAST">https://github.com/HannaMeyer/CAST</a>.
 </div>
 <div id="ref-stars" class="csl-entry" role="listitem">
-———. 2019. <em>Stars: Spatiotemporal Arrays, Raster and Vector Data Cubes</em>. <a href="https://CRAN.R-project.org/package=stars">https://CRAN.R-project.org/package=stars</a>.
+Pebesma, Edzer. 2019. <em>Stars: Spatiotemporal Arrays, Raster and Vector Data Cubes</em>. <a href="https://CRAN.R-project.org/package=stars">https://CRAN.R-project.org/package=stars</a>.
 </div>
 <div id="ref-tmap" class="csl-entry" role="listitem">
 Tennekes, Martijn. 2018. <span>“<span class="nocase">tmap</span>: Thematic Maps in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 84 (6): 1–39. <a href="https://doi.org/10.18637/jss.v084.i06">https://doi.org/10.18637/jss.v084.i06</a>.
+</div>
+<div id="ref-bfast" class="csl-entry" role="listitem">
+Verbesselt, Jan, Achim Zeileis, and Martin Herold. 2012. <span>“Near Real-Time Disturbance Detection Using Satellite Image Time Series.”</span> <em>Remote Sensing of Environment</em> 123: 98–108. <a href="https://doi.org/10.1016/j.rse.2012.02.022">https://doi.org/10.1016/j.rse.2012.02.022</a>.
+</div>
+<div id="ref-bfast_rs2020" class="csl-entry" role="listitem">
+Wu, Ling, Zhaoliang Li, Xiangnan Liu, Lihong Zhu, Yibo Tang, Biyao Zhang, Boliang Xu, Meiling Liu, Yuanyuan Meng, and Boyuan Liu. 2020. <span>“Multi-Type Forest Change Detection Using BFAST and Monthly Landsat Time Series for Monitoring Spatiotemporal Dynamics of Forests in Subtropical Wetland.”</span> <em>Remote Sensing</em> 12 (2). <a href="https://doi.org/10.3390/rs12020341">https://doi.org/10.3390/rs12020341</a>.
 </div>
 <div id="ref-colorspace" class="csl-entry" role="listitem">
 Zeileis, Achim, Jason C. Fisher, Kurt Hornik, Ross Ihaka, Claire D. McWhite, Paul Murrell, Reto Stauffer, and Claus O. Wilke. 2020. <span>“<span class="nocase">colorspace</span>: A Toolbox for Manipulating and Assessing Colors and Palettes.”</span> <em>Journal of Statistical Software</em> 96 (1): 1–49. <a href="https://doi.org/10.18637/jss.v096.i01">https://doi.org/10.18637/jss.v096.i01</a>.
