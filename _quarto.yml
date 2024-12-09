@@ -6,6 +6,7 @@ project:
 execute:
   freeze: true    
 website:
+  bread-crumbs: false
   open-graph: true
   page-navigation: true  
   title: "Advanced GIS and Remote Sensing"

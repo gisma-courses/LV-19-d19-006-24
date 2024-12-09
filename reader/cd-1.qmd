@@ -4,7 +4,7 @@ title: Change Detection - Sentinel
 #date: '2024-12-06'
 bibliography: references.bib
 subtitle: 'Clusteranalysis, Maximum-Likelihood and ML'
-title-block-banner: ../reader/images/hinterland-sp.jpg
+title-block-banner: images/hinterland-sp.jpg
 title-block-banner-color: green
 editor: 
   markdown: 
@@ -148,7 +148,7 @@ Please note to project to three different CRS is for this examples convenience a
 
 
 ```{r geometries}
-#| eval: false
+# #| eval: false
 #| echo: true
 
 # download the Harz region from the UBA WFS server
@@ -216,7 +216,9 @@ mapview(corine_harz)+mapview(train_areas_2019_2020,zcol="class")+harz_forest_mas
 e <- ext(harz_forest_mask)
 p <- as.polygons(e, crs="EPSG:4326")
 cm=sf::st_as_sf(p)
-
+harz_bbox = bb(train_areas_2019_2020,projection=4326)
+harz_32632 =sf::st_transform(train_areas_2019_2020,crs = 32632)
+harz_bbox_32632 = bb(harz_32632,projection=32632)
 ```
 ## Step 1: Retrieving Sentinel data
 
@@ -247,7 +249,7 @@ One major challenge is the fact that most of the earth surface related remote se
 Using the `rstac` package, we first request all available images from 2018 to 208 that intersect with our region of interest. Here, since the polygon has WGS84 as CRS, we do **not** need to transform the bounding box before using the `stac_search()` function.
 
 ```{r stac2}
-#| eval: false
+# #| eval: false
 #| echo: fenced
 # search the data stack for the given period and area
 library(rstac)
@@ -271,7 +273,7 @@ To obtain a Sentinel data cube, a gdalcube image collection must be created from
 
 ```{r add_cube_assets}
 #| echo: true
-#| eval: false
+# #| eval: false
 
 library(gdalcubes)
 s2_collection <- stac_image_collection(items$features,
@@ -292,7 +294,7 @@ The *gdalcube image collection* can be considered as a proxy structure object wh
 
 ```{r create_cubeview, messages=FALSE, warnings=FALSE}
 #| echo: true
-#| eval: false
+# #| eval: false
 
 v = cube_view(srs = "EPSG:32632", 
               dx = 10, 
@@ -325,7 +327,7 @@ Only calling a final *action* will start the processing on the COG-Server. In th
   gdalcubes_options(parallel = 16, 
                     ncdf_compression_level = 5)
   raster_cube(s2_collection, v, mask = s2.mask) |>
-    write_ncdf("data/harz_2019_2021_kndvi.nc",overwrite=TRUE)
+    write_ncdf(file.path(root_folder,"data/harz_2019_2021_kndvi.nc"),overwrite=TRUE)
 ```
 
 #### kNDVI
@@ -334,9 +336,9 @@ Below, we derive mean monthly [kNDVI](https://advances.sciencemag.org/content/7/
 
 ```{r forest_kndvi, messages=FALSE, warnings=FALSE}
 #| echo: true
-#| eval: false
+# #| eval: false
 #| 
-ncdf_cube("data/harz_2019_2021_kndvi.nc") |>
+ncdf_cube(file.path(root_folder,"data/harz_2019_2021_kndvi.nc")) |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
   plot(key.pos = 1,  col = ndvi.col, nbreaks = 12)
@@ -348,7 +350,7 @@ The [CDSE package](https://zivankaraman.github.io/CDSE/articles/CDSE.html) provi
 
 ```{R cdse}
 #| echo: true
-#| eval: false
+# #| eval: false
 #------------
 # NOTE: You must create an Copernicus account and provide the token credtials have a look at:
 #       https://zivankaraman.github.io/CDSE/articles/BeforeYouStart.html#accessing-cdse-data-and-services
@@ -503,9 +505,9 @@ In our example (applied to 5 classes and executed with the function `unsuperClas
 The cluster algorithm can achieve a fairly acceptable separation of the clearings/bald spots with 5 clusters, which makes a classification seem promising.
 Also experiment with other cluster settings and discuss the results.
 
-```{R}
+```{R kmenas}
 #| echo: true
-#| eval: false
+# #| eval: false
 ## k-means über RStoolbox
 
 #"EVI"   "kNDVI" "SAVI"
@@ -665,9 +667,9 @@ For larger tasks, it makes sense to use the convenient method described in the c
 Assuming we have digitized trainingdata using either QGIS or R We need now to extract the values according to the assigned areas: 
 
 
-```{R}
+```{R tdf}
 #| echo: true
-#| eval: false
+# #| eval: false
 
 pred_stack_2018 = rast(file.path(root_folder,"data/pred_stack_2018.tif"))
 pred_stack_2022 = rast(file.path(root_folder,"data/pred_stack_2022.tif"))
@@ -713,7 +715,7 @@ Since the maximum likelihood algorithm requires training data, it is a supervise
 
 ```{R maxlike , message = FALSE, warnings = FALSE}
 #| echo: true
-#| eval: false
+# #| eval: false
 # ---- Maximum Likelihood Classification ----
 
 ## Here the caret utility package is used
@@ -742,12 +744,12 @@ crs(sp_testDat) = crs(pred_stack_2018)
 
 
 # superClass method "mlc" trains the model and then classifies it
-prediction_mlc_2018 <- superClass(pred_stack_2018, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class", model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
+prediction_mlc_2018 <- superClass(pred_stack_2018, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class", model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE, filename=file.path(root_folder,"data/prediction_mlc_2018.tif"))
 
-prediction_mlc_2022 <- superClass(pred_stack_2022, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class",model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE)
+prediction_mlc_2022 <- superClass(pred_stack_2022, trainData = sp_trainDat[,1:16],valData = sp_testDat[,1:16], responseCol = "class",model = "mlc", tuneLength = 1, trainPartition = 0.3,verbose = TRUE,filename=file.path(root_folder,"data/prediction_mlc_2022.tif"))
 
-terra::writeRaster(prediction_mlc_2018, "../data/prediction_mlc_2018.tif",overwrite=TRUE)
-terra::writeRaster(prediction_mlc_2022, "../data/prediction_mlc_2022.tif",overwrite=TRUE)
+saveRDS(prediction_mlc_2018, file.path(root_folder,"data/prediction_mlc_2018.rds"))
+saveRDS(prediction_mlc_2022, file.path(root_folder,"data/prediction_mlc_2022.rds"))
 ```
 
 ### Random forest
@@ -756,7 +758,7 @@ A simplified version of the workflow proposed by Max Kuhn [@caret] and improved 
 
 ```{R random_forest, eval=FALSE, message=FALSE, include=FALSE, warnings=FALSE}
 #| echo: true
-#| eval: false
+# #| eval: false
 
 # Settings for model training: cross-validation, 10 repetitions
 ctrlh = trainControl(method = "cv",
@@ -774,7 +776,7 @@ rf_model = train(trainDat[,2:16], # Columns 2 to 16 contain the training data (c
 rf_model
 
 saveRDS(rf_model, file.path(root_folder,"data/rf_model.rds"))
-rf_model = readRDS(file.path(root_folder,"data/rf_model.rds"))
+
 ```
 
 ### Prediction on the original data
@@ -783,11 +785,13 @@ Now we are ready to apply the verified model to our data set. In remote sensing,
 
 ```{R klassifikation2018, message = FALSE, warnings = FALSE}
 #| echo: true
-#| eval: false
-#| 
+# #| eval: false
+
+rf_model = readRDS(file.path(root_folder,"data/rf_model.rds"))
+
 # Classification (also known as prediction)
-prediction_rf_2018  = raster::predict(pred_stack_2018 ,rf_model)
-prediction_rf_2022  = raster::predict(pred_stack_2022 ,rf_model)
+prediction_rf_2018  = terra::predict(pred_stack_2018 ,rf_model)
+prediction_rf_2022  = terra::predict(pred_stack_2022 ,rf_model)
 saveRDS(prediction_rf_2018, file.path(root_folder,"data/prediction_rf_2018.rds"))
 saveRDS(prediction_rf_2022, file.path(root_folder,"data/prediction_rf_2022.rds"))
 
@@ -795,22 +799,18 @@ saveRDS(prediction_rf_2022, file.path(root_folder,"data/prediction_rf_2022.rds")
 
 ```{R comparison_classifications}
 #| echo: true
-#| eval: false
+# #| eval: false
 ## ##
 prediction_rf_2018 = readRDS(file.path(root_folder,"data/prediction_rf_2018.rds"))
 prediction_rf_2022 = readRDS(file.path(root_folder,"data/prediction_rf_2022.rds"))
-prediction_mlc_2018 = readRDS(file.path(root_folder,"data/prediction_mlc_2018.rds"))
-prediction_mlc_2022 = readRDS(file.path(root_folder,"data/prediction_mlc_2022.rds"))
+prediction_mlc_2018 = rast(file.path(root_folder,"data/prediction_mlc_2018.tif"))
+prediction_mlc_2022 = rast(file.path(root_folder,"data/prediction_mlc_2022.tif"))
 
 ## ---- Visualisierung mit mapview ----
 mask = resample(harz_forest_mask,pred_stack_2022)
-mapview::mapshot(
-  mapview(mask*prediction_rf_2018 , alpha.regions = 0.5, maxpixels =  1693870,
-          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, 2, 1), legend = TRUE) +
-  mapview(mask*prediction_rf_2022, alpha.regions = 0.5, maxpixels =  1693870,
-          col.regions = mapviewPalette("mapviewRasterColors"),at = seq(0, 2, 1), legend = FALSE) ,url = "compare-class1.html" )
-plot(prediction_mlc_2018$map)
-plot(prediction_mlc_2022$map)
+
+plot(mask*prediction_rf_2022 - mask*prediction_rf_2018) 
+plot(mask*prediction_mlc_2022-mask*prediction_mlc_2018)
 ```
 
 <iframe valign="center" src="compare-class1.html" width="640" height="960" frameborder="0" allowfullscreen="allowfullscreen">
@@ -836,7 +836,7 @@ Overall, however, the model can be considered good.
 
 ```{R konfusiomatrix2018, echo=FALSE, message=FALSE, warnings=FALSE}
 #| echo: true
-#| eval: false
+# #| eval: false
 ## ##
 # ----Calculation of the confusion matrix  ----
 cm_rf <- confusionMatrix(data = predict(rf_model, newdata = testDat), testDat$class)
