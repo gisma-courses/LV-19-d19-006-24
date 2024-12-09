@@ -1,11 +1,11 @@
 ---
 title: Change Detection - Sentinel  
-author: Chris Reudenbach
-date: '2024-12-06'
+#author: Chris Reudenbach
+#date: '2024-12-06'
 bibliography: references.bib
 subtitle: 'Clusteranalysis, Maximum-Likelihood and ML'
-title-block-banner: ../reader/images/grubenwiese-sp.jpg
-title-block-banner-color: white
+title-block-banner: ../reader/images/hinterland-sp.jpg
+title-block-banner-color: green
 editor: 
   markdown: 
     wrap: sentence
