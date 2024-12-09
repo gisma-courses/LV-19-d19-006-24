@@ -544,7 +544,7 @@ We assume that we want to classify two types of land cover: *clearcut* and *othe
 
 For larger tasks, it makes sense to use the convenient method described in the current QGIS  documentation, for example in the [digitizing tutorial](https://docs.qgis.org/3.34/en/docs/training_manual/create_vector_data/create_new_vector.html#basic-ty-digitizing-polygons).
 
-[Digitizing training data in R](digitize2.qmd){.btn .btn-outline-primary .btn role="button" data-toggle="tooltip" title="Digitizing training data using mapedit"}
+[Digitizing training data in R](digitize.qmd){.btn .btn-outline-primary .btn role="button" data-toggle="tooltip" title="Digitizing training data using mapedit"}
 
 Assuming we have digitized trainingdata using either QGIS or R We need now to extract the values according to the assigned areas: 
 

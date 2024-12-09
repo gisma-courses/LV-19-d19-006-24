@@ -104,8 +104,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../css/styles.css">
 <meta property="og:title" content="Advanced GIS and Remote Sensing - Untitled">
+<meta property="og:description" content="">
 <meta property="og:site_name" content="Advanced GIS and Remote Sensing">
 <meta name="twitter:title" content="Advanced GIS and Remote Sensing - Untitled">
+<meta name="twitter:description" content="">
 <meta name="twitter:creator" content="@gisma">
 <meta name="twitter:card" content="summary">
 </head>
@@ -338,7 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#excursus-creating-training-areas-with-mapedit" id="toc-excursus-creating-training-areas-with-mapedit" class="nav-link active" data-scroll-target="#excursus-creating-training-areas-with-mapedit">Excursus: Creating training areas with mapedit</a>
+  <li><a href="#creating-training-areas-with-mapedit" id="toc-creating-training-areas-with-mapedit" class="nav-link active" data-scroll-target="#creating-training-areas-with-mapedit">Creating training areas with mapedit</a>
   <ul class="collapse">
   <li><a href="#using-color-composites-for-better-training-results" id="toc-using-color-composites-for-better-training-results" class="nav-link" data-scroll-target="#using-color-composites-for-better-training-results">Using color composites for better training results</a></li>
   </ul></li>
@@ -367,8 +369,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="excursus-creating-training-areas-with-mapedit" class="level2">
-<h2 class="anchored" data-anchor-id="excursus-creating-training-areas-with-mapedit">Excursus: Creating training areas with mapedit</h2>
+<section id="creating-training-areas-with-mapedit" class="level2">
+<h2 class="anchored" data-anchor-id="creating-training-areas-with-mapedit">Creating training areas with mapedit</h2>
+<p>With mapedit, each class must be digitized individually. Once the training areas are available as vector data, the features of the respective raster stack can be extracted into a table according to the digitized classes and corrected for possible missing values.</p>
 <section id="using-color-composites-for-better-training-results" class="level3">
 <h3 class="anchored" data-anchor-id="using-color-composites-for-better-training-results">Using color composites for better training results</h3>
 <p>For this exercise, we use <code>mapedit</code>, a small but powerful package that allows you to digitize and edit vector data in Rstudio or an external browser. In combination with <code>mapview</code>, any [color composite] (https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/composites/) can also be used as a basis for digitization.</p>

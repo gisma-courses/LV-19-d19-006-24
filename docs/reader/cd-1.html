@@ -872,7 +872,7 @@ background-size: cover;
 <p>For a supervised classification, we need data that indicates which surface class defined areas of the satellite image belong to. This data is referred to as training data and is very often obtained by manual digitization. This can be done quite comfortably in RStudio if only a few training areas have to be digitized quickly and effectively.</p>
 <p>We assume that we want to classify two types of land cover: <em>clearcut</em> and <em>other</em>.</p>
 <p>For larger tasks, it makes sense to use the convenient method described in the current QGIS documentation, for example in the <a href="https://docs.qgis.org/3.34/en/docs/training_manual/create_vector_data/create_new_vector.html#basic-ty-digitizing-polygons">digitizing tutorial</a>.</p>
-<p><a href="digitize2.qmd" class="btn btn-outline-primary" role="button" data-toggle="tooltip" title="Digitizing training data using mapedit">Digitizing training data in R</a></p>
+<p><a href="../reader/digitize.html" class="btn btn-outline-primary" role="button" data-toggle="tooltip" title="Digitizing training data using mapedit">Digitizing training data in R</a></p>
 <p>Assuming we have digitized trainingdata using either QGIS or R We need now to extract the values according to the assigned areas:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use the provided training data set</span></span>

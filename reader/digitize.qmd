@@ -4,8 +4,8 @@ editor: visual
 ---
 
 ## Creating training areas with mapedit
-With mapedit, each class must be digitized individually.
-Once the training areas are available as vector data, the features of the respective raster stack can be extracted into a table according to the digitized classes and corrected for possible missing values.
+
+With mapedit, each class must be digitized individually. Once the training areas are available as vector data, the features of the respective raster stack can be extracted into a table according to the digitized classes and corrected for possible missing values.
 
 ### Using color composites for better training results
 
