@@ -1,7 +1,7 @@
 ---
 title: Change Detection - Sentinel  
 author: Chris Reudenbach
-date: '2021-12-16'
+date: '2024-12-06'
 bibliography: references.bib
 subtitle: 'Clusteranalyse, Maximum-Likelihood and ML'
 title-block-banner: ../reader/images/harz2-sp.jpg
@@ -59,7 +59,7 @@ Probably the best-known unsupervised classification technique is K-means cluster
 
 K-means clustering is a technique commonly used in satellite image classification to group pixels with similar spectral characteristics. Treating each pixel as an observation, the algorithm assigns pixels to clusters based on their spectral values, with each cluster having a mean (or centroid) that represents its central spectral signature. This results in the segmentation of the image into distinct regions (similar to Voronoi cells) corresponding to land cover types, such as water, vegetation or urban areas, facilitating further analysis. It is often used to obtain an initial overview of whether the raster data can be sufficiently separated in feature space.
 
-![](https://en.wikipedia.org/wiki/K-means_clustering#/media/File:K-means_convergence.gif)
+<a title="Chire, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:K-means_convergence.gif"><img width="512" alt="K-means convergence" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/K-means_convergence.gif/512px-K-means_convergence.gif?20170530143526"></a>
 
 Figure: Convergence of k-means clustering from an unfavorable starting position (two initial cluster centers are fairly close). [Chire](https://commons.wikimedia.org/wiki/User:Chire) \[CC BY-SA 4.0\] via wikipedia.org
 
@@ -146,6 +146,8 @@ Please note to project to three different CRS is for this examples convenience a
 
 
 ```{r geometries}
+#| eval: false
+#| echo: true
 
 library(tmap)
 library(tmaptools)
@@ -586,9 +588,7 @@ The goal is to separate clearcuts from all other pixels and to quantify the diff
 
 ### Maximum Likelihood Classification
 
-Maximum likelihood classification assumes that the distribution of data for each class and in each channel is normally distributed. Under this assumption, the probability that a particular pixel belongs to a particular class is calculated. Since the probabilities can also be specified as a threshold, without this restriction, *all* pixels are assigned regardless of how unlikely they are. Each pixel is assigned to the class that has the highest probability (i.e., the maximum probability).
 
-![](images/max.png)
 
 Since the maximum likelihood algorithm requires training data, it is a supervised learning method. This means that we, as users, have to provide the algorithm with data that conveys knowledge about the classes to be predicted. This data is then divided into training and test data.
 
