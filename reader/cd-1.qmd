@@ -14,7 +14,7 @@ editor:
 In the geosciences, remote sensing is the only measurement technique that allows complete coverage of large spatial areas, up to the entire Earth's surface.
 Its successful application requires both the use of existing methods and the adaptation and development of new ones.
 
-# Introduction
+## Introduction
 
 In geospatial or environmental informatics, the detection of changes to the Earth's surface using satellite, aircraft or drone images, known as change detection analysis, is an important application.
 These results are often linked to biophysical, geophysical or anthropogenic processes in order to gain both a deeper understanding and the possibility of developing predictive models.
@@ -53,7 +53,7 @@ The focus is then on model building and quality assessment, which can be seen as
 
 We will go through this process step by step.
 
-## Unsupervised Classification - k-means clustering
+### Unsupervised Classification - k-means clustering
 
 Probably the best-known unsupervised classification technique is K-means clustering, which is also referred to as the *"simplest machine learning algorithm"*.
 
@@ -63,7 +63,7 @@ K-means clustering is a technique commonly used in satellite image classificatio
 
 Figure: Convergence of k-means clustering from an unfavorable starting position (two initial cluster centers are fairly close). [Chire](https://commons.wikimedia.org/wiki/User:Chire) \[CC BY-SA 4.0\] via wikipedia.org
 
-## Supervised classification
+### Supervised classification
 
 In supervised land cover classification, a model is derived from a limited amount of training land cover data that predicts land cover for the entire data set.
 The land cover types are defined *a priori*, and the model attempts to predict these types based on the similarity between the characteristics of the training data and the rest of the data set.
@@ -76,7 +76,7 @@ We now want to predict the spatial characteristics of clear-felling/no forest us
 
 The goal is to separate clearcuts from all other pixels and to quantify the differences between 2019 and 2020.
 
-### Maximum Likelihood Classification
+#### Maximum Likelihood Classification
 
 Maximum likelihood classification assumes that the distribution of data for each class and in each channel is normally distributed.
 Under this assumption, the probability that a particular pixel belongs to a particular class is calculated.
@@ -85,7 +85,7 @@ Each pixel is assigned to the class that has the highest probability (i.e., the 
 
 ![](images/max.png)
 
-### Random forest
+#### Random forest
 
 Random forests can be used for both regression and classification tasks, with the latter being particularly relevant in environmental remote sensing.
 Like any machine learning method, the random forest model learns to recognize patterns and structures in the data itself.
@@ -106,7 +106,7 @@ From a pragmatic point of view, classification tasks generally require the follo
 
 ## Change detection case study: Harz Mountains
 
-# Goals
+### Goals
 
 This example shows how complex times series methods from external R packages can be applied in cloud computing environments using [`[rstac`](https://cran.r-project.org/package=rstac) [@rstac] and [`gdalcubes`](https://cran.r-project.org/package=gdalcubes) [@gdalcubes]. We will use the [`bfast` R package](https://cran.r-project.org/package=bfast) containing unsupervised change detection methods identifying structural breakpoints in vegetation index time series. Specifically, we will use the `bfastmonitor()` function to monitor changes on a dedicated timeperiod of a time series of Sentinel-2 imagery.
 
@@ -195,7 +195,8 @@ tmap_options(check.and.fix = TRUE) +
 ## Then execute the commented snippet below
 
 corine_raw = rast(file.path("../data/U2018_CLC2018_V2020_20u1.tif"))
-corine_harz = terra::crop(corine_raw,vect(harz))
+corine = terra::project(corine_raw,"EPSG:4326" )
+corine_harz = terra::crop(corine,vect(train_areas_2019_2020))
 plot(corine_harz)
 terra::writeRaster(corine_harz,file.path("../data/corine_harz.tif"),overwrite=TRUE)
 
@@ -203,8 +204,7 @@ terra::writeRaster(corine_harz,file.path("../data/corine_harz.tif"),overwrite=TR
 # utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/corine_harz.tif",destfile=file.path(root_folder,"../data/corine_harz.tif"))
 # corine_harz = rast(file.path(root_folder,"../data/corine_harz.tif"))
 
-mapview(corine_harz)+harz
-
+mapview(corine_harz)+train_areas_2019_2020
 # Create a forest mask from corine
 # Agro-forestry areas code=22, Broad-leaved forest code=23,
 # Coniferous forest code=24, Mixed forest code=25
@@ -215,8 +215,9 @@ p <- as.polygons(e, crs="EPSG:4326")
 cm=sf::st_as_sf(p)
 
 ```
+## Step 1: Retrieving Sentinel data
 
-### Aternative 1: Retrieving Sentinel using `gdalcubes`
+### Aternative 1:  Using `gdalcubes`
 
 Sentinel-2 is currently the most important platform for Earth observation in all areas, but especially for climate change, land use and ecological issues at all levels, from the upper micro to the global scale.
 
@@ -224,11 +225,11 @@ There are two operational Sentinel-2 satellites: Sentinel-2A and Sentinel-2B, bo
 
 The Sentinel-2 data are therefore predestined to record spatial and temporal changes on the Earth's surface (the forest was green in early summer, it has disappeared by late summer). They are ideal for timely studies before and after natural disasters, or for biomass balancing, etc.
 
-## Cloud-Optimised GeoTIFFs (COGs)
+#### Cloud-Optimised GeoTIFFs (COGs)
 
 Unfortunately, the official [Sentinel-2 archives](https://scihub.copernicus.eu/dhus/#/home) are anything but user-friendly. Even with very convenient tools such as [`sen2r`](https://sen2r.ranghetti.info/) it is sometimes tedious to process them.Technically, the processed product levels are available for download pre-processed as L1C and L2A products in JP2K format. The preferred file format is JP2K, which is storage efficient but has to be downloaded in its entirety locally by the user, resulting in high access costs and huge local storage requirements. The cloud-optimised GeoTIFFs (COGs) allow only the areas of interest to be downloaded and are also much faster to process. However, this requires optimised cloud services and a technically different access logic than in the processing chains used so far.
 
-## SpatioTemporal Asset Catalog (STAC)
+#### SpatioTemporal Asset Catalog (STAC)
 
 The [Spatial-Temporal Asset Catalogue] (https://stacspec.org/) (STAC) provides a common language for simplified indexing and discovery of geospatial data. A "Spatio-Temporal Asset" is a file that contains information in a specific space and time.
 
@@ -237,7 +238,8 @@ This approach allows any provider of spatio-temporal data (imagery, SAR, point c
 [Element84](https://www.element84.com/) has provided a public API called Earth-search, a central search catalogue for all public AWS datasets using STAC (including the new Sentinel-2 COGs), which contains more than 11.4 million Sentinel-2 scenes worldwide as of 1 November 2017.
 
 One major challenge is the fact that most of the earth surface related remote sensing activities are heavily *"disturbed"* by the atmosphere, especially by clouds. So to find cloud free satellite imagery is a common and cumbersome task. This task is supported by the `rstac` package which provides a convenient tool to find and filter adequate Sentinel-2 images out of the COG data storage. However, to address the AOI we need to provide the extend via the `bbox` argument of the corresponding function `stac_search()`. So first we need to derive and transform the required bounding box to WGS84 geo-coordinates, easily done with the `sf` functions `st_bbox()` and `st_transform()`. In addition we adapt the projection of the referencing vector objects to all other later projection needs.
-### Querying images with `rstac`
+
+#### Querying images with `rstac`
 
 Using the `rstac` package, we first request all available images from 2018 to 208 that intersect with our region of interest. Here, since the polygon has WGS84 as CRS, we do **not** need to transform the bounding box before using the `stac_search()` function.
 
@@ -260,7 +262,7 @@ items
 
 This gives us 350 matching images recorded between Januar 2019 and December 2023.
 
-### Creating a monthly Sentinel-2 data cube
+#### Creating a monthly Sentinel-2 data cube
 
 To obtain a Sentinel data cube, a gdalcube image collection must be created from the STAC query result. To do this, the asset names must be explicitly named in order to apply the SCL channel with the quality characteristics per pixel (classification as clouds, cloud shadows, etc.). In this query, a filter is set to cloud cover <= 50%.
 
@@ -323,11 +325,11 @@ Only calling a final *action* will start the processing on the COG-Server. In th
 
 In the following examples we will show a simple plot in a generic pipe. However, a more common visualisation is quite simple. A typical pipe might be *Save a resulting netCDF file* `->` *Convert it to a `stars` object* `->` *Visualise the results* with `tmap`, `mapview`, `ggplot2` or whatever package you prefer to produce (interactive) map(s).
 
-## Reducers (Statistics)
+#### Reducers (Statistics)
 
 Possible *reducers* include `min"`, `mean"`, `median"`, `max"`, `count"` (count non-missing values), `sum"`, `var"` (variance), and `sd"` (standard deviation). Reducer expressions are always given as a string, starting with the reducer name, followed by the band name in parentheses. Note that it is possible to mix reducers and bands.
 
-### Counting image contribution per pixel
+#### Counting image contribution per pixel
 
 To get an idea of the data, we can compute simple summary statistics using a 'reducer' function over dimensions. For example, using the `count` reducer, we can learn about the temporal coverage for each aggregated pixel, giving us an initial understanding of the temporal quality of the dataset.
 
@@ -344,7 +346,7 @@ We can see that most time series contain valid observations of around 60 months,
 
 Below you will find various examples dealing with the common NDVI and the [kNDVI](https://advances.sciencemag.org/content/7/9/eabc7447) Indices.
 
-### kNDVI
+#### kNDVI
 
 Below, we derive mean monthly kNdvi values over all pixel time series.
 
@@ -359,7 +361,7 @@ ncdf_cube("data/harz_2019_summer_tile.nc") |>
 ```
 
 
-## Alternative 2: Copernicus Data Space Ecosystem API Wrapper CDSE
+### Alternative 2: Copernicus Data Space Ecosystem API Wrapper CDSE
 The [CDSE package](https://zivankaraman.github.io/CDSE/articles/CDSE.html) provides another simple way to get Sentinel/Copernicus data sets.
 
 ```{R cdse}
