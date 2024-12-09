@@ -48,10 +48,10 @@ We will cover the following topics:
 
 * [Theoretical principles](cd-1.qmd#theoretical-principles) 
 * [Case Study Harz Mountains](cd-1.qmd#change-detection-case-study-harz-mountains)
-   - [Preparing the work environment](cd-1.qmd#setting-up-the-work-environment)       - [Retrieving Sentinel and auxilliary data](cd-1.qmd#step-1-retrieving-sentinel-data)
+   - [Preparing the work environment](cd-1.qmd#setting-up-the-work-environment)       -      - [Retrieving Sentinel and auxilliary data](cd-1.qmd#step-1-retrieving-sentinel-data)
    - [Unsupervised classification](cd-1.qmd#step2-overview-unsupervised-classification-k-means-clustering) (k-means clustering)
    - [Recording training areas](cd-1.qmd#step-3---generating-training-data).
-   - [Supervised classification]cd-1.qmd#step-4---supervised-classification) (Random Forest, Maximum Likelihood)
+   - [Supervised classification](cd-1.qmd#step-4---supervised-classification) (Random Forest, Maximum Likelihood)
    - [Estimating model quality](cd-1.qmd#step-5-estimation-model-quality)
 
 ## Theoretical principles
@@ -82,7 +82,7 @@ Within the limits of the quality of the training data, such models are suitable 
 
 We now want to predict the spatial characteristics of clear-felling/no forest using a maximum likelihood classification and random forest, and apply standard methods of random validation and model quality assessment.
 
-The goal is to separate clearcuts from all other pixels and to quantify the differences between 2019 and 2020.
+The goal is to separate clearcuts from all other pixels and to quantify the differences between 2018 and 2022.
 
 #### Maximum Likelihood Classification
 
@@ -110,15 +110,22 @@ Finally, the pixel is assigned to the class that has the most trees, according t
 
 From a pragmatic point of view, classification tasks generally require the following steps:
 
--   Creation of a comprehensive input data set that contains one or more raster layers. Selection of training areas, i.e. subsets of the input data set for which the land cover type is known to the remote sensing expert. Knowledge of the land cover can be obtained, for example, from one's own or third-party in situ observations, management information or other remote sensing products (e.g. high-resolution aerial photographs). Training a model using the training sites. For validation purposes, the training sites are often subdivided into one or more test and training sites to evaluate the performance of the model algorithm. Applying the trained model to the entire data set, i.e. predicting the land cover type based on the similarity of the data at each site to the class characteristics of the training data set.
+- Creation of a comprehensive input data set that contains one or more raster layers. 
+- Selection of training areas, i.e. subsets of the input data set for which the land cover type is known to the remote sensing expert. Knowledge of the land cover can be obtained, for example, from one's own or third-party in situ observations, management information or other remote sensing products (e.g. high-resolution aerial photographs). 
+- Training a model using the training sites. For validation purposes, the training sites are often subdivided into one or more test and training sites to evaluate the performance of the model algorithm. 
+- Applying the trained model to the entire data set, i.e. predicting the land cover type based on the similarity of the data at each site to the class characteristics of the training data set.
 
 ## Change detection case study: Harz Mountains
 
 
+Since 2018, there has been a notable increase in the incidence of extensive forest dieback in the Harz Mountains. During this period, the combination of repeated years of drought, extreme heat waves and the resulting weakening of the spruce trees led to an exponential increase in the population of bark beetles. The combined impact of these factors resulted in the extensive mortality of spruce stands across an area of approximately 30,000 hectares over a period of approximately five to six years. This equates to approximately 35% of the total forest area of the Harz.
+
+It is important to note that the prolonged drought in 2018, 2019 and 2020, which is considered one of the most severe in the region, has significantly exacerbated the damage in the Harz Mountains.
+
+In this context, a time series analysis or a change detection analysis is an essential technique for quantifying and localising the damage and characterising its dynamics.
 
 ### Setting up the work environment
 
-You can either use the data saved from the previous exercise or define, download and edit a new area.
 However, the work environment is usually loaded first.
 
 ```{R setup , message = FALSE, warnings = FALSE}
@@ -141,12 +148,11 @@ ano.col = diverging_hcl(7, palette = "Red-Green",  register = "rg")
 
 ```
 
-Please add any missing or defective packages in the above setup script (if error messages occur).
-On the basis of the available Sentinel data, the first step should be to identify suitable data sets for a surface classification.
+Please add any missing or defective packages in the above setup script (if error messages occur). On the basis of the available Sentinel data, the first step should be to identify suitable data sets for a surface classification.
 
 ### Defining the Area of Interest
 
-Please note to project to three different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.\
+Please note to project to different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.\
 
 
 ```{r geometries}

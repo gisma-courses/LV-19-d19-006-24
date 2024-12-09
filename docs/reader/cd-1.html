@@ -459,10 +459,10 @@ background-size: cover;
 <li><a href="../reader/cd-1.html#theoretical-principles">Theoretical principles</a></li>
 <li><a href="../reader/cd-1.html#change-detection-case-study-harz-mountains">Case Study Harz Mountains</a>
 <ul>
-<li><a href="../reader/cd-1.html#setting-up-the-work-environment">Preparing the work environment</a> - <a href="../reader/cd-1.html#step-1-retrieving-sentinel-data">Retrieving Sentinel and auxilliary data</a></li>
+<li><a href="../reader/cd-1.html#setting-up-the-work-environment">Preparing the work environment</a> - - <a href="../reader/cd-1.html#step-1-retrieving-sentinel-data">Retrieving Sentinel and auxilliary data</a></li>
 <li><a href="../reader/cd-1.html#step2-overview-unsupervised-classification-k-means-clustering">Unsupervised classification</a> (k-means clustering)</li>
 <li><a href="../reader/cd-1.html#step-3---generating-training-data">Recording training areas</a>.</li>
-<li><a href="#supervised-classification">Supervised classification</a>cd-1.qmd#step-4—supervised-classification) (Random Forest, Maximum Likelihood)</li>
+<li><a href="../reader/cd-1.html#step-4---supervised-classification">Supervised classification</a> (Random Forest, Maximum Likelihood)</li>
 <li><a href="../reader/cd-1.html#step-5-estimation-model-quality">Estimating model quality</a></li>
 </ul></li>
 </ul>
@@ -483,7 +483,7 @@ background-size: cover;
 <p>In supervised land cover classification, a model is derived from a limited amount of training land cover data that predicts land cover for the entire data set. The land cover types are defined <em>a priori</em>, and the model attempts to predict these types based on the similarity between the characteristics of the training data and the rest of the data set.</p>
 <p><img src="images/supervised_classification.jpg" class="img-fluid"> Classifiers (e.g.&nbsp;the maximum likelihood classifier) or machine learning algorithms (such as Random Forest) use the training data to determine descriptive models that represent statistical signatures, classification trees or other functions. Within the limits of the quality of the training data, such models are suitable and representative for making predictions for areas if the predictors from the model are available for the entire area.</p>
 <p>We now want to predict the spatial characteristics of clear-felling/no forest using a maximum likelihood classification and random forest, and apply standard methods of random validation and model quality assessment.</p>
-<p>The goal is to separate clearcuts from all other pixels and to quantify the differences between 2019 and 2020.</p>
+<p>The goal is to separate clearcuts from all other pixels and to quantify the differences between 2018 and 2022.</p>
 <section id="maximum-likelihood-classification" class="level4">
 <h4 class="anchored" data-anchor-id="maximum-likelihood-classification">Maximum Likelihood Classification</h4>
 <p>Maximum likelihood classification assumes that the distribution of data for each class and in each channel is normally distributed. Under this assumption, the probability that a particular pixel belongs to a particular class is calculated. Since the probabilities can also be specified as a threshold, without this restriction, <em>all</em> pixels are assigned regardless of how unlikely they are. Each pixel is assigned to the class that has the highest probability (i.e., the maximum probability).</p>
@@ -496,16 +496,22 @@ background-size: cover;
 <p>A random forest algorithm learns from the data by creating random decision trees – hence the name. For classification tasks, the algorithm takes a suitable instance of a decision tree from the training data set and assigns the corresponding class to the pixel. This is repeated with all available decision trees. Finally, the pixel is assigned to the class that has the most trees, according to the winner-takes-all principle.</p>
 <p>From a pragmatic point of view, classification tasks generally require the following steps:</p>
 <ul>
-<li>Creation of a comprehensive input data set that contains one or more raster layers. Selection of training areas, i.e.&nbsp;subsets of the input data set for which the land cover type is known to the remote sensing expert. Knowledge of the land cover can be obtained, for example, from one’s own or third-party in situ observations, management information or other remote sensing products (e.g.&nbsp;high-resolution aerial photographs). Training a model using the training sites. For validation purposes, the training sites are often subdivided into one or more test and training sites to evaluate the performance of the model algorithm. Applying the trained model to the entire data set, i.e.&nbsp;predicting the land cover type based on the similarity of the data at each site to the class characteristics of the training data set.</li>
+<li>Creation of a comprehensive input data set that contains one or more raster layers.</li>
+<li>Selection of training areas, i.e.&nbsp;subsets of the input data set for which the land cover type is known to the remote sensing expert. Knowledge of the land cover can be obtained, for example, from one’s own or third-party in situ observations, management information or other remote sensing products (e.g.&nbsp;high-resolution aerial photographs).</li>
+<li>Training a model using the training sites. For validation purposes, the training sites are often subdivided into one or more test and training sites to evaluate the performance of the model algorithm.</li>
+<li>Applying the trained model to the entire data set, i.e.&nbsp;predicting the land cover type based on the similarity of the data at each site to the class characteristics of the training data set.</li>
 </ul>
 </section>
 </section>
 </section>
 <section id="change-detection-case-study-harz-mountains" class="level2">
 <h2 class="anchored" data-anchor-id="change-detection-case-study-harz-mountains">Change detection case study: Harz Mountains</h2>
+<p>Since 2018, there has been a notable increase in the incidence of extensive forest dieback in the Harz Mountains. During this period, the combination of repeated years of drought, extreme heat waves and the resulting weakening of the spruce trees led to an exponential increase in the population of bark beetles. The combined impact of these factors resulted in the extensive mortality of spruce stands across an area of approximately 30,000 hectares over a period of approximately five to six years. This equates to approximately 35% of the total forest area of the Harz.</p>
+<p>It is important to note that the prolonged drought in 2018, 2019 and 2020, which is considered one of the most severe in the region, has significantly exacerbated the damage in the Harz Mountains.</p>
+<p>In this context, a time series analysis or a change detection analysis is an essential technique for quantifying and localising the damage and characterising its dynamics.</p>
 <section id="setting-up-the-work-environment" class="level3">
 <h3 class="anchored" data-anchor-id="setting-up-the-work-environment">Setting up the work environment</h3>
-<p>You can either use the data saved from the previous exercise or define, download and edit a new area. However, the work environment is usually loaded first.</p>
+<p>However, the work environment is usually loaded first.</p>
 <div class="cell" data-warnings="false">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- 0 Projekt Setup ----</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(<span class="st">"pacman"</span>)</span>
@@ -525,7 +531,7 @@ background-size: cover;
 </section>
 <section id="defining-the-area-of-interest" class="level3">
 <h3 class="anchored" data-anchor-id="defining-the-area-of-interest">Defining the Area of Interest</h3>
-<p>Please note to project to three different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.<br>
+<p>Please note to project to different CRS is for this examples convenience and clarity and somewhat superfluous. Only the corner coordinates of the sections are required and not the complete geometries. However, it creates more clarity for the later process to already have the data needed in different projections.<br>
 </p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the Harz region from the UBA WFS server</span></span>
