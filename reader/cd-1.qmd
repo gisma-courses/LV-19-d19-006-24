@@ -123,6 +123,8 @@ However, the work environment is usually loaded first.
 
 ```{R setup , message = FALSE, warnings = FALSE}
 #| echo: true
+#| warning: false
+#| message: false
 # ---- 0 Projekt Setup ----
 require("pacman")
 #remotes::install_github("zivankaraman/CDSE")
@@ -148,8 +150,10 @@ Please note to project to three different CRS is for this examples convenience a
 
 
 ```{r geometries}
-# #| eval: false
+#| eval: false
 #| echo: true
+#| warning: false
+#| message: false
 
 # download the Harz region from the UBA WFS server
 # nre_regions <- "https://geodienste.bfn.de/ogc/wfs/gliederungen?"
@@ -220,9 +224,8 @@ harz_bbox = bb(train_areas_2019_2020,projection=4326)
 harz_32632 =sf::st_transform(train_areas_2019_2020,crs = 32632)
 harz_bbox_32632 = bb(harz_32632,projection=32632)
 ```
-## Step 1: Retrieving Sentinel data
 
-### Aternative 1:  Using `gdalcubes`
+## Step 1: Retrieving Sentinel data
 
 Sentinel-2 is currently the most important platform for Earth observation in all areas, but especially for climate change, land use and ecological issues at all levels, from the upper micro to the global scale.
 
@@ -230,9 +233,13 @@ There are two operational Sentinel-2 satellites: Sentinel-2A and Sentinel-2B, bo
 
 The Sentinel-2 data are therefore predestined to record spatial and temporal changes on the Earth's surface (the forest was green in early summer, it has disappeared by late summer). They are ideal for timely studies before and after natural disasters, or for biomass balancing, etc.
 
+### Aternative 1:  Using `gdalcubes`
+
+The [`gdalcubes`](https://gdalcubes.github.io/source/tutorials/) tool has been developed with the objective of facilitating the processing of extensive collections of satellite images. It has been designed to enhance the efficiency, speed, intuitiveness and interactivity of this task.
+
 #### Cloud-Optimised GeoTIFFs (COGs)
 
-Unfortunately, the official [Sentinel-2 archives](https://scihub.copernicus.eu/dhus/#/home) are anything but user-friendly. Even with very convenient tools such as [`sen2r`](https://sen2r.ranghetti.info/) it is sometimes tedious to process them.Technically, the processed product levels are available for download pre-processed as L1C and L2A products in JP2K format. The preferred file format is JP2K, which is storage efficient but has to be downloaded in its entirety locally by the user, resulting in high access costs and huge local storage requirements. The cloud-optimised GeoTIFFs (COGs) allow only the areas of interest to be downloaded and are also much faster to process. However, this requires optimised cloud services and a technically different access logic than in the processing chains used so far.
+Unfortunately, the official [Sentinel-2 archives](https://scihub.copernicus.eu/dhus/#/home) are anything but user-friendly. Technically, the processed product levels are available for download pre-processed as L1C and L2A products in JP2K format. The preferred file format is JP2K, which is storage efficient but has to be downloaded in its entirety locally by the user, resulting in high access costs and huge local storage requirements. The cloud-optimised GeoTIFFs (COGs) allow only the areas of interest to be downloaded and are also much faster to process. However, this requires optimised cloud services and a technically different access logic than in the traditional processing chains used so far.
 
 #### SpatioTemporal Asset Catalog (STAC)
 
@@ -249,8 +256,10 @@ One major challenge is the fact that most of the earth surface related remote se
 Using the `rstac` package, we first request all available images from 2018 to 208 that intersect with our region of interest. Here, since the polygon has WGS84 as CRS, we do **not** need to transform the bounding box before using the `stac_search()` function.
 
 ```{r stac2}
-# #| eval: false
-#| echo: fenced
+#| eval: false
+#| echo: true
+#| warning: false
+#| message: false
 # search the data stack for the given period and area
 library(rstac)
 s = stac("https://earth-search.aws.element84.com/v0")
@@ -273,7 +282,9 @@ To obtain a Sentinel data cube, a gdalcube image collection must be created from
 
 ```{r add_cube_assets}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 
 library(gdalcubes)
 s2_collection <- stac_image_collection(items$features,
@@ -294,7 +305,9 @@ The *gdalcube image collection* can be considered as a proxy structure object wh
 
 ```{r create_cubeview, messages=FALSE, warnings=FALSE}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 
 v = cube_view(srs = "EPSG:32632", 
               dx = 10, 
@@ -319,6 +332,8 @@ Only calling a final *action* will start the processing on the COG-Server. In th
 
 ```{r get_data_write_ncdf}
 #| echo: true
+#| warning: false
+#| message: false
 #| eval: false
 ## ##
 #| 
@@ -336,7 +351,9 @@ Below, we derive mean monthly [kNDVI](https://advances.sciencemag.org/content/7/
 
 ```{r forest_kndvi, messages=FALSE, warnings=FALSE}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 #| 
 ncdf_cube(file.path(root_folder,"data/harz_2019_2021_kndvi.nc")) |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
@@ -350,7 +367,9 @@ The [CDSE package](https://zivankaraman.github.io/CDSE/articles/CDSE.html) provi
 
 ```{R cdse}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 #------------
 # NOTE: You must create an Copernicus account and provide the token credtials have a look at:
 #       https://zivankaraman.github.io/CDSE/articles/BeforeYouStart.html#accessing-cdse-data-and-services
@@ -404,7 +423,7 @@ kndvi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                              buffer = 0.01, 
                              client = OAuthClient)
 names(kndvi_2018_07_01 )[1] = c("kNDVI")
-terra::plot(kndvi_2018_07_01[[1]] , main = paste(names(kndvi_2018_07_01 ), day[12]), cex.main = 0.75)
+terra::plot(kndvi_2018_07_01[[1]] , main = paste(names(kndvi_2018_07_01 ), day[12]), col = ndvi.col, nbreaks = 12,cex.main = 0.75)
 
 savi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                             time_range = day[12], 
@@ -417,7 +436,7 @@ savi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                             buffer = 0.01, 
                             client = OAuthClient)
 names(savi_2018_07_01)[1] = c( "SAVI")
-terra::plot(savi_2018_07_01[[1]], main = paste("SAVI", day[12]), cex.main = 0.75)
+terra::plot(savi_2018_07_01[[1]], main = paste("SAVI", day[12]),col = ndvi.col, nbreaks = 12, cex.main = 0.75)
 
 evi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                            time_range = day[12], 
@@ -430,7 +449,7 @@ evi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                            buffer = 0.01, 
                            client = OAuthClient)
 names(evi_2018_07_01)[1] = c( "EVI")
-terra::plot(evi_2018_07_01[[1]], main = paste("EVI",day[12]), cex.main = 0.75)
+terra::plot(evi_2018_07_01[[1]], main = paste("EVI",day[12]), col = ndvi.col, nbreaks = 12, cex.main = 0.75)
 
 pred_stack_2018 = c(raw_2018_07_01,evi_2018_07_01[[1]],kndvi_2018_07_01[[1]],savi_2018_07_01[[1]])
 
@@ -459,7 +478,7 @@ kndvi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                              buffer = 0.01, 
                              client = OAuthClient)
 names(kndvi_2022_06_23)[1] = c("kNDVI")
-terra::plot(kndvi_2022_06_23[[1]] , main = paste(names(kndvi_2022_06_23 ), day[1]), cex.main = 0.75)
+terra::plot(kndvi_2022_06_23[[1]] , main = paste(names(kndvi_2022_06_23 ), day[1]), col = ndvi.col, nbreaks = 12, cex.main = 0.75)
 
 savi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                             time_range = day[1], 
@@ -472,7 +491,7 @@ savi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                             buffer = 0.01, 
                             client = OAuthClient)
 names(savi_2022_06_23)[1] = c( "SAVI")
-terra::plot(savi_2022_06_23[[1]], main = paste("SAVI",day[1]), cex.main = 0.75)
+terra::plot(savi_2022_06_23[[1]], main = paste("SAVI",day[1]),col = ndvi.col, nbreaks = 12, cex.main = 0.75)
 
 evi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                            time_range = day[1], 
@@ -485,7 +504,7 @@ evi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                            buffer = 0.01, 
                            client = OAuthClient)
 names(evi_2022_06_23)[1] = c( "EVI")
-terra::plot(evi_2022_06_23[[1]], main = paste("EVI",day[1]), cex.main = 0.75)
+terra::plot(evi_2022_06_23[[1]], main = paste("EVI",day[1]), col = ndvi.col, nbreaks = 12, cex.main = 0.75)
 
 pred_stack_2022 = c(raw_2022_06_23,evi_2022_06_23[[1]],kndvi_2022_06_23[[1]],savi_2022_06_23[[1]])
 
@@ -507,7 +526,9 @@ Also experiment with other cluster settings and discuss the results.
 
 ```{R kmenas}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 ## k-means über RStoolbox
 
 #"EVI"   "kNDVI" "SAVI"
@@ -524,7 +545,6 @@ prediction_kmeans_2022 = RStoolbox::unsuperClass(pred_stack_2022,
 plot(prediction_kmeans_2022$map)
 ```
 
-![](images/kmeans-2018.png) ![](images/kmeans-2022.png)
 
 ### bfast:  Spatial identification of magnitudes and time periods of kNDVI changes
 
@@ -539,6 +559,8 @@ The results shows the changes starting at 7/2019 until 10/2021.
 
 ```{r calc_bfast , messages=FALSE, warnings=FALSE}
 #| echo: true
+#| warning: false
+#| message: false
 #| eval: false
 figtrim <- function(path) {
   img <- magick::image_trim(magick::image_read(path))
@@ -574,6 +596,9 @@ system.time(
 Now we can use the netCDF file and map the results with any preferred visualisation tool. In this case `tmap`.
 
 ```{r plot_bfast, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE}
+#| echo: true
+#| warning: false
+#| message: false
 
 # plotting it from the local ncdf  
 tmap_mode("view")
@@ -605,6 +630,8 @@ tm_shape(osm_forest) + tm_rgb() +
 
 ```{r plot_bfast_worker, echo=FALSE, message=FALSE, warning=FALSE}
 #| echo: true
+#| warning: false
+#| message: false
 #| eval: false
 
 # plotting it from the local ncdf  
@@ -669,7 +696,9 @@ Assuming we have digitized trainingdata using either QGIS or R We need now to ex
 
 ```{R tdf}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 
 pred_stack_2018 = rast(file.path(root_folder,"data/pred_stack_2018.tif"))
 pred_stack_2022 = rast(file.path(root_folder,"data/pred_stack_2022.tif"))
@@ -715,7 +744,9 @@ Since the maximum likelihood algorithm requires training data, it is a supervise
 
 ```{R maxlike , message = FALSE, warnings = FALSE}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 # ---- Maximum Likelihood Classification ----
 
 ## Here the caret utility package is used
@@ -758,7 +789,9 @@ A simplified version of the workflow proposed by Max Kuhn [@caret] and improved 
 
 ```{R random_forest, eval=FALSE, message=FALSE, include=FALSE, warnings=FALSE}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 
 # Settings for model training: cross-validation, 10 repetitions
 ctrlh = trainControl(method = "cv",
@@ -785,7 +818,9 @@ Now we are ready to apply the verified model to our data set. In remote sensing,
 
 ```{R klassifikation2018, message = FALSE, warnings = FALSE}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 
 rf_model = readRDS(file.path(root_folder,"data/rf_model.rds"))
 
@@ -799,7 +834,9 @@ saveRDS(prediction_rf_2022, file.path(root_folder,"data/prediction_rf_2022.rds")
 
 ```{R comparison_classifications}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 ## ##
 prediction_rf_2018 = readRDS(file.path(root_folder,"data/prediction_rf_2018.rds"))
 prediction_rf_2022 = readRDS(file.path(root_folder,"data/prediction_rf_2022.rds"))
@@ -836,7 +873,9 @@ Overall, however, the model can be considered good.
 
 ```{R konfusiomatrix2018, echo=FALSE, message=FALSE, warnings=FALSE}
 #| echo: true
-# #| eval: false
+#| warning: false
+#| message: false
+#| eval: false
 ## ##
 # ----Calculation of the confusion matrix  ----
 cm_rf <- confusionMatrix(data = predict(rf_model, newdata = testDat), testDat$class)
