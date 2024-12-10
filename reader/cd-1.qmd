@@ -157,7 +157,7 @@ Please note to project to different CRS is for this examples convenience and cla
 
 
 ```{r geometries}
-#| eval: false
+#| eval: true
 #| echo: true
 #| warning: false
 #| message: false
@@ -263,7 +263,7 @@ One major challenge is the fact that most of the earth surface related remote se
 Using the `rstac` package, we first request all available images from 2018 to 208 that intersect with our region of interest. Here, since the polygon has WGS84 as CRS, we do **not** need to transform the bounding box before using the `stac_search()` function.
 
 ```{r stac2}
-#| eval: false
+#| eval: true
 #| echo: true
 #| warning: false
 #| message: false
@@ -291,7 +291,7 @@ To obtain a Sentinel data cube, a gdalcube image collection must be created from
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 
 library(gdalcubes)
 s2_collection <- stac_image_collection(items$features,
@@ -314,7 +314,7 @@ The *gdalcube image collection* can be considered as a proxy structure object wh
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 
 v = cube_view(srs = "EPSG:32632", 
               dx = 10, 
@@ -360,12 +360,13 @@ Below, we derive mean monthly [kNDVI](https://advances.sciencemag.org/content/7/
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 #| 
 ncdf_cube(file.path(root_folder,"data/harz_2019_2021_kndvi.nc")) |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
-  plot(key.pos = 1,  col = ndvi.col, nbreaks = 12)
+  plot(key.pos = 1,  col = ndvi.col(11), nbreaks = 12)
+
 ```
 
 
@@ -376,7 +377,7 @@ The [CDSE package](https://zivankaraman.github.io/CDSE/articles/CDSE.html) provi
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 #------------
 # NOTE: You must create an Copernicus account and provide the token credtials have a look at:
 #       https://zivankaraman.github.io/CDSE/articles/BeforeYouStart.html#accessing-cdse-data-and-services
@@ -430,7 +431,7 @@ kndvi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                              buffer = 0.01, 
                              client = OAuthClient)
 names(kndvi_2018_07_01 )[1] = c("kNDVI")
-terra::plot(kndvi_2018_07_01[[1]] , main = paste(names(kndvi_2018_07_01 ), day[12]), col = ndvi.col, nbreaks = 12,cex.main = 0.75)
+mapview(kndvi_2018_07_01[[1]] , main = paste(names(kndvi_2018_07_01 ), day[12]), col = ndvi.col(11),nbreaks = 12, cex.main = 0.75)
 
 savi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                             time_range = day[12], 
@@ -443,7 +444,7 @@ savi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                             buffer = 0.01, 
                             client = OAuthClient)
 names(savi_2018_07_01)[1] = c( "SAVI")
-terra::plot(savi_2018_07_01[[1]], main = paste("SAVI", day[12]),col = ndvi.col, nbreaks = 12, cex.main = 0.75)
+terra::plot(savi_2018_07_01[[1]], main = paste("SAVI", day[12]),col = ndvi.col(11), nbreaks = 12, cex.main = 0.75)
 
 evi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                            time_range = day[12], 
@@ -456,7 +457,7 @@ evi_2018_07_01 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                            buffer = 0.01, 
                            client = OAuthClient)
 names(evi_2018_07_01)[1] = c( "EVI")
-terra::plot(evi_2018_07_01[[1]], main = paste("EVI",day[12]), col = ndvi.col, nbreaks = 12, cex.main = 0.75)
+terra::plot(evi_2018_07_01[[1]], main = paste("EVI",day[12]), col = ndvi.col(11), nbreaks = 12, cex.main = 0.75)
 
 pred_stack_2018 = c(raw_2018_07_01,evi_2018_07_01[[1]],kndvi_2018_07_01[[1]],savi_2018_07_01[[1]])
 
@@ -485,7 +486,7 @@ kndvi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                              buffer = 0.01, 
                              client = OAuthClient)
 names(kndvi_2022_06_23)[1] = c("kNDVI")
-terra::plot(kndvi_2022_06_23[[1]] , main = paste(names(kndvi_2022_06_23 ), day[1]), col = ndvi.col, nbreaks = 12, cex.main = 0.75)
+terra::plot(kndvi_2022_06_23[[1]] , main = paste(names(kndvi_2022_06_23 ), day[1]), col = ndvi.col(11), nbreaks = 12, cex.main = 0.75)
 
 savi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                             time_range = day[1], 
@@ -498,7 +499,7 @@ savi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                             buffer = 0.01, 
                             client = OAuthClient)
 names(savi_2022_06_23)[1] = c( "SAVI")
-terra::plot(savi_2022_06_23[[1]], main = paste("SAVI",day[1]),col = ndvi.col, nbreaks = 12, cex.main = 0.75)
+terra::plot(savi_2022_06_23[[1]], main = paste("SAVI",day[1]),col = ndvi.col(11), nbreaks = 12, cex.main = 0.75)
 
 evi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020), 
                            time_range = day[1], 
@@ -511,7 +512,7 @@ evi_2022_06_23 <- GetImage(bbox = st_bbox(train_areas_2019_2020),
                            buffer = 0.01, 
                            client = OAuthClient)
 names(evi_2022_06_23)[1] = c( "EVI")
-terra::plot(evi_2022_06_23[[1]], main = paste("EVI",day[1]), col = ndvi.col, nbreaks = 12, cex.main = 0.75)
+terra::plot(evi_2022_06_23[[1]], main = paste("EVI",day[1]), col = ndvi.col(11), nbreaks = 12, cex.main = 0.75)
 
 pred_stack_2022 = c(raw_2022_06_23,evi_2022_06_23[[1]],kndvi_2022_06_23[[1]],savi_2022_06_23[[1]])
 
@@ -535,7 +536,7 @@ Also experiment with other cluster settings and discuss the results.
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 ## k-means über RStoolbox
 
 #"EVI"   "kNDVI" "SAVI"
@@ -606,13 +607,13 @@ Now we can use the netCDF file and map the results with any preferred visualisat
 #| echo: true
 #| warning: false
 #| message: false
-
+osm_forest <- tmaptools::read_osm(cm,type = "bing")
 # plotting it from the local ncdf  
 tmap_mode("view")
 gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
   stars::st_as_stars() -> x
 
-tm_shape(osm_forest) + tm_rgb() +
+tm_shape(rast(osm_forest)) + tm_rgb() +
   tm_shape(x[1]) + 
   tm_raster(n = 6)  +
   tm_layout(
@@ -623,7 +624,7 @@ tm_shape(osm_forest) + tm_rgb() +
     legend.outside = TRUE) +
   tm_grid()
 
-tm_shape(osm_forest) + tm_rgb() +
+tm_shape(rast(osm_forest)) + tm_rgb() +
   tm_shape(x[2])  + tm_raster() +
   tm_layout(legend.title.size = 1,
             panel.label.height=0.6,
@@ -639,8 +640,8 @@ tm_shape(osm_forest) + tm_rgb() +
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
-
+#| eval: true
+osm_forest <- tmaptools::read_osm(cm,type = "bing")
 # plotting it from the local ncdf  
 tmap_mode("view")
 
@@ -648,7 +649,7 @@ tmap_mode("view")
 gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
   stars::st_as_stars() -> x
 
-tmap::tmap_save(tm_shape(osm_forest) + tm_rgb() +
+tmap::tmap_save(tm_shape(rast(osm_forest)) + tm_rgb() +
   tm_shape(x[1] ) + 
   tm_raster(n = 6)  +
   tm_layout(legend.title.size = 1,
@@ -660,15 +661,16 @@ tmap::tmap_save(tm_shape(osm_forest) + tm_rgb() +
   tm_grid(), file = "m1.html" ) 
 
 # Magnitude Change Map 
-tmap::tmap_save(tm_shape(osm_forest) + tm_rgb() +
+tmap::tmap_save(
+  tm_shape(rast(osm_forest)) + tm_rgb() +
   tm_shape(x[2])  + tm_raster() +
   tm_layout(legend.title.size = 1,
     legend.show = TRUE,
     panel.label.height=0.6,
     panel.label.size=0.6,
     legend.text.size = 0.4,
-    legend.outside = TRUE) +
-  tm_grid(),file = "m2.html" ) 
+    legend.outside = TRUE) 
+  +  tm_grid(),file = "m2.html" ) 
 
 
 ```
@@ -705,7 +707,7 @@ Assuming we have digitized trainingdata using either QGIS or R We need now to ex
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 
 pred_stack_2018 = rast(file.path(root_folder,"data/pred_stack_2018.tif"))
 pred_stack_2022 = rast(file.path(root_folder,"data/pred_stack_2022.tif"))
@@ -753,7 +755,7 @@ Since the maximum likelihood algorithm requires training data, it is a supervise
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 # ---- Maximum Likelihood Classification ----
 
 ## Here the caret utility package is used
@@ -798,7 +800,7 @@ A simplified version of the workflow proposed by Max Kuhn [@caret] and improved 
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 
 # Settings for model training: cross-validation, 10 repetitions
 ctrlh = trainControl(method = "cv",
@@ -827,7 +829,7 @@ Now we are ready to apply the verified model to our data set. In remote sensing,
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 
 rf_model = readRDS(file.path(root_folder,"data/rf_model.rds"))
 
@@ -843,7 +845,7 @@ saveRDS(prediction_rf_2022, file.path(root_folder,"data/prediction_rf_2022.rds")
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 ## ##
 prediction_rf_2018 = readRDS(file.path(root_folder,"data/prediction_rf_2018.rds"))
 prediction_rf_2022 = readRDS(file.path(root_folder,"data/prediction_rf_2022.rds"))
@@ -882,7 +884,7 @@ Overall, however, the model can be considered good.
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: false
+#| eval: true
 ## ##
 # ----Calculation of the confusion matrix  ----
 cm_rf <- confusionMatrix(data = predict(rf_model, newdata = testDat), testDat$class)
