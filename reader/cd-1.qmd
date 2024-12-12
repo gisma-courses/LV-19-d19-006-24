@@ -342,7 +342,7 @@ Only calling a final *action* will start the processing on the COG-Server. In th
   gdalcubes_options(parallel = 16, 
                     ncdf_compression_level = 5)
   raster_cube(s2_collection, v, mask = s2.mask) |>
-    write_ncdf(file.path(root_folder,"data/harz_2018_2022_all.nc"),overwrite=TRUE)
+    write_ncdf(file.path(root_folder,"../data/harz_2018_2022_all.nc"),overwrite=TRUE)
  
   
 ```
@@ -357,7 +357,7 @@ Below, we derive mean monthly [kNDVI](https://advances.sciencemag.org/content/7/
 #| message: false
 #| eval: true
 #| 
-ncdf_cube(file.path(root_folder,"data/harz_2018_2022_all.nc")) |>
+ncdf_cube(file.path(root_folder,"../data/harz_2018_2022_all.nc")) |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
   plot(key.pos = 1,  col = ndvi.col(11), nbreaks = 12)
@@ -569,7 +569,7 @@ The results shows the changes starting at 7/2019 until 10/2021.
 
 gdalcubes_options(parallel = 16)
 
-ncdf_cube(file.path(root_folder,"data/harz_2018_2022_all.nc")) |>
+ncdf_cube(file.path(root_folder,"..data/harz_2018_2022_all.nc")) |>
   reduce_time(names = c("change_date", "change_magnitude"), FUN = function(x) {
     knr <- exp(-((x["B08",]/10000)-(x["B04",]/10000))^2/(2))
     kndvi <- (1-knr) / (1+knr)    
@@ -594,10 +594,11 @@ Now we can use the netCDF file and map the results with any preferred visualisat
 #| echo: true
 #| warning: false
 #| message: false
+#| eval: false
 
 # plotting it from the local ncdf  
 
-gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
+gdalcubes::ncdf_cube(file.path(root_folder,"..data/bfast_results.nc")) |>
    plot(key.pos = 1,  col = ndvi.col(11), nbreaks = 12)
 
   stars::st_as_stars() -> x
@@ -657,7 +658,7 @@ summary(tDF)
 
 # Save as R internal data format
 # is stored in the repo and can therefore be loaded (line below)
-saveRDS(tDF, paste0("../data/tDF_2018_2022.rds"))
+saveRDS(tDF, file.path(root_folder,"data/tDF_2018_2022.rds"))
 ```
 
 ## Step 4 - supervised classification
