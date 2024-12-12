@@ -82,6 +82,8 @@ website:
         contents:
           - href:  reader/cd-1.qmd          
             text: Classification Workflow 
+          - href:  reader/mc3.qmd          
+            text: Filling Gaps             
           
       - text: "---"
       - section: "Worksheets"

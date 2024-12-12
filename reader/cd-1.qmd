@@ -188,6 +188,8 @@ Please note to project to different CRS is for this examples convenience and cla
 # Download training data which is also used for the extend
 utils::download.file(url="https://github.com/gisma/gismaData/raw/master/geoinfo/train_areas_2019_2020.gpkg",destfile=file.path("../data/train_areas_2019_2020.gpkg"))
 train_areas_2019_2020 = st_read(file.path("../data/train_areas_2019_2020.gpkg"))
+train_areas_2019_2020  |>
+  st_bbox() -> bbox
 
 # mapping the extents and boundaries of the choosen geometries
 # tmap_mode("view")
@@ -228,8 +230,7 @@ e <- ext(harz_forest_mask)
 p <- as.polygons(e, crs="EPSG:4326")
 cm=sf::st_as_sf(p)
 harz_bbox = bb(train_areas_2019_2020,projection=4326)
-harz_32632 =sf::st_transform(train_areas_2019_2020,crs = 32632)
-harz_bbox_32632 = bb(harz_32632,projection=32632)
+
 ```
 
 ## Step 1: Retrieving Sentinel data
@@ -268,20 +269,20 @@ Using the `rstac` package, we first request all available images from 2018 to 20
 #| warning: false
 #| message: false
 # search the data stack for the given period and area
-library(rstac)
 s = stac("https://earth-search.aws.element84.com/v0")
+
 
 items <- s |>
   stac_search(collections = "sentinel-s2-l2a-cogs",
-              bbox= as.vector(harz_bbox), 
-              datetime = c("2019-06-01/2021-09-01"),
-              limit = 1000) |>
+              bbox= c(bbox["xmin"],bbox["ymin"],bbox["xmax"],bbox["ymax"]), , 
+              datetime = c("2018-06-01/2022-09-01"),
+              limit = 600) |>
   post_request() 
 items
 
 ```
 
-This gives us 350 matching images recorded between Januar 2019 and December 2023.
+This gives us 334 matching images recorded between 2019-06-01 and 2021-09-01.
 
 #### Creating a monthly Sentinel-2 data cube
 
@@ -293,10 +294,9 @@ To obtain a Sentinel data cube, a gdalcube image collection must be created from
 #| message: false
 #| eval: true
 
-library(gdalcubes)
 s2_collection <- stac_image_collection(items$features,
-                                      asset_names = c("B04","B08","SCL"),
-#c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL"), 
+                                      asset_names = 
+c("B01","B02","B03","B04","B05","B06", "B07","B08","B8A","B09","B11","SCL"), 
                                       property_filter = function(x) {x[["eo:cloud_cover"]] < 5}) 
 s2_collection
 ```
@@ -315,19 +315,12 @@ The *gdalcube image collection* can be considered as a proxy structure object wh
 #| warning: false
 #| message: false
 #| eval: true
+st_as_sfc(bbox) |>
+  st_transform("EPSG:32632") |>
+  st_bbox() -> bbox_utm
+v = cube_view(srs = "EPSG:32632", extent = list(t0 = "2018-06", t1 = "2022-09", left = bbox_utm["xmin"] - 10, right = bbox_utm["xmax"] + 10, bottom = bbox_utm["ymin"] - 10, top = bbox_utm["ymax"] + 10),
+              dx = 10, dy = 10, dt = "P1M", aggregation = "median", resampling = "bilinear")
 
-v = cube_view(srs = "EPSG:32632", 
-              dx = 10, 
-              dy = 10, 
-              dt = "P1M",  
-              aggregation = "median", 
-              extent = list(t0 = "2019-06-01",
-                            t1 = "2021-09-01", 
-                            left = st_bbox(harz_32632)["xmin"] , 
-                            right = st_bbox(harz_32632)["xmax"] ,
-                            bottom = st_bbox(harz_32632)["ymin"] , 
-                            top = st_bbox(harz_32632)["ymax"] ),
-              resampling = "bilinear")
 v
 ```
 
@@ -349,7 +342,9 @@ Only calling a final *action* will start the processing on the COG-Server. In th
   gdalcubes_options(parallel = 16, 
                     ncdf_compression_level = 5)
   raster_cube(s2_collection, v, mask = s2.mask) |>
-    write_ncdf(file.path(root_folder,"data/harz_2019_2021_kndvi.nc"),overwrite=TRUE)
+    write_ncdf(file.path(root_folder,"data/harz_2018_2022_all.nc"),overwrite=TRUE)
+ 
+  
 ```
 
 #### kNDVI
@@ -362,7 +357,7 @@ Below, we derive mean monthly [kNDVI](https://advances.sciencemag.org/content/7/
 #| message: false
 #| eval: true
 #| 
-ncdf_cube(file.path(root_folder,"data/harz_2019_2021_kndvi.nc")) |>
+ncdf_cube(file.path(root_folder,"data/harz_2018_2022_all.nc")) |>
     apply_pixel("tanh(((B08-B04)/(B08+B04))^2)", "kNDVI") |>
   reduce_time("mean(kNDVI)") |>
   plot(key.pos = 1,  col = ndvi.col(11), nbreaks = 12)
@@ -570,35 +565,27 @@ The results shows the changes starting at 7/2019 until 10/2021.
 #| warning: false
 #| message: false
 #| eval: false
-figtrim <- function(path) {
-  img <- magick::image_trim(magick::image_read(path))
-  magick::image_write(img, path)
-  path
-}
 
-gdalcubes_options(parallel = 12)
 
-## start analysis
-system.time(
-  ncdf_cube(file.path(root_folder,"data/harz_2019_2021_kndvi.nc")) |>
-    reduce_time(names = c("change_date", "change_magnitude", "kndvi"), 
-                FUN = function(x) {
-                  kndvi = tanh(((x['B08',]-x['B04',])/(x['B08',]+x['B04',]))^2)
-                  if (all(is.na(kndvi))) {
-                    return(c(NA,NA))
-                    }
-                  kndvi_ts = ts(kndvi, start = c(2019, 1), frequency = 12)
-                  library(bfast)
-                  tryCatch({
-                    result = bfastmonitor(kndvi_ts, 
-                                          start = c(2020,1), 
-                                          history = "all", 
-                                          level = 0.01)
-                    return(c(result$breakpoint, result$magnitude))
-                    }, error = function(x) {return(c(NA,NA))
-                      })
-                  }) |>
-    write_ncdf(file.path(root_folder,"data/bfast_results.nc"),overwrite = TRUE))
+gdalcubes_options(parallel = 16)
+
+ncdf_cube(file.path(root_folder,"data/harz_2018_2022_all.nc")) |>
+  reduce_time(names = c("change_date", "change_magnitude"), FUN = function(x) {
+    knr <- exp(-((x["B08",]/10000)-(x["B04",]/10000))^2/(2))
+    kndvi <- (1-knr) / (1+knr)    
+    if (all(is.na(kndvi))) {
+      return(c(NA,NA))
+    }
+    kndvi_ts = ts(kndvi, start = c(2018, 1), frequency = 12)
+    library(bfast)
+    tryCatch({
+        result = bfastmonitor(kndvi_ts, start = c(2019,1), level = 0.01)
+        return(c(result$breakpoint, result$magnitude))
+      }, error = function(x) {
+        return(c(NA,NA))
+      })
+  }) |>
+  write_ncdf(file.path(root_folder,"data/bfast_results.nc"), overwrite = TRUE)
 ```
 
 Now we can use the netCDF file and map the results with any preferred visualisation tool. In this case `tmap`.
@@ -607,84 +594,20 @@ Now we can use the netCDF file and map the results with any preferred visualisat
 #| echo: true
 #| warning: false
 #| message: false
-osm_forest <- tmaptools::read_osm(cm,type = "bing")
+
 # plotting it from the local ncdf  
-tmap_mode("view")
+
 gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
+   plot(key.pos = 1,  col = ndvi.col(11), nbreaks = 12)
+
   stars::st_as_stars() -> x
-
-tm_shape(rast(osm_forest)) + tm_rgb() +
-  tm_shape(x[1]) + 
-  tm_raster(n = 6)  +
-  tm_layout(
-    legend.show = TRUE,
-    panel.label.height=0.6,
-    panel.label.size=0.6,
-    legend.text.size = 0.4,
-    legend.outside = TRUE) +
-  tm_grid()
-
-tm_shape(rast(osm_forest)) + tm_rgb() +
-  tm_shape(x[2])  + tm_raster() +
-  tm_layout(legend.title.size = 1,
-            panel.label.height=0.6,
-            panel.label.size=0.6,
-            legend.text.size = 0.4,
-            legend.outside = TRUE) +
-  tm_grid()
+plot(x[1])
+mapview(x[2])
 
 ```
 
 
-```{r plot_bfast_worker, echo=FALSE, message=FALSE, warning=FALSE}
-#| echo: true
-#| warning: false
-#| message: false
-#| eval: true
-osm_forest <- tmaptools::read_osm(cm,type = "bing")
-# plotting it from the local ncdf  
-tmap_mode("view")
 
-# Period of Change Map
-gdalcubes::ncdf_cube(file.path(root_folder,"data/bfast_results.nc")) |>
-  stars::st_as_stars() -> x
-
-tmap::tmap_save(tm_shape(rast(osm_forest)) + tm_rgb() +
-  tm_shape(x[1] ) + 
-  tm_raster(n = 6)  +
-  tm_layout(legend.title.size = 1,
-    legend.show = TRUE,
-    panel.label.height=0.6,
-    panel.label.size=0.6,
-    legend.text.size = 0.4,
-    legend.outside = TRUE) +
-  tm_grid(), file = "m1.html" ) 
-
-# Magnitude Change Map 
-tmap::tmap_save(
-  tm_shape(rast(osm_forest)) + tm_rgb() +
-  tm_shape(x[2])  + tm_raster() +
-  tm_layout(legend.title.size = 1,
-    legend.show = TRUE,
-    panel.label.height=0.6,
-    panel.label.size=0.6,
-    legend.text.size = 0.4,
-    legend.outside = TRUE) 
-  +  tm_grid(),file = "m2.html" ) 
-
-
-```
-
-
-<iframe valign="center" src="m2.html" width="640" height="800" frameborder="0">
-</iframe>
-<figcaption>*Magnitude Change Map *</figcaption>
-
-<p>
-
-<iframe valign="center" src="m1.html" width="640" height="800" frameborder="0">
-</iframe>
-<figcaption>*Period of Change Map *</figcaption>
 
 
 
@@ -892,7 +815,7 @@ cm_rf
 ```
 
 
-## Further support
+## Further support supervised classification
 
 Consider the following resources as examples of how a specific conceptual and technical approach to answering a question can be *"crystallized"* step by step from the wide range of instructions available on the internet. After a lot of research and critical cross-checking, a *"state of research"* that is currently considered to be certain within the scientific community can be identified, which can be regarded as a sufficient basis for good scientific practice.
 
@@ -913,3 +836,6 @@ I would like to explicitly quote Valentin Stefan, the author of the blog post [p
 *"\[...\] Consider this content a blog post and nothing more. It does not claim to be an exhaustive exercise or a substitute for your critical thinking \[...\]."* :::
 :::
 
+## Final Remarks
+
+You may have noticed that we have mixed two different approaches to processing satellite data here in a somewhat arbitrary way. On the one hand, the conventional approach of downloading individual data sets and processing them locally, and on the other hand, an introduction to cloud computing, which mainly takes place on the corresponding servers. We have refrained from calculating exclusively on the servers, but technically this is identical. This is didactically questionable, but it shows the direction in which the processing and analysis of mass data is currently moving. The use of cloud-based techniques is essential, especially for long time series and valid systematic data-driven analyses.For further information, please refer to [gdalcubes tutorials](https://gdalcubes.github.io/source/tutorials/) and (not mentioned in this reader) [openeo](https://openeo.org/) and the [R-interface](https://open-eo.github.io/openeo-r-client/) to openeo. 
