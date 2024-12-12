@@ -679,7 +679,7 @@ Since the maximum likelihood algorithm requires training data, it is a supervise
 #| echo: true
 #| warning: false
 #| message: false
-#| eval: true
+#| eval: false
 # ---- Maximum Likelihood Classification ----
 
 ## Here the caret utility package is used

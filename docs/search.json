@@ -64,7 +64,7 @@
     "href": "reader/mc3.html#further-hands-on-examples",
     "title": "Spatial Interpolation",
     "section": "Further Hands on examples",
-    "text": "Further Hands on examples\nThe Forgenius Pinus Pinaster Project provides an fully integrated GIS source code and field data dealing with prediction classificaten of UAV and station realted data.",
+    "text": "Further Hands on examples\nClimate Data Inmterpolation Hands on The Forgenius Pinus Pinaster Project provides an fully integrated GIS source code and field data dealing with prediction classificaten of UAV and station realted data.",
     "crumbs": [
       "FAQ",
       "Reader",
@@ -214,5 +214,26 @@
       "Reader",
       "Classification Workflow"
     ]
+  },
+  {
+    "objectID": "worksheets/ws-07.html",
+    "href": "worksheets/ws-07.html",
+    "title": "Worksheet 7: Reproducible Analysis Workflows",
+    "section": "",
+    "text": "Achieving reliable monitoring hinges on the reproducibility of both field data collection and subsequent analyses. In the context of spatial micro-scale analysis and modeling, the precise geo-object locations play a central role, presenting an additional challenge when considering the 3D structure. Incorporating the temporal aspect, such as accurately recording repeated flights, further elevates these demands. Whether utilizing low-cost or professional UAV systems, these factors must be acknowledged to enable meaningful analysis or modeling. While LiDAR systems are the preferred choice for acquiring forest structure, their high cost, both in acquisition and processing, poses challenges. A feasible alternative lies in off-the-shelf UAV systems with integrated image acquisition. These systems allow for the generation of not only orthorectified planar image data but also quasi-three-dimensional point clouds through photo reconstruction and image processing techniques, providing elevation information for each coordinate."
+  },
+  {
+    "objectID": "worksheets/ws-07.html#aims-and-goals",
+    "href": "worksheets/ws-07.html#aims-and-goals",
+    "title": "Worksheet 7: Reproducible Analysis Workflows",
+    "section": "Aims and Goals",
+    "text": "Aims and Goals\nReproducibility in Data Acquisition and Analysis:\nAims: Establish a framework for reproducible and automated data acquisition and analysis, crucial for robust monitoring.\nGoals: Ensure that the 3D parameters and forest ecological metrics are calculated in a fully reproducible manner, enabling accurate spatial micro-scale modeling.\nIntegration of Temporal and Spatial Aspects:\nAims: Address the challenges posed by the 3D structure and temporal aspects in UAV-based monitoring. Goals: Achieve meaningful analysis and modeling by acknowledging and incorporating precise geo-object locations and accurate recording of repeated flights.\nCost-Effective Alternatives for Forest Structure Acquisition:\nAims: Explore alternatives to expensive LiDAR systems for acquiring forest structure. Goals: Utilize off-the-shelf UAV systems with integrated image acquisition to generate quasi-three-dimensional point clouds, providing elevation information in a cost-effective manner.\nAutomated and Reproducible Workflows:\nAims: Develop automated workflows that streamline data processing and analysis. Goals: Enable a robust and efficient classification method using machine learning object-based image analysis (OBIA), ensuring complex classification goals can be achieved with minimal technical expertise."
+  },
+  {
+    "objectID": "worksheets/ws-07.html#project-repository",
+    "href": "worksheets/ws-07.html#project-repository",
+    "title": "Worksheet 7: Reproducible Analysis Workflows",
+    "section": "Project Repository",
+    "text": "Project Repository\n\nforenius-pp repository for additional functions"
   }
 ]
