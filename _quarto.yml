@@ -81,7 +81,7 @@ website:
       - section: "Reader"
         contents:
           - href:  reader/cd-1.qmd          
-            text: Classification Workflow 
+            text: Spatial data classification
           - href:  reader/mc3.qmd          
             text: Filling Gaps     
           - href:  reader/cd2.qmd          
