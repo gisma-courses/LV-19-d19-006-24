@@ -9,3 +9,7 @@ prediction_rf_2018.rds
 prediction_rf_2020.rds
 prediction_rf_2022.rds
 test.tif
+harz_2018_2022_kndvi.nc
+harz_2018_2022_all.nc
+CopyOfharz_2018_2022_all.nc.bak
+bfast_results2.nc

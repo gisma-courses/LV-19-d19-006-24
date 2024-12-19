@@ -24,11 +24,10 @@ Geographic Information Science (GIS) is based on versatile and powerful software
 
 At the end of this course you should be able
 
--   to understand, adapt and develop geographic information science methods
--   to design workflows suitable to solve common spatio temporal data-related issues
--   to deploy your workflows using geo-information science tools, R scripts and collaborative code management platforms for task management and issue tracking
--   to critically evaluate your spatio-temporal analysis
--   to communicate your workflow and analysis results
+- Understand, adapt and develop geoinformatics methods
+- Design workflows that are suitable for solving  spatio-temporal data-related regionalization issues
+- Critically evaluate their spatio-temporal analysis
+- Communicate their workflows and analysis results
 
 # Course features
 
@@ -36,10 +35,10 @@ The course is intended as a blended learning module in our study program althoug
 
 # Deliverables
 
-The graded examination is based on a 10-minute scientific presentation on a topic of your choice, using the central techniques taught in the course. The topic should be of personal interest and should be chosen from available data sets or from the student's own classifications, presenting the data in relation to a research question. The presentation, a one-page abstract, and the scripts and sources used are to be posted as a team portfolio (2 people) on github.
+The graded examination is based on a 10 + 10 minute scientific presentation on a topic of your choice, using the central techniques taught in the course. The topic should be of personal interest and should be chosen from available data sets or from the student's own classifications, presenting the data in relation to a research question. The presentation, a one-page abstract, and the scripts and sources used are to be posted as a team portfolio (2 people) on github.
 
 ::: callout-note
-The presentation will take place in the last course session of the semester.
+The presentation will take place in the last course session of the semester. 
 :::
 
 
