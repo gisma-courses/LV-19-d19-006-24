@@ -4,7 +4,14 @@ title: "Spatial Interpolation"
 author: Chris Reudenbach, Philipps University Marburg (PUM)
 date: "2024-09-05"
 image: ../images/mc3.png
-
+about:
+  id: image-heading
+  template: solana
+  image-shape: round
+  image-width: 10em
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Distance and data representation
@@ -96,9 +103,11 @@ dimensions, giving rise to Voronoi polyhedra.
 ```{=html}
 <iframe width="780" height="1280" src="https://geomoer.github.io/geoAI//assets/images/unit01/suisse1.html" title="VVoronoi"></frame>
 ```
+
 ```{=html}
 <iframe width="780" height="1280" src="https://geomoer.github.io/geoAI//assets/images/unit01/suisse6.html" title="Interpol"></iframe>
 ```
+
 <figure>
 
 <figcaption>The blue dots are a typical example of irregularly
@@ -147,6 +156,7 @@ tessellation).
 ```{=html}
 <iframe width="780" height="1280" src="https://geomoer.github.io/geoAI//assets/images/unit01/suisse6.html" title="Interpol"></iframe>
 ```
+
 <figure>
 
 <figcaption>The blue dots are a typical example of irregularly
@@ -254,18 +264,28 @@ Learning!](https://youtu.be/reY50t2hbuM) (6:17)
 [GeoAI: Machine Learning meets ArcGIS](https://youtu.be/aKq50YM8a8w)
 (8:50)
 
+
 ## Hands on our data
 
-Download the [exercises
-repository](https://github.com/gisma-courses/eon2024-mc/blob/master/Archiv_EON2024_Interpol.zip)
+
+Download the [Harz exercises
+repository](https://github.com/gisma-courses/LV-19-d19-006-24/blob/main/reader/data/Archiv_EON2024_Interpol.zip)
 as a ZIP file from and unpack it on your computer.
+
+::: callout-note
+
+* In the top right, right click the Raw button.
+* Save as...
+:::
+
 
 Then, you can open the `.Rproj` file and start working on the exercises
 in RStudio.
 
 ## Further Hands on examples
-* [Climate Data Inmterpolation Hands on](mc_2024.qmd)
-* [The Forgenius Pinus Pinaster
-Project](https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/tree/main)
-provides an fully integrated GIS source code and field data dealing with
-prediction classificaten of UAV and station realted data.
+
+-   [Climate Data Inmterpolation Hands on](mc_2024.qmd)
+-   [The Forgenius Pinus Pinaster
+    Project](https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/tree/main)
+    provides an fully integrated GIS source code and field data dealing
+    with prediction classificaten of UAV and station realted data.
