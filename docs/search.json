@@ -52,7 +52,7 @@
     "href": "reader/mc3.html#hands-on-our-data",
     "title": "Spatial Interpolation",
     "section": "Hands on our data",
-    "text": "Hands on our data\nDownload the Harz exercises repository as a ZIP file from and unpack it on your computer.\n\n\n\n\n\n\nNote\n\n\n\n\nIn the top right, right click the Raw button.\nSave as…\n\n\n\nThen, you can open the .Rproj file and start working on the exercises in RStudio.",
+    "text": "Hands on our data\nDownload the Harz exercises repository as a ZIP file from and unpack it on your computer.\nThen, you can open the .Rproj file and start working on the exercises in RStudio.",
     "crumbs": [
       "FAQ",
       "Reader",
