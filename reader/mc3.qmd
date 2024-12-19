@@ -4,14 +4,7 @@ title: "Spatial Interpolation"
 author: Chris Reudenbach, Philipps University Marburg (PUM)
 date: "2024-09-05"
 image: ../images/mc3.png
-about:
-  id: image-heading
-  template: solana
-  image-shape: round
-  image-width: 10em
-editor: 
-  markdown: 
-    wrap: 72
+
 ---
 
 ## Distance and data representation
@@ -271,8 +264,8 @@ Then, you can open the `.Rproj` file and start working on the exercises
 in RStudio.
 
 ## Further Hands on examples
-[Climate Data Inmterpolation Hands on](mc_2024.R)
-[The Forgenius Pinus Pinaster
+* [Climate Data Inmterpolation Hands on](mc_2024.qmd)
+* [The Forgenius Pinus Pinaster
 Project](https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/tree/main)
 provides an fully integrated GIS source code and field data dealing with
 prediction classificaten of UAV and station realted data.

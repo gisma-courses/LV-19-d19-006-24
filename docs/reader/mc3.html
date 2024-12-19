@@ -35,6 +35,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
@@ -318,6 +319,7 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
+   
   <ul>
   <li><a href="#distance-and-data-representation" id="toc-distance-and-data-representation" class="nav-link active" data-scroll-target="#distance-and-data-representation">Distance and data representation</a>
   <ul class="collapse">
@@ -339,55 +341,64 @@ ul.task-list li input[type="checkbox"] {
 <div class="toc-actions"><ul><li><a href="https://github.com/gisma-courses/LV-19-d19-006-24/edit/main/reader/mc3.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gisma-courses/LV-19-d19-006-24/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<div class="quarto-about-solana column-body content">
-  <div class="about-entity">
-    <div class="entity-contents">
-      <header id="title-block-header" class="quarto-title-block default">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title d-none d-lg-block">Spatial Interpolation</h1>
 </div>
+
+
+
 <div class="quarto-title-meta">
+
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
              <p>Chris Reudenbach, Philipps University Marburg (PUM) </p>
           </div>
   </div>
+    
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
       <p class="date">September 5, 2024</p>
     </div>
   </div>
+  
+    
   </div>
-</header> 
-      <div class="about-contents"><main class="content" id="quarto-document-content">
+  
+
+
+</header>
+
 
 <section id="distance-and-data-representation" class="level2">
-<h2 data-anchor-id="distance-and-data-representation">Distance and data representation</h2>
+<h2 class="anchored" data-anchor-id="distance-and-data-representation">Distance and data representation</h2>
 <p>Let’s take a closer look at proximity, which is mentioned frequently. What exactly is it? How can proximity/neighborliness be expressed in such a way that the space becomes meaningful?</p>
 <p>In general, spatial relationships are described in terms of neighborhoods (positional) and distances (metric). In spatial analysis or prediction, however, it is important to be able to name the spatial <strong>influence</strong>, i.e.&nbsp;the evaluation or weighting of this relationship, either qualitatively or quantitatively. Tobler did this for a specific objective by stating that “near” is more important than “far”. But what about in other cases? The challenge is that spatial influence can only be measured directly in exceptional cases. There are many ways to estimate it, however.</p>
 <section id="neighborhood" class="level3">
-<h3 data-anchor-id="neighborhood">Neighborhood</h3>
+<h3 class="anchored" data-anchor-id="neighborhood">Neighborhood</h3>
 <p>Neighborhood is perhaps the most important concept. Higher dimensional geo-objects can be considered neighboring if they <em>touch</em> each other, e.g.&nbsp;neighboring countries. For zero-dimensional objects (points), the most common approach is to use distance in combination with a number of points to determine neighborhood.</p>
 </section>
 <section id="distance" class="level3">
-<h3 data-anchor-id="distance">Distance</h3>
+<h3 class="anchored" data-anchor-id="distance">Distance</h3>
 <p>Proximity or neighborhood analyses are often concerned with areas of influence or catchment areas, i.e.&nbsp;spatial patterns of effects or processes.</p>
 <p>This section discusses some methods for calculating distances between spatial objects. Because of the different ways of discretizing space, we must make the – already familiar – distinction between vector and raster data models.</p>
 <p>Initially, it is often useful to work without spatially restrictive conditions in a first analysis, e.g.&nbsp;when this information is missing. The term “proximity” inherently implies a certain imprecision. Qualitative terms that can be used for this are: “near”, “far” or “in the neighborhood of”. Representation and data-driven analysis require these terms to be objectified and operationalized. So, this metric must be based on a distance concept, e.g.&nbsp;Euclidean distance or travel times. In a second interpretative step, we must decide which units define this type of proximity. In terms of the objective of a question, there are only suitable and less-suitable measures; there is no correct or incorrect. Therefore, it is critical to define a meaningful neighborhood relationship for the objects under investigation.</p>
 </section>
 </section>
 <section id="filling-spatial-gaps" class="level2">
-<h2 data-anchor-id="filling-spatial-gaps">Filling spatial gaps</h2>
+<h2 class="anchored" data-anchor-id="filling-spatial-gaps">Filling spatial gaps</h2>
 <p>Now that we have learned the basic concepts of distance, neighborhood and filling spatial gaps, let’s take a look at interpolating or predicting values in space.</p>
 <p>For many decades, deterministic interpolation techniques (<a href="https://en.wikipedia.org/wiki/Inverse_distance_weighting">inverse distance weighting</a>, <a href="https://en.wikipedia.org/wiki/Nearest_neighbor_search">nearest neighbor</a>, <a href="https://en.wikipedia.org/wiki/Kriging">kriging</a>) have been the most popular spatial interpolation techniques. External drift kriging and regression kriging, in particular, are fundamental techniques that use <a href="https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_auto-correlation">spatial autocorrelation</a> and covariate information, i.e.&nbsp;sophisticated regression statistics.</p>
 <p>Machine learning algorithms like random forest have become very popular for spatial environmental prediction. One major reason for this is that they are can take into account non-linear and complex relationships, i.e.&nbsp;compensate for certain disadvantages that are present in the usual regression methods.</p>
 </section>
 <section id="proximity-concepts" class="level2">
-<h2 data-anchor-id="proximity-concepts">Proximity concepts</h2>
+<h2 class="anchored" data-anchor-id="proximity-concepts">Proximity concepts</h2>
 <section id="voronoi-polygons-dividing-space-geometrically" class="level3">
-<h3 data-anchor-id="voronoi-polygons-dividing-space-geometrically">Voronoi polygons – dividing space geometrically</h3>
+<h3 class="anchored" data-anchor-id="voronoi-polygons-dividing-space-geometrically">Voronoi polygons – dividing space geometrically</h3>
 <p><a href="https://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi polygons</a> (aka Thiessen polygons) are an elementary method for geometrically determining <em>proximity</em> or <em>neighborhoods</em>. Voronoi polygons (see figure below) divide an area into regions that are closest to a given point in a set of irregularly distributed points. In two dimensions, a Voronoi polygon encompasses an area around a point, such that every spatial point within the Voronoi polygon is closer to this point than to any other point in the set. Such constructs can also be formed in higher dimensions, giving rise to Voronoi polyhedra.</p>
 <iframe width="780" height="1280" src="https://geomoer.github.io/geoAI//assets/images/unit01/suisse1.html" title="VVoronoi"></frame>
 <iframe width="780" height="1280" src="https://geomoer.github.io/geoAI//assets/images/unit01/suisse6.html" title="Interpol"></iframe>
@@ -401,11 +412,11 @@ The blue dots are a typical example of irregularly distributed points in space �
 <p>But what if we know more about the spatial relationships of the features? Let’s have a look at some crucial concepts.</p>
 </section>
 <section id="spatial-interpolation-of-data" class="level3">
-<h3 data-anchor-id="spatial-interpolation-of-data">Spatial interpolation of data</h3>
+<h3 class="anchored" data-anchor-id="spatial-interpolation-of-data">Spatial interpolation of data</h3>
 <p><em>Spatially interpolating</em> data points provides us with a modeled quasi-continuous estimation of features under the corresponding assumptions. But what is spatial interpolation? Essentially, this means using known values to calculate neighboring values that are unknown. Most of these techniques are among the most complex methods of spatial analysis, so we will deliberately limit ourselves here to a basic overview of the methods. Some of the best-known and common interpolation methods found in spatial sciences are <em>nearest neighbor</em> <em>inverse distance</em>, <em>spline interpolations</em>, <em>kriging</em>, and <em>regression methods</em>.</p>
 </section>
 <section id="continously-filling-the-gaps-by-interpolation" class="level3">
-<h3 data-anchor-id="continously-filling-the-gaps-by-interpolation">Continously filling the gaps by interpolation</h3>
+<h3 class="anchored" data-anchor-id="continously-filling-the-gaps-by-interpolation">Continously filling the gaps by interpolation</h3>
 <p>To get started, take a look at the following figure, which shows six different interpolation methods to derive the spatial distribution of precipitation in Switzerland (in addition to the overlaid Voronoi tessellation).</p>
 <iframe width="780" height="1280" src="https://geomoer.github.io/geoAI//assets/images/unit01/suisse6.html" title="Interpol"></iframe>
 <figure class="figure">
@@ -424,13 +435,14 @@ The blue dots are a typical example of irregularly distributed points in space �
 <p>What makes things even more complex is that these four factors – representativeness, homogeneity, spatial distribution and size – are all interrelated. For example, a sample size of 5 measuring stations for estimating precipitation for all of Switzerland is hardly meaningful and therefore not representative. Equally unrepresentative would be selecting every measuring station in German-speaking Switzerland to estimate precipitation for the entire country. In this case, the number alone might be sufficient, but the spatial distribution would not be. If we select every station at an altitude below 750 m asl, the sample could be correct in terms of both size and spatial distribution, but the phenomenon is not homogeneously represented in the sample. An estimate based on this sample would be clearly distorted, especially in areas above 750 m asl. In practice, virtually every natural spatially-continuous phenomenon is governed by stochastic fluctuations, so, mathematically speaking, it can only be described in approximate terms.</p>
 </section>
 <section id="machine-learning" class="level3">
-<h3 data-anchor-id="machine-learning">Machine learning</h3>
+<h3 class="anchored" data-anchor-id="machine-learning">Machine learning</h3>
 <p>Machine learning (ML) methods such as random forest can also produce spatial and temporal predictions (i.e.&nbsp;produce maps from point observations). These methods are particularly robust because they take spatial autocorrelation into account, which can improve predictions or interpolations by adding geographic distances. This ultimately leads to better maps with much more complex relationships and dependencies.</p>
 <p>In the simplest case, the results are comparable to the well-known model-based geostatistics. The advantage of ML methods over model-based geostatistics, however, is that they make fewer assumptions, can take non-linearities into account and are easier to automate.</p>
 <p><img src="https://geomoer.github.io/geoAI/assets/images/unit01/ML_interpol.png" class="img-fluid"></p>
 <figure class="figure">
 <figcaption>
 The original dataset (top left) is a terrain model reduced to 8 meters with 48384 single pixels. For interpolation, 1448 points were randomly drawn and interpolated with conventional kriging (top right), support vector machines (SVM) (middle left), neural networks (middle right), and two variants of random forest (bottom row). In each method, only the distance of the drawn points is used as a dependency.<br>
+
 </figcaption>
 </figure>
 <p>Each interpolation method was applied using the “default” settings. Tuning could possibly lead to significant changes in all of them. Fascinatingly, the error measures correlate to the visual results: Kriging and the neural network show the best performance, followed by the random forest models and the support-vector machine.</p>
@@ -478,30 +490,28 @@ The original dataset (top left) is a terrain model reduced to 8 meters with 4838
 </table>
 </section>
 <section id="additional-references" class="level3">
-<h3 data-anchor-id="additional-references">Additional references</h3>
+<h3 class="anchored" data-anchor-id="additional-references">Additional references</h3>
 <p>Get the Most Out of AI, Machine Learning, and Deep Learning <a href="https://www.youtube.com/watch?v=KiKjforteXs">Part 1</a> (10:52) and <a href="https://www.youtube.com/watch?v=Ys33AhNDwC4">Part 2</a> (13:18)</p>
 <p><a href="https://youtu.be/reY50t2hbuM">Why You Should NOT Learn Machine Learning!</a> (6:17)</p>
 <p><a href="https://youtu.be/aKq50YM8a8w">GeoAI: Machine Learning meets ArcGIS</a> (8:50)</p>
 </section>
 </section>
 <section id="hands-on-our-data" class="level2">
-<h2 data-anchor-id="hands-on-our-data">Hands on our data</h2>
+<h2 class="anchored" data-anchor-id="hands-on-our-data">Hands on our data</h2>
 <p>Download the <a href="https://github.com/gisma-courses/eon2024-mc/blob/master/Archiv_EON2024_Interpol.zip">exercises repository</a> as a ZIP file from and unpack it on your computer.</p>
 <p>Then, you can open the <code>.Rproj</code> file and start working on the exercises in RStudio.</p>
 </section>
 <section id="further-hands-on-examples" class="level2">
-<h2 data-anchor-id="further-hands-on-examples">Further Hands on examples</h2>
-<p><a href="mc_2024.R">Climate Data Inmterpolation Hands on</a> <a href="https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/tree/main">The Forgenius Pinus Pinaster Project</a> provides an fully integrated GIS source code and field data dealing with prediction classificaten of UAV and station realted data.</p>
+<h2 class="anchored" data-anchor-id="further-hands-on-examples">Further Hands on examples</h2>
+<ul>
+<li><a href="../reader/mc_2024.html">Climate Data Inmterpolation Hands on</a></li>
+<li><a href="https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/tree/main">The Forgenius Pinus Pinaster Project</a> provides an fully integrated GIS source code and field data dealing with prediction classificaten of UAV and station realted data.</li>
+</ul>
 
 
 </section>
-</main></div>
-    </div>
-    <img src="../images/mc3.png" class="about-image
-  round " style="height: 10em; width: 10em;">
-  </div>
-</div>
- <!-- /main -->
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -666,6 +676,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   } else {
     toggleColorMode(false);
   }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

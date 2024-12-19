@@ -1,16 +1,19 @@
 #------------------------------------------------------------------------------
 # Author: creuden@gmail.com
-# Description:  interpolates the air temp
-# Copyright:GPL (>= 3)  Date: 2023-08-28 
+# Description:  cleans climate data from ecowitt stations and interpolates the air temp
+# Copyright:GPL (>= 3)  Date: 2024-09-28 
 #------------------------------------------------------------------------------
 
 # 0 ---- project setup ----
 
 # load packages (if not installed please install via install.packages())
-install.packages("remotes")
-pkg_list = c("raster","terra","sp","sf","dplyr","lwgeom","readxl",
-             "highfrequency","tidyverse","rprojroot","tibble","xts","data.table","mapview","stars","gstat","readxl")
-remotes::install_cran(pkg_list)
+require("pacman")
+# packages installing if necessary and loading
+pacman::p_load(mapview, mapedit, tmap, tmaptools, raster, terra, stars, gdalcubes,
+               sf,webshot, dplyr,CDSE,webshot, downloader, tidyverse,RStoolbox,
+               rprojroot, exactextractr, randomForest, ranger, e1071, caret, 
+               link2GI, rstac, OpenStreetMap,colorspace,ows4R,httr,
+               lwgeom,readxl,highfrequency,tibble,xts,data.table,gstat)
 
 # create a string containing the current working directory
 wd=paste0(find_rstudio_root_file(),"/reader/data/")
@@ -121,6 +124,9 @@ z=as.numeric(temperature_vect$A20230829220000)
 # Voronoi Segmentation
 p = vect(xyz, geom=c("x", "y")) 
 voronoi = voronoi(p)
+v = sf::st_as_sf(p)
+sf::st_crs(v)= sfcrs
+
 
 # Nearest neighbor interpolation
 interpNN = interpNear(r, as.matrix(xyz),radius=100)
@@ -136,15 +142,20 @@ idw_gstat <- gstat::idw(A20230829220000~1, m, st_as_stars(r),nmin = 3, maxdist =
 # ploting
 plot(idw_gstat)
 
+
+
 # kriging
+
+# first convert terra spatraster to stars  and set name to altitude
+dtm = setNames(st_as_stars(DTM),"altitude")
+
+# create an autovariogram model
 vm.auto = automap::autofitVariogram(formula = as.formula(paste("altitude", "~ 1")),
                                     input_data = m)
-k <- krige(A20230829220000 ~ altitude, m, st_as_stars(DTM),
+k <- krige(A20230829220000 ~ altitude, m, dtm,
            vm.auto$var_model)
 plot(k)
 
-crs(voronoi)=crs
-v=sf::st_as_sf(voronoi)
 # map it
 mapview(raster(interpNN) ,col=rainbow(25)) + 
   mapview( raster(interpIDW),col=rainbow(25)) + 
@@ -163,10 +174,11 @@ for (var in vars[7:8]){
   
   #   # kriging   
   print(paste0("kriging ", var))
-  k <- gstat::krige( as.formula(paste(var, " ~ altitude")), m, st_as_stars(DTM),
+  k <- gstat::krige( as.formula(paste(var, " ~ altitude")), m, dtm,
               vm.auto$var_model)
   plot(k)
   # save to geotiff
   stars::write_stars(k,paste0(wd,var,"v_interpol.tif"),overwrite=TRUE)
   
 }
+
