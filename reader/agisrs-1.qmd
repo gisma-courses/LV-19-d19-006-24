@@ -1,9 +1,6 @@
 ---
-title: aGIS Ressources 
-author: Chris Reudenbach
-date: '2021-11-16'
-slug: []
-subtitle: 'Supplemental Ressources for advanced GIS'
+title: aGIS-RS Ressources 
+subtitle: 'Supplemental Ressources for advanced GIS/RS'
 title-block-banner: ../images/sard-sp.png
 title-block-banner-color: black
 ---
