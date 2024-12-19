@@ -1390,5 +1390,29 @@
       "Worksheets",
       "Worksheet 5: Regionalisation"
     ]
+  },
+  {
+    "objectID": "reader/mc3.html#hands-on",
+    "href": "reader/mc3.html#hands-on",
+    "title": "Spatial Interpolation",
+    "section": "Hands on",
+    "text": "Hands on\nDownload the Harz exercises repository as a ZIP file from and unpack it on your computer. Then, you can open the .Rproj file and start working on the climate data interpolation exercise in RStudio.",
+    "crumbs": [
+      "FAQ",
+      "Reader",
+      "Filling Gaps"
+    ]
+  },
+  {
+    "objectID": "reader/mc3.html#further-more-complex-examples",
+    "href": "reader/mc3.html#further-more-complex-examples",
+    "title": "Spatial Interpolation",
+    "section": "Further more complex examples",
+    "text": "Further more complex examples\n\nSoil Humidity from the Forgenius Pinus Pinaster Project\nThe Forgenius Pinus Pinaster Project provides an fully integrated GIS source code and field data dealing with prediction classificaten of UAV and station realted data.",
+    "crumbs": [
+      "FAQ",
+      "Reader",
+      "Filling Gaps"
+    ]
   }
 ]

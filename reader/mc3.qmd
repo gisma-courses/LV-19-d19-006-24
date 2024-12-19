@@ -265,22 +265,13 @@ Learning!](https://youtu.be/reY50t2hbuM) (6:17)
 (8:50)
 
 
-## Hands on our data
-
+## Hands on 
 
 Download the [Harz exercises
-repository](https://raw.githubusercontent.com/gisma-courses/LV-19-d19-006-24/main/reader/data/Archiv_EON2024_Interpol.zip)
-as a ZIP file from and unpack it on your computer.
+repository](https://raw.githubusercontent.com/gisma-courses/LV-19-d19-006-24/main/reader/data/Archiv_EON2024_Interpol.zip) as a ZIP file from and unpack it on your computer. Then, you can open the `.Rproj` file and start working on the [climate data interpolation](mc_2024.qmd) exercise in RStudio.
 
+## Further more complex examples
 
-
-
-Then, you can open the `.Rproj` file and start working on the exercises
-in RStudio.
-
-## Further Hands on examples
-
--   [Climate Data Inmterpolation Hands on](mc_2024.qmd)
 -   [Soil Humidity from the Forgenius Pinus Pinaster Project](https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/raw/main/src/FR_soilmoist.R)
 -   [The Forgenius Pinus Pinaster Project](https://gitlab.uni-marburg.de/reudenba/forgenius-pp/-/tree/main)
     provides an fully integrated GIS source code and field data dealing
